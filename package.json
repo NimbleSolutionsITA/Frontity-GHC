@@ -1,0 +1,35 @@
+{
+  "name": "hesperia",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Frontity project",
+  "keywords": [
+    "frontity"
+  ],
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
+  "scripts": {
+    "dev": "frontity dev",
+    "build": "frontity build",
+    "serve": "frontity serve",
+    "start": "frontity build && frontity serve --port 3001"
+  },
+  "prettier": {},
+  "dependencies": {
+    "@frontity/core": "^1.11.1",
+    "@frontity/html2react": "^1.6.2",
+    "@frontity/mars-theme": "./packages/mars-theme",
+    "@frontity/tiny-router": "^1.4.1",
+    "@frontity/wp-source": "^1.11.2",
+    "@keepist/react-gdpr-cookie-banner": "^0.4.0",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "@n8tb1t/use-scroll-position": "^2.0.3",
+    "frontity": "^1.14.3",
+    "react-swipeable": "^6.1.0",
+    "universal-cookie": "^4.0.4"
+  }
+}
