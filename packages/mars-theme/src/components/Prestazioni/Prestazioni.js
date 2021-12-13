@@ -11,7 +11,7 @@ const Prestazioni = ({state, actions, libraries}) => {
     const data = state.source.get(state.router.link);
     const ambCat = state.theme.lang === 'it' ? 33 : 39
     const ricCat = state.theme.lang === 'it' ? 35 : 37
-    const categoryId = state.router.link === pagesMap[1][state.theme.lang][1] ? ambCat : ricCat
+    const categoryId = [ambCat, ricCat] // state.router.link === pagesMap[1][state.theme.lang][1] ? ambCat : ricCat
     const post = state.source.page[data.id]
     const type = state.router.link === pagesMap[1][state.theme.lang][1] ? 'ambulatoriali' : 'ricoveri'
 
@@ -97,7 +97,7 @@ const Prestazioni = ({state, actions, libraries}) => {
                             <div key={chunk.letter} style={{position: 'relative'}}>
                                 <div style={{position: 'absolute', top: '-90px', width: '1px', height: '1px'}} id={chunk.letter} />
                                 <Typography color="primary" variant="h5" style={{fontWeight: 'bold', paddingLeft: '16px'}}>{chunk.letter}</Typography>
-                                <PrestazioniTabs actions={actions} lang={state.theme.lang} type={type} services={chunk.services} expanded={expanded} setExpanded={setExpanded} Html2React={Html2React}/>
+                                <PrestazioniTabs ambCat={ambCat} actions={actions} lang={state.theme.lang} type={type} services={chunk.services} expanded={expanded} setExpanded={setExpanded} Html2React={Html2React}/>
                                 <br/>
                             </div>
                         ))}

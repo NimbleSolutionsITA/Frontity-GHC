@@ -66,7 +66,7 @@ const Theme = ({ state }) => {
               <Switch>
                   <Loading when={data.isFetching} />
                   <Home when={data.isPostType && state.router.link === pagesMap[0][language][1]} />
-                  <Prestazioni when={state.router.link === pagesMap[1][language][1] || state.router.link === pagesMap[2][language][1]}/>
+                  <Prestazioni when={state.router.link === pagesMap[1][language][1]}/>
                   <Prestazione when={data.isPostType && data.type === 'services'} />
                   <Doctors when={data.isPostType && state.router.link === pagesMap[6][language][1]}/>
                   <Doctor when={data.isPostType && data.type === 'doctors'}/>
@@ -83,7 +83,7 @@ const Theme = ({ state }) => {
               </Switch>
               {!data.isFetching && <Footer />}
               <TuoTempo />
-              {cookies.get('rcl_consent_given') && <Newsletter />}
+              {/*{cookies.get('rcl_consent_given') && <Newsletter />}*/}
               <CookieConsent />
           </>
       )}
@@ -140,6 +140,15 @@ const globalStyles = css`
   td, th {
     border: 1px solid #1f407d;
     padding: 16px;
+  }
+  
+  thead tr, td.head {
+    background-color: #375172;
+  }
+  
+  thead td, td.head {
+    color: white;
+    border-color: white;
   }
 
   tr:nth-child(even) {

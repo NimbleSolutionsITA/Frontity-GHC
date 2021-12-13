@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const PrestazioniTabs = ({type, services, expanded, setExpanded, Html2React}) => {
+const PrestazioniTabs = ({type, services, expanded, setExpanded, Html2React, ambCat}) => {
     const classes = useStyles();
 
     const handleChange = (panel) => (event, isExpanded) => {
@@ -55,7 +55,7 @@ const PrestazioniTabs = ({type, services, expanded, setExpanded, Html2React}) =>
                         <Typography variant="h4" className={classes.heading}><Html2React html={service.title.rendered} /></Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <PrestazioneContent type={type} service={service} />
+                        <PrestazioneContent type={service.categories.includes(ambCat) ? 'ambulatoriali' : 'ricoveri'} service={service} />
                     </AccordionDetails>
                 </Accordion>
             ))}

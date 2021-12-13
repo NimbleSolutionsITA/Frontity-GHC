@@ -183,7 +183,7 @@ const Doctors = ({ state, actions, libraries }) => {
                                                 <CardActionArea>
                                                     <CardMedia
                                                         onClick={() => actions.router.set(doctor.link)}
-                                                        image={state.source.attachment[doctor["featured_media"]]['media_details']['sizes']['full']['source_url']}
+                                                        image={doctor["featured_media"] && state.source.attachment[doctor["featured_media"]]['media_details']['sizes']['full']['source_url']}
                                                         style={{height: '300px'}}
                                                     />
                                                     <CardContent>

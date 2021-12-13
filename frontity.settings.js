@@ -1,5 +1,5 @@
 const settings = {
-  name: "hesperia",
+  name: "IRG",
   state: {
     frontity: {
       url: "https://irg.nimble-lab.com",
@@ -23,7 +23,7 @@ const settings = {
       name: "@frontity/wp-source",
       state: {
         source: {
-          url: "https://wp.hesperia.it",
+          url: "https://irg.nimble-lab.com",
           homepage: "/inizio",
           postTypes: [
             {

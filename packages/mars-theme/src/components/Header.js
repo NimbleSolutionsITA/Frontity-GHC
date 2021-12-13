@@ -119,8 +119,8 @@ const useStyles = makeStyles((theme) => ({
     homeBannerDescription: {
         textAlign: 'left',
         fontWeight: 'bold',
-        fontSize: '20px',
-        lineHeight: '32px',
+        fontSize: '19px',
+        lineHeight: '26px',
         padding: '36px 0 16px'
     },
     homeBannerPhone: {
@@ -194,17 +194,17 @@ const Header = ({ state, actions, libraries }) => {
                                       {/*<Button onClick={() => window.open('https://wp.hesperia.it/wp-content/uploads/2021/03/modalita%CC%80-prenotazione.pdf','_blank')} variant="contained" color="secondary" disableElevation>
                                           {translations(state.theme.lang, 'prenotareUnaVisita')}
                                       </Button>*/}
-                                      <Grid container>
+                                      <Grid container justifyContent="center">
                                           <Grid item xs={12} sm={6}>
                                               <Button onClick={() => actions.router.set('/prenota')} variant="contained" color="secondary" disableElevation>
                                                   {translations(state.theme.lang, 'prenotareUnaVisita')}
                                               </Button>
                                           </Grid>
-                                          <Grid item xs={12} sm={6}>
+                                          {/*<Grid item xs={12} sm={6}>
                                               <Button onClick={() => actions.router.set('/prenota', {state: {params: '#login'}})} variant="outlined" color="secondary" disableElevation>
                                                   {translations(state.theme.lang, 'refertiOnline')}
                                               </Button>
-                                          </Grid>
+                                          </Grid>*/}
                                       </Grid>
                                       <Typography variant="h3"  className={classes.homeBannerPhoneText}>
                                         <span className={classes.homeBannerPhone}>

@@ -4,8 +4,8 @@ export const pagesMap = [
         en: ["Start", "/en/start/"],
     },
     { //1
-        it: ["Prestazioni Ambulatoriali", "/prestazioni-ambulatoriali/"],
-        en: ["Outpatient services", "/en/outpatient-services/"],
+        it: ["Prestazioni (U.O.)", "/prestazioni/"],
+        en: ["Services", "/en/services/"],
     },
     { //2
         it: ["Prestazioni con ricovero (U.O.)", "/prestazioni-con-ricovero/"],
@@ -48,8 +48,8 @@ export const pagesMap = [
         en: ["Privacy Policy & Cookies", "/en/privacy-policy-cookies-en/"],
     },
     { //12
-        it: ["La Mission", "/la-mission/"],
-        en: ["The Mission", "/en/the-mission/"],
+        it: ["Presentazione", "/presentazione/"],
+        en: ["About us", "/en/about-us/"],
     },
     { //13
         it: ["Struttura Organizzativa", "/struttura-organizzativa/"],
@@ -60,11 +60,11 @@ export const pagesMap = [
         en: ["Work with us", "/en/work-with-us/"],
     },
     { //15
-        it: ["La storia", "/la-storia/"],
-        en: ["History", "/en/history/"],
+        it: ["Mission Aziendale", "/la-mission/"],
+        en: ["Mission", "/en/mission/"],
     },
     { //16
-        it: ["Impegni e programmi", "/impegni-e-programmi/"],
+        it: ["Standard di Qualità", "/standard-di-qualita/"],
         en: ["Quality & Commitments", "/en/quality-commitments/"],
     },
     { //17
@@ -93,22 +93,18 @@ export const mainMenu = (lang) => [
     [lang === 'it' ? "Chi Siamo" : "About Us", [
         pagesMap[15][lang],
         pagesMap[12][lang],
-        pagesMap[16][lang],
-        pagesMap[18][lang],
         pagesMap[13][lang],
     ]],
-    pagesMap[2][lang],
     pagesMap[1][lang],
     pagesMap[6][lang],
     pagesMap[8][lang],
     pagesMap[5][lang],
 ]
 
-export const footerMenu = (lang) => [
-    pagesMap[10][lang],
-    pagesMap[6][lang],
-    pagesMap[7][lang],
-    pagesMap[8][lang]
+export const footerLinks = [
+    [10, 12],
+    [15, 16],
+    [5, 11]
 ]
 
 export const categories = (lang) => {
@@ -159,15 +155,15 @@ export const departments = (lang) => {
     switch (lang) {
         case 'en':
             return [
-                [70, 'Medical surgical and thoracic vascular cardiology'],
-                [76, 'Department of Medicine and General surgery'],
-                [80, 'Support and integrative services']
+                [70, 'Riabilitazione di 1° & 2° Livello'],
+                [76, 'Diagnostica per Immagini'],
+                // [80, 'Support and integrative services']
             ]
         case 'it':
             return [
-                [68, 'Cardiologia medico chirurgica e toraco vascolare'],
-                [74, 'Dipartimento di medicina e chirurgia'],
-                [78, 'Servizi di supporto ed integrativi']
+                [68, 'Riabilitazione di 1° & 2° Livello'],
+                [74, 'Diagnostica per Immagini'],
+                // [78, 'Servizi di supporto ed integrativi']
             ]
         default:
             return {

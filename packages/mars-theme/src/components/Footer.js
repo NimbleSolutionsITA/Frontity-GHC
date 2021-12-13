@@ -3,9 +3,9 @@ import {styled, connect, css} from "frontity"
 import {Container, Grid, Typography, Button, IconButton, makeStyles, Box} from "@material-ui/core"
 import logoGHCW from "../../assets/logo-GHC-W.png";
 import logo from "../../assets/logo-footer.png";
-import {pagesMap} from "../config";
+import {pagesMap, footerLinks} from "../config";
 import translations from "../translations";
-import {Facebook, LinkedIn} from "@material-ui/icons";
+// import {Facebook, LinkedIn} from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
     socials: {
@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
         }
     }
 }));
-
 
 const ContainerWrapper = styled(Box)`
     padding: 32px 0;
@@ -42,10 +41,10 @@ const LogoGHC = styled.img`
   height: 24px;
   margin-right: 32px;
  `;
+
 const Contacts = styled(Typography)`
   padding-left: 16px;
 `;
-
 
 const PrivacyPolicy = styled(Button)`
   padding: 0 !important;
@@ -57,12 +56,6 @@ const LogoHH = styled.img`
   padding: 16px 0;
   height: 24px;
 `;
-
-const footerLinks = [
-    [10, 12, 15, 16],
-    [19, 18, 21, 5],
-    [17, 14, 20, 11]
-]
 
 const HeartIcon = () => (
     <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="red" stroke="red" style={{transform: 'scale(0.5) translate(0px, 17px)'}}>
@@ -82,14 +75,14 @@ const Footer = ({ state, actions }) => {
                         </a>
                         <LogoHH src={logo} alt="Logo Istituto Raffaele Garofalo"/>
                     </Grid>
-                    <Grid item xs={12} sm={4} classes={{root: classes.socials}}>
+                    {/*<Grid item xs={12} sm={4} classes={{root: classes.socials}}>
                         <IconButton href="https://www.facebook.com/hesperiahospital" target="_blank" edge="start">
                             <Facebook />
                         </IconButton>
                         <IconButton href="https://www.linkedin.com/company/6907246" target="_blank" edge="end">
                             <LinkedIn />
                         </IconButton>
-                    </Grid>
+                    </Grid>*/}
                 </Grid>
                 <Grid container style={{margin: '16px 0'}}>
                     {footerLinks.map((chunk, id) => (
@@ -103,17 +96,15 @@ const Footer = ({ state, actions }) => {
                     ))}
                     <Grid item xs={12} md={3} css={css`border-left: 1px solid #FFFFFF;`}>
                         <Contacts variant="body2">
-                            Via Arquà 80 - 41125 Modena<br />
-                            {translations(state.theme.lang, 'centralino')}: <b>059-449.111</b><br />
-                            {translations(state.theme.lang, 'fax')}: <b>059-394.840</b><br />
-                            {translations(state.theme.lang, 'prenotazioneVisite')}: <b>centralinovisite@hesperia.it</b><br />
-                            {translations(state.theme.lang, 'richiesta')}: <b>fatturazione@hesperia.it</b><br />
-                            PEC: <b>direzionegenerale@pec.hesperia.it</b>
+                            Via Albertini, 21 – 28883 Gravellona Toce (Vb)<br />
+                            {translations(state.theme.lang, 'centralino')}: <b>0323-84.991</b><br />
+                            {translations(state.theme.lang, 'fax')}: <b>0323-84.9930</b><br />
+                            {translations(state.theme.lang, 'prenotazioneVisite')}: <b>info@istitutoraffaelegarofalo.com</b><br />
                         </Contacts>
                     </Grid>
                 </Grid>
                 <HHCredits variant="body2">
-                    Hesperia Hospital S.r.l   |   P.IVA 03831150366   |   CF 01049620360   |   REA MO 210368   |   Direttore Sanitario Dr. Federico Marzo   |   Cap.Soc. € 120.000,00<br />
+                    Eremo di Miazzina SRL - P.IVA 03831150366 - C.F. 05788741006 Cap. Soc. 1.560.000,00 € - REA VB 188950<br />
                     Società soggetta all'attività di direzione e coordinamento di Garofalo Health Care S.p.A
                 </HHCredits>
                 <NimbleCredits variant="body2">

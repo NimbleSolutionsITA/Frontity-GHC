@@ -11,6 +11,7 @@ const PrestazioneContent = ({type, service, state, libraries, actions}) => {
     const handleClick = (st) => {
         actions.router.set(pagesMap[6][state.theme.lang][1], {state: st})
     }
+    console.log(type)
     return (
         <Grid container>
             <Grid item xs={12} md={type === 'ambulatoriali' || service.acf.servicesInfo ? 8 : 12}>
@@ -23,7 +24,7 @@ const PrestazioneContent = ({type, service, state, libraries, actions}) => {
                     <div />
                 </Grid>
             </Hidden>
-            {type === 'ambulatoriali' || service.acf.servicesInfo && (
+            {(type === 'ambulatoriali' || service.acf.servicesInfo) && (
                 <Grid item xs={12} md={4} lg={3}>
                     {type === 'ambulatoriali' && service.acf.servicesPhone && (
                         <div style={{borderRadius: '8px', backgroundColor: '#F6F9FC', padding: '32px', textAlign: 'center', margin: '32px auto'}}>

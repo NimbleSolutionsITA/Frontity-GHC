@@ -21,7 +21,7 @@ const marsTheme = {
      * relevant state. It is scoped to the `theme` namespace.
      */
     theme: {
-      lang: ({ state }) => state.router.link.split('/')[1] === 'en' ? 'en' : 'it',
+      lang: 'it', // ({ state }) => state.router.link.split('/')[1] === 'en' ? 'en' : 'it',
       currentPage: ({ state }) => pagesMap.filter(page => page[state.theme.lang][1] === state.router.link)[0],
       autoPrefetch: "in-view",
       menu: ({ state }) => mainMenu(state.theme.lang),

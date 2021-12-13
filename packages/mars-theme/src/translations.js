@@ -21,10 +21,10 @@ const translations = (lang, key) => {
         prendiAppuntamento: ['Prendi appuntameno con il dottore', 'Arrange a visit with the doctor'],
         pubblicatoIl: ['Pubblicato il', 'Published on'],
         descrizione: [
-            'Struttura accreditata nelle discipline post-traumatiche e post-operatorie (post-acuzie) per il recupero e la riabilitazione funzionale motoria, neurologica e respiratoria.',
+            'Struttura accreditata nelle discipline post-traumatiche e post-operatorie per il recupero e la riabilitazione funzionale motoria, neurologica e respiratoria.',
             'Multi-specialized hospital accredited by the National Health Service for hospitalization and outpatient activity.'
         ],
-        centralino: ['Centralino (numero unico)', 'Contact Center (unique number)'],
+        centralino: ['Centralino', 'Contact Center'],
         prenotazioneVisite: ['Prenotazione visite', 'Book a visit'],
         fax: ['Fax Centralino', 'Fax Contact Center'],
         richiesta: ['Richiesta cartelle cliniche', 'Request for medical records'],
