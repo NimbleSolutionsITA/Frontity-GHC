@@ -114,7 +114,7 @@ const theme = createMuiTheme({
         MuiOutlinedInput: {
             root: {
                 paddingLeft: '16px',
-                borderRadius: '50px',
+                borderRadius: '25px',
                 borderColor: '#375172',
                 background: '#F6F9FC'
             }
