@@ -21,7 +21,7 @@ const translations = (lang, key) => {
         prendiAppuntamento: ['Prendi appuntameno con il dottore', 'Arrange a visit with the doctor'],
         pubblicatoIl: ['Pubblicato il', 'Published on'],
         descrizione: [
-            'Struttura accreditata nelle discipline post-traumatiche e post-operatorie per il recupero e la riabilitazione funzionale motoria, neurologica e respiratoria.',
+            'Casa di cura riabilitativa accreditata e poliambulatorio specialistico',
             'Multi-specialized hospital accredited by the National Health Service for hospitalization and outpatient activity.'
         ],
         centralino: ['Centralino', 'Contact Center'],
