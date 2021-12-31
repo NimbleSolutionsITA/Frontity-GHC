@@ -4,7 +4,8 @@ import { renderToString } from "react-dom/server";
 import image from "@frontity/html2react/processors/image";
 import iframe from "@frontity/html2react/processors/iframe";
 import link from "@frontity/html2react/processors/link";
-import { mainMenu, pagesMap, categories } from "./config";
+import { mainMenu, pagesMap } from "./config";
+
 
 const marsTheme = {
   name: "@frontity/mars-theme",
@@ -31,6 +32,7 @@ const marsTheme = {
         showOnList: false,
         showOnPost: false,
       },
+      options: {},
     },
   },
 
@@ -41,6 +43,11 @@ const marsTheme = {
   actions: {
     theme: {
       beforeSSR: async ({ actions, state, libraries }) => {
+        const optionResponse = await libraries.source.api.get({
+          endpoint: `/acf/v3/options/options`
+        });
+        const options = await optionResponse.json();
+        state.theme.options = options.acf
         libraries.frontity.render = ({ App }) => {
           const sheets = new ServerStyleSheets();
 

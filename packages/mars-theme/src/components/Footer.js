@@ -7,17 +7,10 @@ import {pagesMap, footerLinks} from "../config";
 import translations from "../translations";
 // import {Facebook, LinkedIn} from "@material-ui/icons";
 
-const useStyles = makeStyles((theme) => ({
-    socials: {
-        [theme.breakpoints.up('sm')]: {
-            textAlign: 'right'
-        }
-    }
-}));
 
 const ContainerWrapper = styled(Box)`
     padding: 32px 0;
-    background-color: #375172;
+    // background-color: #375172;
     color: #FFFFFF;
 `;
 
@@ -63,17 +56,17 @@ const HeartIcon = () => (
     </svg>
 )
 
-const Footer = ({ state, actions }) => {
-    const classes = useStyles()
+const Footer = ({ state, actions, libraries }) => {
+    const Html2React = libraries.html2react.Component;
     return (
-        <ContainerWrapper marginTop={{md: '8px', lg: '32px'}}>
+        <ContainerWrapper marginTop={{md: '8px', lg: '32px'}} bgcolor="primary.main">
             <Container>
                 <Grid container justify="space-between">
                     <Grid item xs={12} sm={8}>
                         <a href="https://garofalohealthcare.com" target="_blank">
-                            <LogoGHC src={logoGHCW} alt="Logo Garofalo Health Care"/>
+                            <LogoGHC src={state.theme.options.logoGHCWhite.url} alt="Logo Garofalo Health Care"/>
                         </a>
-                        <LogoHH src={logo} alt="Logo Istituto Raffaele Garofalo"/>
+                        <LogoHH src={state.theme.options.logoFooter.url} alt="Logo Istituto Raffaele Garofalo"/>
                     </Grid>
                     {/*<Grid item xs={12} sm={4} classes={{root: classes.socials}}>
                         <IconButton href="https://www.facebook.com/hesperiahospital" target="_blank" edge="start">
@@ -96,16 +89,14 @@ const Footer = ({ state, actions }) => {
                     ))}
                     <Grid item xs={12} md={3} css={css`border-left: 1px solid #FFFFFF;`}>
                         <Contacts variant="body2">
-                            Via Albertini, 21 – 28883 Gravellona Toce (Vb)<br />
-                            {translations(state.theme.lang, 'centralino')}: <b>0323-84.991</b><br />
-                            {translations(state.theme.lang, 'fax')}: <b>0323-84.9930</b><br />
-                            {translations(state.theme.lang, 'prenotazioneVisite')}: <b>info@istitutoraffaelegarofalo.com</b><br />
+                            {state.theme.options.contactsFooter.map(ct => (<>
+                                {ct.label}{ct.value && ': '}<b>{ct.value}</b><br />
+                            </>))}
                         </Contacts>
                     </Grid>
                 </Grid>
                 <HHCredits variant="body2">
-                    Eremo di Miazzina SRL - P.IVA 03831150366 - C.F. 05788741006 Cap. Soc. 1.560.000,00 € - REA VB 188950<br />
-                    Società soggetta all'attività di direzione e coordinamento di Garofalo Health Care S.p.A
+                    <Html2React html={state.theme.options.legal } />
                 </HHCredits>
                 <NimbleCredits variant="body2">
                     Made with <HeartIcon /> by <a href="https://www.nimble-solutions.com" target="_blank">Nimble Solutions</a>

@@ -2,7 +2,7 @@ const settings = {
   name: "IRG",
   state: {
     frontity: {
-      url: "https://irg.nimble-lab.com",
+      url: "https://ghc.nimble-lab.com",
       title: "Istituto Raffaele Garofalo",
       description: "WordPress installation for Frontity development"
     }
@@ -23,7 +23,7 @@ const settings = {
       name: "@frontity/wp-source",
       state: {
         source: {
-          url: "https://irg.nimble-lab.com",
+          url: "https://ghc.nimble-lab.com",
           homepage: "/inizio",
           postTypes: [
             {
@@ -41,12 +41,18 @@ const settings = {
               endpoint: "services",
               archive: "/services",
             },
+            {
+              type: "documents",
+              endpoint: "documents",
+              archive: "/documents",
+            },
           ]
         }
       }
     },
     "@frontity/tiny-router",
-    "@frontity/html2react"
+    "@frontity/html2react",
+    "@frontity/yoast",
   ]
 };
 

@@ -1,14 +1,14 @@
 import { red } from '@material-ui/core/colors';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 import createBreakpoints from '@material-ui/core/styles/createBreakpoints'
 
 const breakpoints = createBreakpoints({})
 
 // A custom theme for this app
-const theme = createMuiTheme({
+const theme = ( colorPrimary =  '#375172') => createTheme({
     palette: {
         primary: {
-            main: '#375172',
+            main: colorPrimary,
         },
         secondary: {
             main: '#E9ECF2',
@@ -85,7 +85,7 @@ const theme = createMuiTheme({
                 textDecoration: 'underline',
             },
             contained: {
-                color: '#375172',
+                color: colorPrimary,
                 textDecoration: 'none',
                 fontWeight: 'bold',
                 backgroundColor: '#E9ECF2',
@@ -96,7 +96,7 @@ const theme = createMuiTheme({
                 padding: '10px 20px',
             },
             containedSecondary: {
-                color: '#375172',
+                color: colorPrimary,
             }
         },
         MuiAlert: {
@@ -115,7 +115,7 @@ const theme = createMuiTheme({
             root: {
                 paddingLeft: '16px',
                 borderRadius: '25px',
-                borderColor: '#375172',
+                borderColor: colorPrimary,
                 background: '#F6F9FC'
             }
         }

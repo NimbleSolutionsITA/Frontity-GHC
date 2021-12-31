@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     rightLinks: {
         textAlign: 'right',
         padding: '14px 0',
-        color: '#1F407D',
+        color: theme.palette.primary.main,
     },
     logoGhcTop: {
         padding: '10px 0'
@@ -166,7 +166,7 @@ const Header = ({ state, actions, libraries }) => {
                   <Container>
                       <Grid container>
                           <Grid item xs={3}>
-                              <Hidden xsDown><a href="https://garofalohealthcare.com" target="_blank"><img className={classes.logoGhcTop} src={logoGHC} style={{height: isHomepage ? '60px' : '30px'}} alt="Logo Garofalo Health Care"/></a></Hidden>
+                              <Hidden xsDown><a href="https://garofalohealthcare.com" target="_blank"><img className={classes.logoGhcTop} src={state.theme.options.logoGHC.url} style={{height: isHomepage ? '60px' : '30px'}} alt="Logo Garofalo Health Care"/></a></Hidden>
                           </Grid>
                           <Grid item xs={9} className={classes.rightLinks}>
                               <Button style={{fontWeight: 'normal'}} component={Link} link={pagesMap[9][language][1]}>{pagesMap[9][language][0]}</Button>
@@ -180,7 +180,7 @@ const Header = ({ state, actions, libraries }) => {
                           </Grid>
                       </Grid>
                   </Container>
-                  {isHomepage && <div className={classes.logoHH}><img src={logo} alt="Logo Istituto Raffaele Garofalo"/></div>}
+                  {isHomepage && <div className={classes.logoHH}><img src={state.theme.options.logoHead.url} alt="Logo Istituto Raffaele Garofalo"/></div>}
               </div>
               {isHomepage && (
                   <Hidden smDown>
@@ -189,7 +189,7 @@ const Header = ({ state, actions, libraries }) => {
                               <Grid container>
                                   <Grid item xs={5} className={classes.homeBannerBox}>
                                       <Typography color="secondary" className={classes.homeBannerDescription}>
-                                          {translations(state.theme.lang, 'descrizione')}
+                                          {state.theme.options.description}
                                       </Typography>
                                       {/*<Button onClick={() => window.open('https://wp.hesperia.it/wp-content/uploads/2021/03/modalita%CC%80-prenotazione.pdf','_blank')} variant="contained" color="secondary" disableElevation>
                                           {translations(state.theme.lang, 'prenotareUnaVisita')}
@@ -210,15 +210,15 @@ const Header = ({ state, actions, libraries }) => {
                                         <span className={classes.homeBannerPhone}>
                                             <PhoneIcon style={{height: '18px'}} />
                                         </span>
-                                        0323-84991
+                                          {state.theme.options.phone}
                                       </Typography>
                                       <Typography color="secondary">
-                                          <Html2React html={translations(state.theme.lang, 'orari')} />
+                                          <Html2React html={state.theme.options.opening} />
                                       </Typography>
                                   </Grid>
                                   <Grid item xs={7} style={{position: 'relative'}}>
                                       <div className={classes.bannerHomeImage}>
-                                          <img src={bannerHome} alt="Ingresso Istituto Raffaele Garofalo" />
+                                          <img src={state.theme.options.photo.url} alt={state.theme.options.photo.alt} />
                                       </div>
                                   </Grid>
                               </Grid>
@@ -229,7 +229,7 @@ const Header = ({ state, actions, libraries }) => {
           </div>
           <AppBar color="default" position="sticky" elevation={0}>
               <Container>
-                  {(!isHomepage || isNavBarTop) &&  <Button className={classes.hhLogo} onClick={() => actions.router.set(pagesMap[0][state.theme.lang][1])}><img className={classes.appBarLogo} src={logoSmall} alt="Logo Istituto Raffaele Garofalo"/></Button>}
+                  {(!isHomepage || isNavBarTop) &&  <Button className={classes.hhLogo} onClick={() => actions.router.set(pagesMap[0][state.theme.lang][1])}><img className={classes.appBarLogo} src={state.theme.options.logoHeadSmall.url} alt="Logo Istituto Raffaele Garofalo"/></Button>}
                   <Hidden mdUp>
                       <Toolbar disableGutters>
                           <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => setOpenMobileMenu(!openMobileMenu)}>

@@ -24,6 +24,7 @@ import WorkWithUs from "./Articles/WorkWithUs";
 import Newsletter from "./ Newsletter/Newsletter";
 import CookieConsent from "./CookieConsent/CookieConsent";
 import Prenota from "./Prenota/Prenota";
+import Document from "./Documents/Document";
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -40,11 +41,11 @@ const Theme = ({ state }) => {
   const cookies = new Cookies();
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme(state.theme.options.themeColor)}>
       {/* Add some metatags to the <head> of the HTML. */}
       <Title />
       <Head>
-        <meta name="description" content={state.frontity.description} />
+        <meta name="description" content={state.theme.options.description} />
         <html lang={language} />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,400;0,700;1,400;1,700&display=swap"/>
         {cookies.get('rcl_statistics_consent') && <script async src="https://www.googletagmanager.com/gtag/js?id=UA-64338762-21"/>}
@@ -76,6 +77,7 @@ const Theme = ({ state }) => {
                   )}/>
                   <Prenota when={state.router.link === '/prenota/'} />
                   <Articles when={state.router.link === pagesMap[5][language][1]} />
+                  <Document when={data.isPostType && data.type === 'documents'}/>
                   <WorkWithUs when={state.router.link === pagesMap[14][language][1]} />
                   <List when={data.isArchive} />
                   <Post when={data.isPostType} />
