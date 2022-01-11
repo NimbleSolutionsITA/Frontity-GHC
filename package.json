@@ -1,5 +1,5 @@
 {
-  "name": "garofalohealthcare",
+  "name": "hesperiahospital",
   "version": "1.0.0",
   "private": true,
   "description": "Frontity project",
@@ -14,7 +14,7 @@
     "dev": "frontity dev",
     "build": "frontity build",
     "serve": "frontity serve",
-    "start": "git pull && npm install && frontity build && frontity serve --port 3002"
+    "start": "git pull && npm install && frontity build && frontity serve --port 3000"
   },
   "prettier": {},
   "dependencies": {

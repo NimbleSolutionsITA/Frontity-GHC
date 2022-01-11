@@ -1,8 +1,8 @@
 const settings = {
-  name: "GHC",
+  name: "HH",
   state: {
     frontity: {
-      url: "https://ghc.nimble-lab.com",
+      url: "https://hesperia.it",
       title: "Garofalo Health Care",
       description: "WordPress installation for Frontity development"
     }
@@ -23,7 +23,7 @@ const settings = {
       name: "@frontity/wp-source",
       state: {
         source: {
-          url: "https://ghc.nimble-lab.com",
+          url: "https://hesperia.it",
           homepage: "/inizio",
           postTypes: [
             {
