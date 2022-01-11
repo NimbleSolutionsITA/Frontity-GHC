@@ -13,10 +13,8 @@ import {
 } from "@material-ui/core";
 import {connect} from "frontity";
 import translations from "../../translations";
-import {departments} from "../../config";
 import SupervisedUserCircleRoundedIcon from '@material-ui/icons/SupervisedUserCircleRounded';
 import Loading from "../loading";
-import PrestazioniTabs from "../Prestazioni/PrestazioniTabs";
 
 const Doctors = ({ state, actions, libraries }) => {
     const [onlyHead, setOnlyHead] = useState(false)
@@ -24,10 +22,15 @@ const Doctors = ({ state, actions, libraries }) => {
     const post = state.source[data.type][data.id];
     const serviceId = state.router.state;
     const Html2React = libraries.html2react.Component;
-    const allDepartments = departments(state.theme.lang).map(dep => dep[0])
     const [doctors, setDoctors] = useState(null)
     const [doctorsChunks, setDoctorsChunks] = useState([])
+    const LETTERS_MIN_AMOUNT = 30
     const alphabet = Array.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+
+    const allTags = state.source.get('all-tags').items.filter(itm => state.theme.lang === 'it' ?
+        !itm.link.split('/').includes('en') :
+        itm.link.split('/').includes('en')
+    )
 
     async function fetchDoctors() {
         const response = await libraries.source.api.get({
@@ -66,46 +69,50 @@ const Doctors = ({ state, actions, libraries }) => {
     }, [state.theme.lang]);
 
     useEffect(() => {
-        if (doctors)
-            setDoctorsChunks(alphabet.map(letter => {
-                return {
-                    letter,
-                    doctors: doctors.filter(doctor => doctor.title.rendered.replace('Dr. ', '').replace('Dr.ssa ', '').startsWith(letter))
-                }
-            }).filter(letterChunk => letterChunk.doctors.length > 0))
-    }, [state.router.link, doctors])
+        if (doctors) {
+            const chunks = alphabet.map(letter => ({
+                letter,
+                doctors: doctors.filter(doctor => doctor.title.rendered.startsWith(letter))
+            })).filter(letterChunk => letterChunk.doctors.length > 0)
+            setDoctorsChunks(doctors.length > LETTERS_MIN_AMOUNT ? chunks : [{letter: '#', doctors}])
+        }
+    }, [state.router.link, state.router.state, doctors])
 
-
-    const filterDoctors = (departments, chunk) => (
+    const filterDoctors = (tags, chunk) => {
+        return (
             typeof serviceId === 'number' ?
-                chunk.doctors.filter(doc => doc.acf.prestazioni.filter(p => p.ID === serviceId).length > 0) :
+                chunk.doctors.filter(doc => doc.acf.prestazioni && doc.acf.prestazioni.filter(p => p.ID === serviceId).length > 0) :
                 chunk.doctors
         )
-        .filter(({categories}) => categories.filter(cat => departments.includes(cat)).length > 0)
-        .filter(({acf}) => !onlyHead || acf.doctorsHead)
-    const [currentDepartments, setCurrentDepartments] = useState(allDepartments)
+            .filter(({acf}) =>
+                (!onlyHead || acf.doctorsHead) &&
+                (tags.length === 0 || currentTags.find(t => acf.specialistica && acf.specialistica.map(s => s.term_id).indexOf(t) !== -1))
+            )
+    }
+
+    const [currentTags, setCurrentTags] = useState([])
     const [searchWord, setSearchWord] = useState('')
 
-    const handleClick = (value) => currentDepartments.includes(value) ?
-        setCurrentDepartments(currentDepartments.filter(dep => dep !== value)) :
-        setCurrentDepartments([...currentDepartments, value])
+    const handleClick = (value) => currentTags.includes(value) ?
+        setCurrentTags(currentTags.filter(tag => tag !== value)) :
+        setCurrentTags([...currentTags, value])
 
     const handleChange = (event) => {
         setSearchWord(event.target.value)
         if (event.target.value.length > 0)
-            setDoctorsChunks(alphabet.map(letter => {
+            setDoctorsChunks(doctors.length > LETTERS_MIN_AMOUNT ? alphabet.map(letter => {
                 return {
                     letter,
-                    doctors: doctors.filter(doctor => doctor.title.rendered.replace('Dr. ', '').replace('Dr.ssa ', '').startsWith(letter) && doctor.title.rendered.toLowerCase().indexOf(event.target.value.toLowerCase()) > -1)
+                    doctors: doctors.filter(doctor => doctor.title.rendered.startsWith(letter) && doctor.title.rendered.toLowerCase().indexOf(event.target.value.toLowerCase()) > -1)
                 }
-            }).filter(letterChunk => letterChunk.doctors.length > 0))
+            }).filter(letterChunk => letterChunk.doctors.length > 0) : [{letter: '#', doctors: doctors.filter(doctor => doctor.title.rendered.toLowerCase().indexOf(event.target.value.toLowerCase()) > -1)}])
         else
-            setDoctorsChunks(alphabet.map(letter => {
+            setDoctorsChunks(doctors.length > LETTERS_MIN_AMOUNT ? alphabet.map(letter => {
                 return {
                     letter,
                     doctors: doctors.filter(doctor => doctor.title.rendered.replace('Dr. ', '').replace('Dr.ssa ', '').startsWith(letter))
                 }
-            }).filter(letterChunk => letterChunk.doctors.length > 0))
+            }).filter(letterChunk => letterChunk.doctors.length > 0) : [{letter: '#', doctors}])
     }
 
     return (
@@ -126,15 +133,17 @@ const Doctors = ({ state, actions, libraries }) => {
                                 style={{margin: '16px 0'}}
                             />
                         </Grid>
-                        <Grid item xs={12}>
-                            <Typography align="center">{translations(state.theme.lang, 'oppureClicca' +
-                                '')}</Typography>
-                            <div style={{margin: '16px 0', textAlign: 'center'}}>
-                                {doctorsChunks.map(chunk => filterDoctors(currentDepartments, chunk).length > 0 && (
-                                    <Button key={chunk.letter} component="a" href={`${state.router.link}#${chunk.letter}`}>{chunk.letter}</Button>
-                                ))}
-                            </div>
-                        </Grid>
+                        {doctors.length > LETTERS_MIN_AMOUNT && (
+                            <Grid item xs={12}>
+                                <Typography align="center">{translations(state.theme.lang, 'oppureClicca' +
+                                    '')}</Typography>
+                                <div style={{margin: '16px 0', textAlign: 'center'}}>
+                                    {doctorsChunks.map(chunk => filterDoctors(currentTags, chunk).length > 0 && (
+                                        <Button key={chunk.letter} component="a" href={`${state.router.link}#${chunk.letter}`}>{chunk.letter}</Button>
+                                    ))}
+                                </div>
+                            </Grid>
+                        )}
                     </Grid>
                     <div style={{margin: '16px 0', textAlign: 'center'}}>
                         {typeof serviceId === 'number' ? (
@@ -145,6 +154,18 @@ const Doctors = ({ state, actions, libraries }) => {
                             (
                                 <>
                                     <Chip
+                                        key="all"
+                                        label={translations(state.theme.lang, 'allDocs')}
+                                        onClick={() => {
+                                            setCurrentTags([])
+                                            setOnlyHead(false)
+                                        }}
+                                        style={{
+                                            margin: '8px',
+                                            backgroundColor: (currentTags.length === 0 && !onlyHead) ? 'rgba(31, 64, 125, 0.2)' : 'rgba(31, 64, 125, 0.05)'
+                                        }}
+                                    />
+                                    <Chip
                                         avatar={<SupervisedUserCircleRoundedIcon />}
                                         label={translations(state.theme.lang, 'soloResponsabili')}
                                         onClick={() => setOnlyHead(!onlyHead)}
@@ -153,14 +174,14 @@ const Doctors = ({ state, actions, libraries }) => {
                                             backgroundColor: onlyHead ? 'rgba(31, 64, 125, 0.2)' : 'rgba(31, 64, 125, 0.05)'
                                         }}
                                     />
-                                    {allDepartments.map((value) => (
+                                    {allTags.map((tag) => (
                                         <Chip
-                                            key={value}
-                                            label={departments(state.theme.lang).filter(dep => dep[0] === value)[0][1]}
-                                            onClick={() => handleClick(value)}
+                                            key={tag.id}
+                                            label={tag.name}
+                                            onClick={() => handleClick(tag.id)}
                                             style={{
                                                 margin: '8px',
-                                                backgroundColor: currentDepartments.includes(value) ? 'rgba(31, 64, 125, 0.2)' : 'rgba(31, 64, 125, 0.05)'
+                                                backgroundColor: currentTags.includes(tag.id) ? 'rgba(31, 64, 125, 0.2)' : 'rgba(31, 64, 125, 0.05)'
                                             }}
                                         />
                                     ))}
@@ -168,34 +189,38 @@ const Doctors = ({ state, actions, libraries }) => {
                             )
                         }
                     </div>
-                    {doctorsChunks.map((chunk) => filterDoctors(currentDepartments, chunk).length > 0 && (
+                    {doctorsChunks.map((chunk) => filterDoctors(currentTags, chunk).length > 0 && (
                         <div key={chunk.letter} style={{position: 'relative'}}>
-                            <div style={{position: 'absolute', top: '-90px', width: '1px', height: '1px'}} id={chunk.letter} />
-                            <Typography color="primary" variant="h5" style={{fontWeight: 'bold', paddingLeft: '16px'}}>{chunk.letter}</Typography>
-                            <br/>
+                            {doctors.length > LETTERS_MIN_AMOUNT && (<>
+                                <div style={{position: 'absolute', top: '-90px', width: '1px', height: '1px'}} id={chunk.letter} />
+                                <Typography color="primary" variant="h5" style={{fontWeight: 'bold', paddingLeft: '16px'}}>{chunk.letter}</Typography>
+                                <br/>
+                            </>)}
                             <Grid container spacing={5}>
-                                {filterDoctors(currentDepartments, chunk)
+                                {filterDoctors(currentTags, chunk)
                                     .filter(doctor => searchWord ? doctor.title.rendered.toLowerCase().indexOf(searchWord.toLowerCase()) > -1 : true)
                                     .sort((a,b) => (a.title.rendered > b.title.rendered) ? 1 : ((b.title.rendered > a.title.rendered) ? -1 : 0))
-                                    .map(doctor => (
+                                    .map(doctor => doctor && (
                                         <Grid key={doctor.id} item xs={12} sm={6} md={4} lg={3}>
                                             <Card elevation={0}>
                                                 <CardActionArea>
                                                     <CardMedia
                                                         onClick={() => actions.router.set(doctor.link)}
-                                                        image={doctor["featured_media"] && state.source.attachment[doctor["featured_media"]]['media_details']['sizes']['full']['source_url']}
+                                                        image={doctor["featured_media"] ? state.source.attachment[doctor["featured_media"]]['media_details']['sizes']['full']['source_url'] : state.theme.options.doctorDefault}
                                                         style={{height: '300px'}}
                                                     />
                                                     <CardContent>
                                                         <div onClick={() => actions.router.set(doctor.link)}>
                                                             <Typography variant="h4" style={{fontWeight: 'bold'}}>
                                                                 {doctor.acf.doctorsHead && <SupervisedUserCircleRoundedIcon style={{marginBottom: '-4px', marginRight: '4px', fontSize: '22px', lineHeight: '22px'}} />}
-                                                                <Html2React html={doctor.title.rendered} />
+                                                                {doctor.acf.abbreviazione} <Html2React html={doctor.title.rendered} />
                                                             </Typography>
-                                                            <Typography style={{margin: '16px 0'}}>{doctor.acf.doctorActivity}</Typography>
+                                                            <Typography style={{margin: '16px 0'}}>
+                                                                {doctor.acf.specialistica ? `Specialistica: ${doctor.acf.specialistica.map(s => s.name).join(', ')}` : doctor.acf.doctorActivity}
+                                                            </Typography>
                                                         </div>
                                                         <div style={{marginLeft: '-4px', width: 'calc(100% + 4px)'}}>
-                                                            {doctor.acf.prestazioni.map(prestazione => (
+                                                            {doctor.acf.prestazioni && doctor.acf.prestazioni.map(prestazione => (
                                                                 <Chip
                                                                     key={prestazione.ID}
                                                                     label={prestazione['post_title']}

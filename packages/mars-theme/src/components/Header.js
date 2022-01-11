@@ -159,6 +159,9 @@ const Header = ({ state, actions, libraries }) => {
     const closeMenu = () => setOpenMobileMenu(false)
     const openMenu = () => setOpenMobileMenu(true)
 
+    const menu = state.theme.menus.main.slice(0, -1)
+    const lastItem = [...state.theme.menus.main].pop()
+
     return (
       <>
           <div ref={appBarRef}>
@@ -196,8 +199,8 @@ const Header = ({ state, actions, libraries }) => {
                                       </Button>*/}
                                       <Grid container justifyContent="center">
                                           <Grid item xs={12} sm={6}>
-                                              <Button onClick={() => actions.router.set('/prenota')} variant="contained" color="secondary" disableElevation>
-                                                  {translations(state.theme.lang, 'prenotareUnaVisita')}
+                                              <Button onClick={() => actions.router.set(lastItem[1])} variant="contained" color="secondary" disableElevation>
+                                                  {lastItem[0]}
                                               </Button>
                                           </Grid>
                                           {/*<Grid item xs={12} sm={6}>
@@ -238,23 +241,23 @@ const Header = ({ state, actions, libraries }) => {
                           <SwipeableDrawer classes={{paper: classes.drawer}} anchor="top" open={openMobileMenu} onOpen={openMenu} onClose={closeMenu} >
                               <img className={classes.appBarLogoDrawer} src={logoSmall} alt="Logo Istituto Raffaele Garofalo"/>
                               <IconButton color="inherit" onClick={closeMenu} className={classes.closeIcon}><CloseIcon size="16px" /></IconButton>
-                              {state.theme.menu.map(menuItem => <NavItem closeMenu={closeMenu} key={menuItem[1]} link={menuItem} />)}
+                              {menu.map(menuItem => <NavItem closeMenu={closeMenu} key={menuItem[1]} link={menuItem} />)}
                               <NavItem closeMenu={closeMenu} link={['Prenota', '/prenota']} />
                           </SwipeableDrawer>
                           <Box margin="0 auto" display="flex" justifyContent="space-evenly" width="100%">
-                              <Button onClick={() => actions.router.set('/prenota/')} variant={"contained"} color="primary" size="small" disableElevation>
-                                  {translations(state.theme.lang, 'prenotareUnaVisita')}
+                              <Button onClick={() => actions.router.set(lastItem[1])} variant={"contained"} color="primary" size="small" disableElevation>
+                                  {lastItem[0]}
                               </Button>
                           </Box>
                       </Toolbar>
                   </Hidden>
                   <Hidden smDown>
                       <Toolbar style={{justifyContent: 'flex-end'}} disableGutters>
-                          {state.theme.menu.map(menuItem => <NavItem key={menuItem[1]} link={menuItem} />)}
+                          {menu.map((menuItem, i) => <NavItem key={menuItem[1]} link={menuItem} />)}
                           {!isHomepage && (
                               <Hidden mdDown>
-                                  <Button onClick={() => actions.router.set('/prenota/')} variant={"contained"} color="primary" disableElevation>
-                                      {translations(state.theme.lang, 'prenotareUnaVisita')}
+                                  <Button onClick={() => actions.router.set(lastItem[1])} variant={"contained"} color="primary" disableElevation>
+                                      {lastItem[0]}
                                   </Button>
                               </Hidden>
                           )}

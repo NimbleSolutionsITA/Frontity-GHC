@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from "frontity";
 import {Hidden, Container, Grid, Typography, Chip, Button} from "@material-ui/core";
-import {departments} from "../../config";
 import SupervisedUserCircleRoundedIcon from '@material-ui/icons/SupervisedUserCircleRounded';
 import InfoRoundedIcon from '@material-ui/icons/InfoRounded';
 import translations from "../../translations";
@@ -10,15 +9,16 @@ const Doctor = ({ state, actions, libraries }) => {
     const Html2React = libraries.html2react.Component;
     const data = state.source.get(state.router.link);
     const post = state.source[data.type][data.id];
-    const deps = departments(state.theme.lang).map(dep => dep[0]).filter(dep => post.categories.includes(dep))
 
+    const tags = post.acf.specialistica
     const tuoTempoParams = post.acf.afea_id ? `#search/query/resourceid=${post.acf.afea_id}` : ''
+
     const DepartmentChips = () => (
         <div style={{marginLeft: '-8px', marginBottom: '16px', width: 'calc(100% + 8px)'}}>
-            {deps.map((value) => (
+            {tags.map((tag) => (
                 <Chip
-                    key={value}
-                    label={departments(state.theme.lang).filter(dep => dep[0] === value)[0][1]}
+                    key={tag.term_id}
+                    label={tag.name}
                     style={{
                         margin: '8px',
                         backgroundColor: 'rgba(31, 64, 125, 0.05)'
@@ -31,7 +31,6 @@ const Doctor = ({ state, actions, libraries }) => {
     return (
         <Container>
             <Hidden smUp>
-                <DepartmentChips />
                 <Typography style={{fontWeight: 'bold', textAlign: 'center', margin: '64px 0 32px'}} variant="h1">
                     {post.acf.doctorsHead && <SupervisedUserCircleRoundedIcon color="primary" style={{marginBottom: '-6px', marginRight: '8px', fontSize: '30px', lineHeight: '30px'}} />}
                     <Html2React html={post.title.rendered} />
@@ -39,15 +38,14 @@ const Doctor = ({ state, actions, libraries }) => {
             </Hidden>
             <Grid container spacing={5} style={{marginTop: '32px'}}>
                 <Grid item xs={12} sm={5}>
-                    <div style={{width: '100%',paddingBottom: '100%', backgroundSize: 'cover' ,backgroundImage: `url(${state.source.attachment[post["featured_media"]]['source_url']})`}} />
+                    <div style={{width: '100%',paddingBottom: '100%', backgroundSize: 'cover' ,backgroundImage: `url(${post["featured_media"] ? state.source.attachment[post["featured_media"]]['source_url'] : state.theme.options.doctorDefault})`}} />
                 </Grid>
                 <Hidden smDown>
                     <Grid item md={1} />
                 </Hidden>
                 <Grid item xs={12} sm={7} md={6}>
                     <Hidden xsDown>
-                        <DepartmentChips />
-                        <Typography variant="h4" style={{fontWeight: 'bold'}}>
+                        <Typography variant="h3" component="h1" style={{fontWeight: 'bold'}}>
                             {post.acf.doctorsHead && <SupervisedUserCircleRoundedIcon color="primary" style={{marginBottom: '-6px', marginRight: '8px', fontSize: '30px', lineHeight: '30px'}} />}
                             <Html2React html={post.title.rendered} />
                         </Typography>
@@ -66,6 +64,7 @@ const Doctor = ({ state, actions, libraries }) => {
                                 }}
                             />
                         ))}
+                        <DepartmentChips />
                     </div>
                     <Html2React html={post.content.rendered} />
                     {post.acf.doctorsCV && (

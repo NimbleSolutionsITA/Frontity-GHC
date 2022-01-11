@@ -5,6 +5,9 @@ import image from "@frontity/html2react/processors/image";
 import iframe from "@frontity/html2react/processors/iframe";
 import link from "@frontity/html2react/processors/link";
 import { mainMenu, pagesMap } from "./config";
+import menuHandler from "./components/menu-handler";
+import categoriesHandler from "./components/categories-handler";
+import tagsHandler from "./components/tags-handler";
 
 
 const marsTheme = {
@@ -25,7 +28,8 @@ const marsTheme = {
       lang: 'it', // ({ state }) => state.router.link.split('/')[1] === 'en' ? 'en' : 'it',
       currentPage: ({ state }) => pagesMap.filter(page => page[state.theme.lang][1] === state.router.link)[0],
       autoPrefetch: "in-view",
-      menu: ({ state }) => mainMenu(state.theme.lang),
+      menus: {},
+      // menu: ({ state }) => mainMenu(state.theme.lang),
       //openTuoTempo: false,
       //tuoTempoParams: '',
       featured: {
@@ -43,11 +47,21 @@ const marsTheme = {
   actions: {
     theme: {
       beforeSSR: async ({ actions, state, libraries }) => {
+        // GET OPTIONS FROM ACF PRO
         const optionResponse = await libraries.source.api.get({
           endpoint: `/acf/v3/options/options`
         });
         const options = await optionResponse.json();
         state.theme.options = options.acf
+
+        // GET CATEGORIES & TAGS
+        await actions.source.fetch("all-categories");
+        await actions.source.fetch("all-tags");
+
+        // GET MENUS
+        await actions.source.fetch(`/menu/main`)
+        await actions.source.fetch(`/menu/footer`)
+
         libraries.frontity.render = ({ App }) => {
           const sheets = new ServerStyleSheets();
 
@@ -94,6 +108,9 @@ const marsTheme = {
        * You can add your own processors too.
        */
       processors: [image, iframe, link],
+    },
+    source: {
+      handlers: [menuHandler, categoriesHandler, tagsHandler],
     },
   },
 };

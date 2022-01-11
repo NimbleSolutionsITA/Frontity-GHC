@@ -20,6 +20,7 @@ const Prestazioni = ({state, actions, libraries}) => {
     const [servicesChunks, setServiceChunks] = useState([])
     const [expanded, setExpanded] = React.useState(false);
 
+    const LETTERS_MIN_AMOUNT = 30
     const alphabet = Array.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
     const Html2React = libraries.html2react.Component;
 
@@ -82,23 +83,25 @@ const Prestazioni = ({state, actions, libraries}) => {
                                 style={{margin: '16px 0'}}
                             />
                         </Grid>
-                        <Grid item xs={12}>
-                            <Typography align="center">{translations(state.theme.lang, 'oppureClicca' +
-                                '')}</Typography>
-                            <div style={{margin: '16px 0', textAlign: 'center'}}>
-                                {servicesChunks.map(chunk => (
-                                    <Button key={chunk.letter} component="a" href={`${state.router.link}#${chunk.letter}`}>{chunk.letter}</Button>
-                                ))}
-                            </div>
-                        </Grid>
+                        {services.length > LETTERS_MIN_AMOUNT && (
+                            <Grid item xs={12}>
+                                <Typography align="center">{translations(state.theme.lang, 'oppureClicca' +
+                                    '')}</Typography>
+                                <div style={{margin: '16px 0', textAlign: 'center'}}>
+                                    {servicesChunks.map(chunk => (
+                                        <Button key={chunk.letter} component="a" href={`${state.router.link}#${chunk.letter}`}>{chunk.letter}</Button>
+                                    ))}
+                                </div>
+                            </Grid>
+                        )}
                     </Grid>
                     <div style={{margin: '32px'}}>
                         {servicesChunks.map((chunk) => (
                             <div key={chunk.letter} style={{position: 'relative'}}>
                                 <div style={{position: 'absolute', top: '-90px', width: '1px', height: '1px'}} id={chunk.letter} />
-                                <Typography color="primary" variant="h5" style={{fontWeight: 'bold', paddingLeft: '16px'}}>{chunk.letter}</Typography>
+                                {services.length > LETTERS_MIN_AMOUNT && <Typography color="primary" variant="h5" style={{fontWeight: 'bold', paddingLeft: '16px'}}>{chunk.letter}</Typography>}
                                 <PrestazioniTabs ambCat={ambCat} actions={actions} lang={state.theme.lang} type={type} services={chunk.services} expanded={expanded} setExpanded={setExpanded} Html2React={Html2React}/>
-                                <br/>
+                                {services.length > LETTERS_MIN_AMOUNT && <br/>}
                             </div>
                         ))}
                     </div>

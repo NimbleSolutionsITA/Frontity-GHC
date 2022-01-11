@@ -78,15 +78,15 @@ const Footer = ({ state, actions, libraries }) => {
                     </Grid>*/}
                 </Grid>
                 <Grid container style={{margin: '16px 0'}}>
-                    {footerLinks.map((chunk, id) => (
-                        <Grid key={id} item xs={12} md={3}>
-                            {chunk.map(linkId => (
-                                <FooterLink key={linkId} onClick={() => actions.router.set(pagesMap[linkId][state.theme.lang][1])}>
-                                    {pagesMap[linkId][state.theme.lang][0]}
+                    <Grid item container xs={12} md={9}>
+                        {state.theme.menus.footer.map(itm => (
+                            <Grid key={itm[1]} item xs={12} md={4}>
+                                <FooterLink onClick={() => actions.router.set(itm[1])}>
+                                    {itm[0]}
                                 </FooterLink>
-                            ))}
-                        </Grid>
-                    ))}
+                            </Grid>
+                        ))}
+                    </Grid>
                     <Grid item xs={12} md={3} css={css`border-left: 1px solid #FFFFFF;`}>
                         <Contacts variant="body2">
                             {state.theme.options.contactsFooter.map(ct => (<>

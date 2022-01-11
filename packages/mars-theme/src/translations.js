@@ -27,8 +27,10 @@ const translations = (lang, key) => {
         centralino: ['Centralino', 'Contact Center'],
         prenotazioneVisite: ['Prenotazione visite', 'Book a visit'],
         fax: ['Fax Centralino', 'Fax Contact Center'],
+        allDocs: ['Tutti i medici', 'All doctors'],
         richiesta: ['Richiesta cartelle cliniche', 'Request for medical records'],
         orari: ['dal <b>lunedì</b> al <b>venerdì</b> dalle <b>8</b> alle <b>18</b>', 'from <b>monday</b> to <b>friday 08:00</b> - <b>18:00</b>'],
+        prestazioniSubtitle: ['PRESTAZIONI (U.O.)', 'PRESTAZIONI (U.O.)'],
     }
     switch (lang) {
         case 'en':

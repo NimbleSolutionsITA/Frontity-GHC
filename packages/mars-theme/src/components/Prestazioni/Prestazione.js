@@ -2,19 +2,19 @@ import React from 'react'
 import {Container, Typography} from "@material-ui/core";
 import {connect, styled} from "frontity";
 import PrestazioneContent from "./PrestazioneContent";
-import {pagesMap} from "../../config";
+import translations from "../../translations";
 
-const Prestazione = ({state}) => {
+const Prestazione = ({state, libraries}) => {
     const data = state.source.get(state.router.link)
     const ambCat = state.theme.lang === 'it' ? 33 : 39
     const service = state.source[data.type][data.id]
     const type = service.categories.includes(ambCat) ? 'ambulatoriali' : 'ricoveri'
-    const subtitle = type === 'ambulatoriali' ? 'PRESTAZIONI AMBULATORIALI' : 'PRESTAZIONI CON RICOVERO'
+    const Html2React = libraries.html2react.Component;
 
     return (
         <Container>
-            <Subtitle>{subtitle}</Subtitle>
-            <Title>{service.title.rendered}</Title>
+            <Subtitle>{translations(state.theme.lang, 'prestazioniSubtitle')}</Subtitle>
+            <Title><Html2React html={service.title.rendered} /></Title>
             <PrestazioneContent type={type} service={service}  />
         </Container>
     )
