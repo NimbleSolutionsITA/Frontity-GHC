@@ -140,7 +140,6 @@ const globalStyles = css`
   }
   
   td, th {
-    border: 1px solid #1f407d;
     padding: 16px;
   }
   
@@ -172,7 +171,8 @@ const globalStyles = css`
   .downloadTable td {
     position: relative;
     padding-left: 50px;
-
+    display: flex;
+    align-items: center;
     &::before {
       position: absolute;
       top: 12px;
@@ -191,6 +191,10 @@ const globalStyles = css`
       height: 24px;
       width: 24px;
     }
+  }
+  .downloadTable tr > a {
+    text-decoration: none;
+    color: inherit;
   }
 
   @media only screen and (max-width: 960px) {

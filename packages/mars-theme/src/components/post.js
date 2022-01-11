@@ -4,6 +4,8 @@ import List from "./list";
 import FeaturedMedia from "./featured-media";
 import {Container, Typography} from "@material-ui/core";
 import translations from "../translations";
+import Documents from "./DocsTable";
+
 
 const Post = ({ state, actions, libraries }) => {
   // Get information about the current URL.
@@ -52,6 +54,7 @@ const Post = ({ state, actions, libraries }) => {
        by the processors we included in the libraries.html2react.processors array. */}
       <Content>
         <Html2React html={post.content.rendered} />
+          {post.acf.linkedDocs?.length > 0 && <Documents documents={post.acf.linkedDocs}/>}
       </Content>
     </Container>
   ) : null;
