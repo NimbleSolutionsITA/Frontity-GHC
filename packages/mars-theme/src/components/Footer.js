@@ -1,10 +1,6 @@
 import React from 'react'
-import {styled, connect, css} from "frontity"
-import {Container, Grid, Typography, Button, IconButton, makeStyles, Box} from "@material-ui/core"
-import logoGHCW from "../../assets/logo-GHC-W.png";
-import logo from "../../assets/logo-footer.png";
-import {pagesMap, footerLinks} from "../config";
-import translations from "../translations";
+import {styled, connect, css, decode} from "frontity"
+import {Container, Grid, Typography, Button, Box} from "@material-ui/core"
 // import {Facebook, LinkedIn} from "@material-ui/icons";
 
 
@@ -37,12 +33,6 @@ const LogoGHC = styled.img`
 
 const Contacts = styled(Typography)`
   padding-left: 16px;
-`;
-
-const PrivacyPolicy = styled(Button)`
-  padding: 0 !important;
-  color: #FFFFFF !important;
-  margin-bottom: 16px !important;
 `;
 
 const LogoHH = styled.img`
@@ -82,7 +72,7 @@ const Footer = ({ state, actions, libraries }) => {
                         {state.theme.menus.footer.map(itm => (
                             <Grid key={itm[1]} item xs={12} md={4}>
                                 <FooterLink onClick={() => actions.router.set(itm[1])}>
-                                    {itm[0]}
+                                    {decode(itm[0])}
                                 </FooterLink>
                             </Grid>
                         ))}
