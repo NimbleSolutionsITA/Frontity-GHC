@@ -1,9 +1,9 @@
 const settings = {
-  name: "IRG",
+  name: "GHC",
   state: {
     frontity: {
       url: "https://ghc.nimble-lab.com",
-      title: "Istituto Raffaele Garofalo",
+      title: "Garofalo Health Care",
       description: "WordPress installation for Frontity development"
     }
   },
