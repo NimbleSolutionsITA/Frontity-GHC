@@ -30,7 +30,7 @@ const DocumentTable = connect(({ state, actions, libraries, id }) => {
                 <tr>
                     <a href={doc.file.link} target="_blank">
                         <td>
-                            <CloudDownloadIcon style={{margin: '0 10px 0 -30px'}} />
+                            <CloudDownloadIcon style={{marginRight: '10px'}} />
                             {doc.label}
                             <span style={{flexGrow: 1}} />
                             <span style={{fontSize: '.9em', fontStyle: 'italic'}}>
