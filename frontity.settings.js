@@ -2,7 +2,7 @@ const settings = {
   name: "IRG",
   state: {
     frontity: {
-      url: "https://ghc.nimble-lab.com",
+      url: "https://irg.nimble-lab.com",
       title: "Istituto Raffaele Garofalo",
       description: "WordPress installation for Frontity development"
     }
@@ -23,7 +23,7 @@ const settings = {
       name: "@frontity/wp-source",
       state: {
         source: {
-          url: "https://ghc.nimble-lab.com",
+          url: "https://irg.nimble-lab.com",
           homepage: "/inizio",
           postTypes: [
             {
