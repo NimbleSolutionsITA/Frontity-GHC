@@ -1,10 +1,15 @@
+import { config } from "dotenv";
+
+// Launch dot-env.
+config();
+
 const settings = {
-  name: "GHC",
+  name: process.env.NAME,
   state: {
     frontity: {
-      url: "https://ghc.nimble-lab.com",
-      title: "Garofalo Health Care",
-      description: "WordPress installation for Frontity development"
+      url: process.env.URL,
+      title: process.env.TITLE,
+      description: process.env.DESCRIPTION
     }
   },
   packages: [
@@ -23,7 +28,7 @@ const settings = {
       name: "@frontity/wp-source",
       state: {
         source: {
-          url: "https://ghc.nimble-lab.com",
+          url: process.env.URL,
           homepage: "/inizio",
           postTypes: [
             {
