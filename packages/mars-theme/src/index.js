@@ -4,10 +4,10 @@ import { renderToString } from "react-dom/server";
 import image from "@frontity/html2react/processors/image";
 import iframe from "@frontity/html2react/processors/iframe";
 import link from "@frontity/html2react/processors/link";
-import { mainMenu, pagesMap } from "./config";
-import menuHandler from "./components/menu-handler";
-import categoriesHandler from "./components/categories-handler";
-import tagsHandler from "./components/tags-handler";
+import { pagesMap } from "./config";
+import menuHandler from "./handlers/menu-handler";
+import categoriesHandler from "./handlers/categories-handler";
+import tagsHandler from "./handlers/tags-handler";
 
 
 const marsTheme = {

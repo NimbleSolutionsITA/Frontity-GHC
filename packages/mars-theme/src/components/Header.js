@@ -221,7 +221,7 @@ const Header = ({ state, actions, libraries }) => {
                                   </Grid>
                                   <Grid item xs={7} style={{position: 'relative'}}>
                                       <div className={classes.bannerHomeImage}>
-                                          <img src={state.theme.options.photo.url} alt={state.theme.options.photo.alt} />
+                                          <img style={{borderRadius: '180px 0 0 180px'}} src={state.theme.options.photo.url} alt={state.theme.options.photo.alt} />
                                       </div>
                                   </Grid>
                               </Grid>
