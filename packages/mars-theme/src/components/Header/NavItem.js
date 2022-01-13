@@ -1,6 +1,7 @@
 import React from "react";
 import { connect, decode } from "frontity";
 import { Button, Menu, MenuItem, Hidden, makeStyles } from "@material-ui/core";
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 const useStyles = makeStyles((theme) => ({
     ItemWrapper: {
@@ -44,7 +45,7 @@ const NavItem = ({ state, actions, link, closeMenu }) => {
         <>
             <div className={classes.ItemWrapper}>
                 <Hidden smDown>
-                    <Button aria-haspopup="true" onClick={handleClick}>
+                    <Button aria-haspopup="true" onClick={handleClick} endIcon={<ArrowDropDownIcon />}>
                         {decode(link[0])}
                     </Button>
                     <Menu
