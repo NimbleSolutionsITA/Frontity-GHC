@@ -1,0 +1,55 @@
+import React, {useRef, useState} from "react";
+import { connect } from "frontity";
+import { useScrollPosition } from '@n8tb1t/use-scroll-position'
+import {
+    Hidden,
+} from "@material-ui/core";
+import MenuBar from "./MenuBar";
+import HomeBanner from "./HomeBanner";
+import TopBar from "./TopBar";
+
+
+const Header = ({ state }) => {
+    const isHomepage= ['/', '/en/start/'].includes(state.router.link)
+    const [isNavBarTop, setIsNavBarTop] = useState(false)
+    const [openMobileMenu, setOpenMobileMenu] = useState(false)
+    const appBarRef = useRef()
+
+    useScrollPosition(
+        ({ currPos }) => setIsNavBarTop(-currPos.y >= appBarRef.current.offsetHeight),
+        [],
+        appBarRef
+    )
+
+    const closeMenu = () => setOpenMobileMenu(false)
+    const openMenu = () => setOpenMobileMenu(true)
+
+    const menu = state.theme.menus.main.slice(0, -1)
+    const lastItem = [...state.theme.menus.main].pop()
+
+    return (
+      <>
+          <div ref={appBarRef}>
+              <TopBar isHomepage={isHomepage} />
+              {isHomepage && (
+                  <Hidden smDown>
+                      <HomeBanner lastItem={lastItem} />
+                  </Hidden>
+              )}
+          </div>
+          <MenuBar
+              isHomepage={isHomepage}
+              isNavBarTop={isNavBarTop}
+              menu={menu}
+              closeMenu={closeMenu}
+              setOpenMobileMenu={setOpenMobileMenu}
+              openMobileMenu={openMobileMenu}
+              openMenu={openMenu}
+              lastItem={lastItem}
+          />
+      </>
+    );
+};
+
+// Connect the Header component to get access to the `state` in it's `props`
+export default connect(Header);

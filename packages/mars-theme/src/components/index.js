@@ -3,7 +3,7 @@ import { Global, css, connect, Head } from "frontity";
 import { ThemeProvider } from '@material-ui/core/styles';
 import Cookies from 'universal-cookie';
 import Switch from "@frontity/components/switch";
-import Header from "./Header";
+import Header from "./Header/Header";
 import List from "./list";
 import Post from "./post";
 import Loading from "./loading";
