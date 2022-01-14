@@ -7,6 +7,7 @@ import {
 import MenuBar from "./MenuBar";
 import HomeBanner from "./HomeBanner";
 import TopBar from "./TopBar";
+import HomeSlider from "./HomeSlider";
 
 
 const Header = ({ state }) => {
@@ -30,10 +31,10 @@ const Header = ({ state }) => {
     return (
       <>
           <div ref={appBarRef}>
-              <TopBar isHomepage={isHomepage} />
+              <TopBar hasSlider={state.theme.options.hasSlider} isHomepage={isHomepage} />
               {isHomepage && (
                   <Hidden smDown>
-                      <HomeBanner lastItem={lastItem} />
+                      {state.theme.options.hasSlider ? <HomeSlider /> : <HomeBanner lastItem={lastItem} /> }
                   </Hidden>
               )}
           </div>

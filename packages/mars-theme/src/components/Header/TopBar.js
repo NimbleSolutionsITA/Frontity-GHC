@@ -5,7 +5,7 @@ import Link from "../link";
 const useStyles = makeStyles((theme) => ({
     rightLinks: {
         textAlign: 'right',
-        padding: '14px 0',
+        padding: '8px 0',
         color: theme.palette.primary.main,
     },
     logoGhcTop: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const TopBar = ({isHomepage, state}) => {
+const TopBar = ({isHomepage, hasSlider, state}) => {
     const classes = useStyles()
     const topMenu = state.theme.menus.top
     return (
@@ -32,7 +32,13 @@ const TopBar = ({isHomepage, state}) => {
             <Container>
                 <Grid container>
                     <Grid item xs={3}>
-                        <Hidden xsDown><a href="https://garofalohealthcare.com" target="_blank"><img className={classes.logoGhcTop} src={state.theme.options.logoGHC.url} style={{height: isHomepage ? '60px' : '30px'}} alt="Logo Garofalo Health Care"/></a></Hidden>
+                        {!hasSlider && (
+                            <Hidden xsDown>
+                                <a href="https://garofalohealthcare.com" target="_blank">
+                                    <img className={classes.logoGhcTop} src={state.theme.options.logoGHC.url} style={{height: isHomepage ? '60px' : '30px'}} alt="Logo Garofalo Health Care"/>
+                                </a>
+                            </Hidden>
+                        )}
                     </Grid>
                     <Grid item xs={9} className={classes.rightLinks}>
                         {topMenu.map(item => <Button key={item[1]} style={{fontWeight: 'normal'}} component={Link} link={item[1]}>{item[0]}</Button>)}
@@ -47,7 +53,7 @@ const TopBar = ({isHomepage, state}) => {
                     </Grid>
                 </Grid>
             </Container>
-            {isHomepage && <div className={classes.logoHH}><img src={state.theme.options.logoHead.url} alt="Logo Istituto Raffaele Garofalo"/></div>}
+            {isHomepage && !hasSlider && <div className={classes.logoHH}><img src={state.theme.options.logoHead.url} alt="Logo Istituto Raffaele Garofalo"/></div>}
         </div>
     )
 }

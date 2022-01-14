@@ -46,7 +46,7 @@ const HomeBanner = ({libraries, actions, lastItem, state}) => {
                 <Grid container>
                     <Grid item xs={5} className={classes.homeBannerBox}>
                         <Typography color="secondary" className={classes.homeBannerDescription}>
-                            {state.theme.options.description}
+                            {state.theme.options.banner.description}
                         </Typography>
                         {/*<Button onClick={() => window.open('https://wp.hesperia.it/wp-content/uploads/2021/03/modalita%CC%80-prenotazione.pdf','_blank')} variant="contained" color="secondary" disableElevation>
                                           {translations(state.theme.lang, 'prenotareUnaVisita')}
@@ -67,15 +67,15 @@ const HomeBanner = ({libraries, actions, lastItem, state}) => {
                                         <span className={classes.homeBannerPhone}>
                                             <PhoneIcon style={{height: '18px'}} />
                                         </span>
-                            {state.theme.options.phone}
+                            {state.theme.options.banner.phone}
                         </Typography>
                         <Typography color="secondary">
-                            <Html2React html={state.theme.options.opening} />
+                            <Html2React html={state.theme.options.banner.opening} />
                         </Typography>
                     </Grid>
                     <Grid item xs={7} style={{position: 'relative'}}>
                         <div className={classes.bannerHomeImage}>
-                            <img style={{borderRadius: '180px 0 0 180px'}} src={state.theme.options.photo.url} alt={state.theme.options.photo.alt} />
+                            <img style={{borderRadius: '180px 0 0 180px'}} src={state.theme.options.banner.photo.url} alt={state.theme.options.banner.photo.alt} />
                         </div>
                     </Grid>
                 </Grid>
