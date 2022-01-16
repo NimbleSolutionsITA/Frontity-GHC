@@ -53,7 +53,11 @@ const MenuBar = ({isHomepage, isNavBarTop, actions, menu, closeMenu, setOpenMobi
     return (
         <AppBar color="default" position="sticky" elevation={0}>
             <Container>
-                {(!isHomepage || isNavBarTop) &&  <Button className={classes.hhLogo} onClick={() => actions.router.set(pagesMap[0][state.theme.lang][1])}><img className={classes.appBarLogo} src={state.theme.options.logoHeadSmall.url} alt="Logo Istituto Raffaele Garofalo"/></Button>}
+                {(!isHomepage || isNavBarTop) && state.theme.options.logoHeadSmall && (
+                    <Button className={classes.hhLogo} onClick={() => actions.router.set(state.theme.urlPrefix+'/')}>
+                        <img className={classes.appBarLogo} src={state.theme.options.logoHeadSmall.url} alt="Logo Istituto Raffaele Garofalo"/>
+                    </Button>
+                )}
                 <Hidden mdUp>
                     <Toolbar disableGutters>
                         <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => setOpenMobileMenu(!openMobileMenu)}>
@@ -65,17 +69,20 @@ const MenuBar = ({isHomepage, isNavBarTop, actions, menu, closeMenu, setOpenMobi
                             {menu.map(menuItem => <NavItem closeMenu={closeMenu} key={menuItem[1]} link={menuItem} />)}
                             <NavItem closeMenu={closeMenu} link={['Prenota', '/prenota']} />
                         </SwipeableDrawer>
-                        <Box margin="0 auto" display="flex" justifyContent="space-evenly" width="100%">
-                            <Button onClick={() => actions.router.set(lastItem[1])} variant={"contained"} color="primary" size="small" disableElevation>
-                                {lastItem[0]}
-                            </Button>
-                        </Box>
+                        {lastItem && (
+                            <Box margin="0 auto" display="flex" justifyContent="space-evenly" width="100%">
+                                <Button onClick={() => actions.router.set(lastItem[1])} variant={"contained"}
+                                        color="primary" size="small" disableElevation>
+                                    {lastItem[0]}
+                                </Button>
+                            </Box>
+                        )}
                     </Toolbar>
                 </Hidden>
                 <Hidden smDown>
                     <Toolbar style={{justifyContent: 'flex-end'}} disableGutters>
                         {menu.map((menuItem, i) => <NavItem key={menuItem[1]} link={menuItem} />)}
-                        {!isHomepage && (
+                        {!isHomepage && lastItem && (
                             <Hidden mdDown>
                                 <Button onClick={() => actions.router.set(lastItem[1])} variant={"contained"} color="primary" disableElevation>
                                     {lastItem[0]}

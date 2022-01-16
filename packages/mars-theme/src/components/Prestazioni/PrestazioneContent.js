@@ -11,7 +11,7 @@ const PrestazioneContent = ({type, service, state, libraries, actions}) => {
     const handleClick = (st) => {
         actions.router.set(pagesMap[6][state.theme.lang][1], {state: st})
     }
-    console.log(type)
+
     return (
         <Grid container>
             <Grid item xs={12} md={type === 'ambulatoriali' || service.acf.servicesInfo ? 8 : 12}>

@@ -16,8 +16,6 @@ const WorkWithUs = ({state, libraries, actions}) => {
     const Html2React = libraries.html2react.Component;
     const categories = {it: "166", en: "168"}
 
-    console.log(data)
-
     useEffect(() => {
         async function fetchJobPosts() {
             const response = await libraries.source.api.get({

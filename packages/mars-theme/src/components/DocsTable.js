@@ -6,7 +6,6 @@ import translations from "../translations";
 
 const DocumentTable = connect(({ state, actions, libraries, id }) => {
     const [documents, setDocuments] = useState([])
-    console.log(id)
 
     async function fetchDocs() {
         const response = await libraries.source.api.get({

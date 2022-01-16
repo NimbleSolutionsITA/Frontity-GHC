@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 const NavItem = ({ state, actions, link, closeMenu }) => {
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const isCurrentPage = (url) => state.router.link === url;
+    const isCurrentPage = (url) => state.theme.baseLink === url;
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -33,12 +33,12 @@ const NavItem = ({ state, actions, link, closeMenu }) => {
 
     const handleClickSubItem = (ln) => {
         setAnchorEl(null);
-        actions.router.set(ln);
+        actions.router.set(state.theme.urlPrefix+ln);
     }
 
     const handleClickSubItemMobile = (ln) => {
         closeMenu()
-        actions.router.set(ln);
+        actions.router.set(state.theme.urlPrefix+ln);
     }
 
     return Array.isArray(link[1]) ? (

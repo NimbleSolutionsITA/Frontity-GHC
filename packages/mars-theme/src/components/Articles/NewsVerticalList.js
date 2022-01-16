@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core"
 import PrenotaOra from "../PrenotaOra";
 import translations from "../../translations";
+import {truncate} from "../../utils";
 
 const useStyles = makeStyles( {
     root: {
@@ -44,9 +45,10 @@ const useStyles = makeStyles( {
     }
 });
 
-const NewsList = ({ state, libraries, actions, size = 3 }) => {
+const NewsVerticalList = ({ state, libraries, actions, size = 3, categorySlug }) => {
     const classes = useStyles();
     const [slideChunks, setSlideChunks] = useState(null)
+    const category = state.source.data['all-categories/'].items.find(c => c.slug === categorySlug)
 
     const chunkSize = size;
 
@@ -54,7 +56,7 @@ const NewsList = ({ state, libraries, actions, size = 3 }) => {
         async function fetchFeaturedNews() {
             const response = await libraries.source.api.get({
                 endpoint: "posts",
-                params: { _embed: true, categories: state.theme.lang === 'it' ? "20" : "22", per_page: 20 },
+                params: { _embed: true, categories: category.id, per_page: 20 },
             });
             const res = await libraries.source.populate({ response, state })
 
@@ -68,11 +70,9 @@ const NewsList = ({ state, libraries, actions, size = 3 }) => {
         })
     }, [state.theme.lang]);
 
-    const Html2React = libraries.html2react.Component;
-
     return (
         <div className={classes.wrapper}>
-            <Typography align="center" variant="h1" style={{fontWeight: 'bold', marginBottom: '32px'}}>{translations(state.theme.lang, 'novita')}</Typography>
+            <Typography align="center" variant="h1" style={{fontWeight: 'bold', marginBottom: '32px'}}>{category.name}</Typography>
             <Grid container spacing={4}>
                 {slideChunks && slideChunks.length > 0 ? slideChunks[0].map((info, index) => (
                     <Grid key={info.id} item xs={12}>
@@ -83,7 +83,7 @@ const NewsList = ({ state, libraries, actions, size = 3 }) => {
                                         {decode(info.title.rendered)}
                                     </Typography>
                                     <div style={{flexGrow: 1, marginBottom: '16px'}}>
-                                        <Html2React html={info.acf.excerpt} />
+                                        {truncate(decode(info.acf.excerpt), 130)}
                                     </div>
                                     <div className={classes.actionButtons}>
                                         <Button size="small" variant="contained" onClick={() => actions.router.set(info.link)}>{translations(state.theme.lang, 'scopriDiPiu')}</Button>
@@ -105,4 +105,4 @@ const NewsList = ({ state, libraries, actions, size = 3 }) => {
     )
 }
 
-export default connect(NewsList)
+export default connect(NewsVerticalList)

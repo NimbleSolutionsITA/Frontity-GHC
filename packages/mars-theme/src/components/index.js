@@ -12,7 +12,6 @@ import PageError from "./page-error";
 import theme from './mui-theme';
 import Home from "./Home/Home";
 import Footer from "./Footer";
-import {pagesMap} from "../config";
 import Prestazioni from "./Prestazioni/Prestazioni";
 import Doctors from "./Doctors/Doctors";
 import Doctor from "./Doctors/Doctor";
@@ -61,24 +60,23 @@ const Theme = ({ state }) => {
 
       {/* Add the main section. It renders a different component depending
       on the type of URL we are in. */}
-
       {isBrowser && (
           <>
               <Switch>
                   <Loading when={data.isFetching} />
-                  <Home when={data.isPostType && state.router.link === pagesMap[0][language][1]} />
-                  <Prestazioni when={state.router.link === pagesMap[1][language][1]}/>
+                  <Home when={state.theme.isHomepage} />
+                  <Prestazioni when={state.theme.baseLink === '/prestazioni/'}/>
                   <Prestazione when={data.isPostType && data.type === 'services'} />
-                  <Doctors when={data.isPostType && state.router.link === pagesMap[6][language][1]}/>
+                  <Doctors when={data.isPostType && state.theme.baseLink === '/i-nostri-medici/'}/>
                   <Doctor when={data.isPostType && data.type === 'doctors'}/>
                   <PracticalInfo when={data.isPostType && (
-                      state.router.link === pagesMap[8][language][1] ||
+                      state.theme.baseLink === '/info-pratiche/' ||
                       data.type === 'practical_info'
                   )}/>
-                  <Prenota when={state.router.link === '/prenota/'} />
-                  <Articles when={state.router.link === pagesMap[5][language][1]} />
+                  <Prenota when={state.theme.baseLink === '/prenota/'} />
+                  <Articles when={state.theme.baseLink === '/news/'} />
                   <Document when={data.isPostType && data.type === 'documents'}/>
-                  <WorkWithUs when={state.router.link === pagesMap[14][language][1]} />
+                  <WorkWithUs when={state.theme.baseLink === '/lavora-con-noi/'} />
                   <List when={data.isArchive} />
                   <Post when={data.isPostType} />
                   <PageError when={data.isError} />

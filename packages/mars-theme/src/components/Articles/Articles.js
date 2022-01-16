@@ -1,16 +1,16 @@
 import React from 'react';
 import {Container} from "@material-ui/core";
-import FeaturedSliderView from "./Featured";
-import NewsList from "./News";
-import AllTheNews from "./AllTheNews";
+import ArticlesSliderView from "./ArticlesSliderView";
+import NewsVerticalList from "./NewsVerticalList";
+import NewsGrid from "./NewsGrid";
 
 const Articles = () => {
 
     return (
         <Container>
-            <FeaturedSliderView />
-            <NewsList />
-            <AllTheNews />
+            <ArticlesSliderView categorySlug="featured" />
+            <NewsVerticalList categorySlug="novita" />
+            <NewsGrid categorySlug="news"/>
         </Container>
     )
 }

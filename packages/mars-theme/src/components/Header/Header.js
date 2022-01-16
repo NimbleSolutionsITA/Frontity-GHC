@@ -7,10 +7,10 @@ import {
 import MenuBar from "./MenuBar";
 import HomeBanner from "./HomeBanner";
 import TopBar from "./TopBar";
+import HomeSlider from "./HomeSlider";
 
 
 const Header = ({ state }) => {
-    const isHomepage= ['/', '/en/start/'].includes(state.router.link)
     const [isNavBarTop, setIsNavBarTop] = useState(false)
     const [openMobileMenu, setOpenMobileMenu] = useState(false)
     const appBarRef = useRef()
@@ -30,15 +30,15 @@ const Header = ({ state }) => {
     return (
       <>
           <div ref={appBarRef}>
-              <TopBar isHomepage={isHomepage} />
-              {isHomepage && (
+              <TopBar hasSlider={state.theme.options.hasSlider} isHomepage={state.theme.isHomepage} />
+              {state.theme.isHomepage && (
                   <Hidden smDown>
-                      <HomeBanner lastItem={lastItem} />
+                      {state.theme.options.hasSlider ? <HomeSlider /> : <HomeBanner lastItem={lastItem} /> }
                   </Hidden>
               )}
           </div>
           <MenuBar
-              isHomepage={isHomepage}
+              isHomepage={state.theme.isHomepage}
               isNavBarTop={isNavBarTop}
               menu={menu}
               closeMenu={closeMenu}

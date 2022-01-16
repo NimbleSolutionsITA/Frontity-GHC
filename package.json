@@ -19,6 +19,7 @@
   "prettier": {},
   "dependencies": {
     "@frontity/core": "^1.14.3",
+    "@frontity/google-analytics": "^2.1.0",
     "@frontity/html2react": "^1.7.0",
     "@frontity/mars-theme": "./packages/mars-theme",
     "@frontity/tiny-router": "^1.4.4",
@@ -32,6 +33,7 @@
     "dotenv": "^11.0.0",
     "frontity": "^1.17.1",
     "react-swipeable": "^6.2.0",
+    "swiper": "^7.4.1",
     "universal-cookie": "^4.0.4"
   }
 }
