@@ -1,11 +1,71 @@
 import React, { useEffect } from "react";
 import { connect, styled, decode } from "frontity";
 import List from "./list";
-import FeaturedMedia from "./featured-media";
-import {Container, Typography} from "@material-ui/core";
+import {Container, makeStyles, Typography, useMediaQuery} from "@material-ui/core";
 import translations from "../translations";
 import Documents from "./DocsTable";
 
+const useStyles = makeStyles((theme) => ({
+    wrapper: {
+        position: 'relative',
+        width: '100%',
+        paddingBottom: '42.25%',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+    },
+    textWrapper: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        fontWeight: 'bold',
+        padding: '0 40px',
+        width: '39%',
+        color: 'white',
+        textTransform: 'uppercase',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        [theme.breakpoints.down('sm')]: {
+            width: 'auto',
+        },
+        '& strong': {
+            color: ({accentColor}) => accentColor || theme.palette.primary.main
+        },
+        '& h1': {
+            fontWeight: 'bold',
+            fontSize: '40px',
+            lineHeight: '50px',
+            [theme.breakpoints.down('md')]: {
+                fontSize: '30px',
+                lineHeight: '38px',
+            },
+            [theme.breakpoints.down('sm')]: {
+                fontSize: '24px',
+                lineHeight: '30px',
+            }
+        },
+        '& p': {
+            color: ({accentColor}) => accentColor || theme.palette.primary.main,
+            fontWeight: 'bold',
+            fontSize: '16px',
+            fontStyle: 'italic',
+            textTransform: 'none',
+            [theme.breakpoints.down('sm')]: {
+                fontSize: '12px',
+            }
+        }
+    },
+    mask: {
+        opacity: '.5',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        overflow: 'visible',
+        enableBackground: 'new 0 0 689.4 400',
+        fill: theme.palette.primary.main
+    },
+}));
 
 const Post = ({ state, actions, libraries }) => {
   // Get information about the current URL.
@@ -14,7 +74,8 @@ const Post = ({ state, actions, libraries }) => {
   const post = state.source[data.type][data.id];
   // Get a human readable date.
   const date = new Date(post.date);
-
+  const classes = useStyles({accentColor: state.theme.options.slider.accentColor})
+  const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
 
@@ -29,31 +90,68 @@ const Post = ({ state, actions, libraries }) => {
   }, []);
 
   // Load the post, but only if the data is ready.
+
+    console.log(post, state.source.attachment)
   return data.isReady ? (
     <Container>
-      <div style={{padding: '64px 0 16px'}}>
-          <Typography style={{fontWeight: 'bold'}} variant="h1">{decode(post.title.rendered)}</Typography>
-
-        {/* Only display author and date on posts */}
-        {data.isPost && (
-          <div>
-            <DateWrapper>
-              {" "}
-                {translations(state.theme.lang, 'pubblicatoIl')} <b>{date.toLocaleDateString()}</b>
-            </DateWrapper>
-          </div>
-        )}
-      </div>
 
       {/* Look at the settings to see if we should include the featured image */}
-      {post.featured_media !== 0 && (
-        <FeaturedMedia id={post.featured_media} />
+      {post.featured_media !== 0 ? (
+        // <FeaturedMedia id={post.featured_media} />
+        <div style={{
+            backgroundImage: `url(${state.source.attachment[post.featured_media].source_url})`,
+            backgroundSize: 'cover',
+            width: '100%',
+            paddingBottom: '35%',
+            position: 'relative'
+        }}>
+            {isMobile ? (
+                <svg
+                    height="100%"
+                    width="100%"
+                    className={classes.mask}
+                >
+                    <rect width="100%" height="100%" />
+                </svg>
+            ) : (
+                <svg
+                    height="100%"
+                    viewBox="0 0 689.4 400"
+                    className={classes.mask}
+                >
+                    <path d="M489.4,200c0-110.5,89.5-200,200-200H0v400h689.4C578.9,400,489.4,310.5,489.4,200z"/>
+                </svg>
+            )}
+            <div className={classes.textWrapper}>
+                <Typography variant="h1">{decode(post.title.rendered)}</Typography>
+                {/* Only display author and date on posts */}
+                {data.isPost && (
+                    <Typography>
+                        {date.toLocaleDateString()}
+                    </Typography>
+                )}
+            </div>
+        </div>
+      ) : (
+          <div style={{padding: '64px 0 16px'}}>
+              <Typography style={{fontWeight: 'bold'}} variant="h1">{decode(post.title.rendered)}</Typography>
+
+              {/* Only display author and date on posts */}
+              {data.isPost && (
+                  <div>
+                      <DateWrapper>
+                          {" "}
+                          {translations(state.theme.lang, 'pubblicatoIl')} <b>{date.toLocaleDateString()}</b>
+                      </DateWrapper>
+                  </div>
+              )}
+          </div>
       )}
 
       {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
       <Content>
-        <Html2React html={post.content.rendered} />
+          <Html2React html={post.content.rendered} />
           {post.acf.linkedDocs?.length > 0 && <Documents documents={post.acf.linkedDocs}/>}
       </Content>
     </Container>

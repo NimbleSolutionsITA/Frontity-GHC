@@ -3,62 +3,138 @@ import { config } from "dotenv";
 // Launch dot-env.
 config();
 
-const settings = {
-  name: process.env.NAME,
-  state: {
-    frontity: {
-      url: process.env.URL,
-      title: process.env.TITLE,
-      description: process.env.DESCRIPTION
+const {
+  NAME,
+  TITLE,
+  DESCRIPTION,
+  URL,
+  ANALYTICS,
+  LANGUAGES
+} = process.env
+
+const languageMap = {
+  it: {
+    id: 'it',
+    shortName: 'ITA',
+    name: 'italiano'
+  },
+  en: {
+    id: 'en',
+    shortName: 'ENG',
+    name: 'english'
+  }
+}
+
+let otherLanguages = LANGUAGES.split(',')
+const mainLanguage = otherLanguages.shift()
+
+let hostname = /^(?:\w+\:\/\/)?([^\/]+)([^\?]*)\??(.*)$/.exec(URL)[1].split('.')
+const domain = hostname.pop()
+hostname = hostname.join('.')
+
+const packages = (lang) => [
+  {
+    "name": "@frontity/mars-theme",
+    "state": {
+      "theme": {
+        "featured": {
+          "showOnList": false,
+          "showOnPost": false
+        },
+        "menus": {
+          top: [],
+          main: [],
+          footer: [],
+        },
+        mainUrl: URL,
+        hostname,
+        languages: LANGUAGES.split(',').map(l => languageMap[l]),
+        mainLanguage
+      }
     }
   },
-  packages: [
-    {
-      name: "@frontity/mars-theme",
-      state: {
-        theme: {
-          featured: {
-            showOnList: false,
-            showOnPost: false
+  {
+    "name": "@frontity/wp-source",
+    "state": {
+      "source": {
+        // "url": URL,
+        "api": URL+(lang === mainLanguage ? "" : ("/"+lang))+"/wp-json",
+        "homepage": "/home",
+        // "postsPage": '/news/',
+        "subdirectory": lang === mainLanguage ? "" : lang,
+        "params": {
+          lang
+        },
+        "postTypes": [
+          {
+            type: "practical_info",
+            endpoint: "practical_info",
+            archive: "/practical_info",
+          },
+          {
+            type: "doctors",
+            endpoint: "doctors",
+            archive: "/doctors",
+          },
+          {
+            type: "services",
+            endpoint: "services",
+            archive: "/services",
+          },
+          {
+            type: "documents",
+            endpoint: "documents",
+            archive: "/documents",
+          },
+        ]
+      },
+    }
+  },
+  {
+    name: "@frontity/google-analytics",
+    state: {
+      googleAnalytics: {
+        trackingId: ANALYTICS,
+      },
+    },
+  },
+  "@frontity/tiny-router",
+  "@frontity/html2react",
+  "@frontity/yoast",
+]
+
+const settings = [
+  {
+    "name": `${NAME}-${mainLanguage}`,
+    "state": {
+      "frontity": {
+        url: URL,
+        "title": TITLE,
+        "description": DESCRIPTION
+      },
+      "theme": {
+        "lang": mainLanguage
+      }
+    },
+    packages: packages(mainLanguage),
+  },
+  ...otherLanguages.map(lang => (
+      {
+        "name": `${NAME}-${lang}`,
+        "match": [`(${hostname}\\.${domain}|localhost:3000)\\/${lang}`],
+        "state": {
+          "frontity": {
+            url: URL+'/'+lang,
+            "title": TITLE,
+            "description": DESCRIPTION
+          },
+          "theme": {
+            lang
           }
-        }
+        },
+        packages: packages(lang),
       }
-    },
-    {
-      name: "@frontity/wp-source",
-      state: {
-        source: {
-          url: process.env.URL,
-          homepage: "/inizio",
-          postTypes: [
-            {
-              type: "practical_info",
-              endpoint: "practical_info",
-              archive: "/practical_info",
-            },
-            {
-              type: "doctors",
-              endpoint: "doctors",
-              archive: "/doctors",
-            },
-            {
-              type: "services",
-              endpoint: "services",
-              archive: "/services",
-            },
-            {
-              type: "documents",
-              endpoint: "documents",
-              archive: "/documents",
-            },
-          ]
-        }
-      }
-    },
-    "@frontity/tiny-router",
-    "@frontity/html2react",
-    "@frontity/yoast",
-  ]
-};
+  ))
+];
 
 export default settings;

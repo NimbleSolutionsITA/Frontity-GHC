@@ -53,10 +53,12 @@ const Footer = ({ state, actions, libraries }) => {
             <Container>
                 <Grid container justify="space-between">
                     <Grid item xs={12} sm={8}>
-                        <a href="https://garofalohealthcare.com" target="_blank">
-                            <LogoGHC src={state.theme.options.logoGHCWhite.url} alt="Logo Garofalo Health Care"/>
-                        </a>
-                        <LogoHH src={state.theme.options.logoFooter.url} alt="Logo Istituto Raffaele Garofalo"/>
+                        {state.theme.options.logoGHCWhite&& (
+                            <a href="https://garofalohealthcare.com" target="_blank">
+                                <LogoGHC src={state.theme.options.logoGHCWhite.url} alt="Logo Garofalo Health Care"/>
+                            </a>
+                        )}
+                        {state.theme.options.logoFooter && <LogoHH src={state.theme.options.logoFooter.url} alt="Logo Istituto Raffaele Garofalo"/>}
                     </Grid>
                     {/*<Grid item xs={12} sm={4} classes={{root: classes.socials}}>
                         <IconButton href="https://www.facebook.com/hesperiahospital" target="_blank" edge="start">
@@ -71,7 +73,7 @@ const Footer = ({ state, actions, libraries }) => {
                     <Grid item container xs={12} md={9}>
                         {state.theme.menus.footer.map(itm => (
                             <Grid key={itm[1]} item xs={12} md={4}>
-                                <FooterLink onClick={() => actions.router.set(itm[1])}>
+                                <FooterLink onClick={() => actions.router.set(state.theme.urlPrefix+itm[1])}>
                                     {decode(itm[0])}
                                 </FooterLink>
                             </Grid>
@@ -79,14 +81,16 @@ const Footer = ({ state, actions, libraries }) => {
                     </Grid>
                     <Grid item xs={12} md={3} css={css`border-left: 1px solid #FFFFFF;`}>
                         <Contacts variant="body2">
-                            {state.theme.options.contactsFooter.map(ct => (<>
-                                {ct.label}{ct.value && ': '}<b>{ct.value}</b><br />
-                            </>))}
+                            {state.theme.options.contactsFooter && state.theme.options.contactsFooter.map(ct => (
+                                <>
+                                    {ct.label}{ct.value && ': '}<b>{ct.value}</b><br />
+                                </>
+                            ))}
                         </Contacts>
                     </Grid>
                 </Grid>
                 <HHCredits variant="body2">
-                    <Html2React html={state.theme.options.legal } />
+                    {state.theme.options.legal && <Html2React html={state.theme.options.legal}/>}
                 </HHCredits>
                 <NimbleCredits variant="body2">
                     Made with <HeartIcon /> by <a href="https://www.nimble-solutions.com" target="_blank">Nimble Solutions</a>
