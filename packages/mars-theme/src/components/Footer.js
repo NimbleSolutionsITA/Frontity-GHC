@@ -31,6 +31,11 @@ const LogoGHC = styled.img`
   margin-right: 32px;
  `;
 
+const LogoBigGHC = styled.img`
+  padding: 0;
+  height: 60px;
+`;
+
 const Contacts = styled(Typography)`
   padding-left: 16px;
 `;
@@ -53,9 +58,13 @@ const Footer = ({ state, actions, libraries }) => {
             <Container>
                 <Grid container justify="space-between">
                     <Grid item xs={12} sm={8}>
-                        {state.theme.options.logoGHCWhite&& (
+                        {state.theme.options.logoGHCWhite && (
                             <a href="https://garofalohealthcare.com" target="_blank">
-                                <LogoGHC src={state.theme.options.logoGHCWhite.url} alt="Logo Garofalo Health Care"/>
+                                {state.theme.options.logoFooter ? (
+                                    <LogoGHC src={state.theme.options.logoGHCWhite.url} alt="Logo Garofalo Health Care"/>
+                                ) : (
+                                    <LogoBigGHC src={state.theme.options.logoGHCWhite.url} alt="Logo Garofalo Health Care"/>
+                                )}
                             </a>
                         )}
                         {state.theme.options.logoFooter && <LogoHH src={state.theme.options.logoFooter.url} alt="Logo Istituto Raffaele Garofalo"/>}

@@ -13,7 +13,7 @@ const NewsCard = ({article, state, actions, isFeatured}) => (
             />
             <CardContent>
                 <Typography variant="h4" style={{fontWeight: 'bold'}}>
-                    {isFeatured(article) && <StarsRoundedIcon style={{marginBottom: '-4px', marginRight: '4px', fontSize: '22px', lineHeight: '22px'}} />}
+                    {isFeatured && isFeatured(article) && <StarsRoundedIcon style={{marginBottom: '-4px', marginRight: '4px', fontSize: '22px', lineHeight: '22px'}} />}
                     {decode(article.title.rendered)}
                 </Typography>
                 <Typography style={{margin: '16px 0'}}>{truncate(decode(article.acf.excerpt), 150)}</Typography>

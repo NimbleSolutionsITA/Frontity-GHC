@@ -24,8 +24,8 @@ const Header = ({ state }) => {
     const closeMenu = () => setOpenMobileMenu(false)
     const openMenu = () => setOpenMobileMenu(true)
 
-    const menu = state.theme.menus.main.slice(0, -1)
-    const lastItem = [...state.theme.menus.main].pop()
+    // const menu = state.theme.menus.main.slice(0, -1)
+    // const lastItem = [...state.theme.menus.main].pop()
 
     return (
       <>
@@ -33,19 +33,20 @@ const Header = ({ state }) => {
               <TopBar hasSlider={state.theme.options.hasSlider} isHomepage={state.theme.isHomepage} />
               {state.theme.isHomepage && (
                   <Hidden smDown>
-                      {state.theme.options.hasSlider ? <HomeSlider /> : <HomeBanner lastItem={lastItem} /> }
+                      {/*{state.theme.options.hasSlider ? <HomeSlider /> : <HomeBanner lastItem={lastItem} /> }*/}
+                      <HomeSlider />
                   </Hidden>
               )}
           </div>
           <MenuBar
               isHomepage={state.theme.isHomepage}
               isNavBarTop={isNavBarTop}
-              menu={menu}
+              menu={state.theme.menus.main}
               closeMenu={closeMenu}
               setOpenMobileMenu={setOpenMobileMenu}
               openMobileMenu={openMobileMenu}
               openMenu={openMenu}
-              lastItem={lastItem}
+              // lastItem={lastItem}
           />
       </>
     );

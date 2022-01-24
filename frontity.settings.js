@@ -86,6 +86,11 @@ const packages = (lang) => [
             endpoint: "documents",
             archive: "/documents",
           },
+          {
+            type: "strutture",
+            endpoint: "strutture",
+            archive: "/strutture",
+          },
         ]
       },
     }

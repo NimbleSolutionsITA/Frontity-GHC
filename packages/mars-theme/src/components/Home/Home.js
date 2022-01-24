@@ -6,7 +6,8 @@ import {pagesMap} from "../../config";
 // import NewsGrid from "../Articles/NewsGrid";
 // import NewsVerticalList from "../Articles/NewsVerticalList";
 import translations from "../../translations";
-import NewsHorizontalLis from "../Articles/NewsHorizontalLis";
+import NewsGrid from "../Articles/NewsGrid";
+import Strutture from "../Strutture/Strutture";
 
 const Home = ({ state, actions, libraries }) => {
     const data = state.source.get(state.router.link);
@@ -31,7 +32,8 @@ const Home = ({ state, actions, libraries }) => {
                 )}
             </Container>
             <Container>
-                <NewsHorizontalLis categorySlug="novita" />
+                <Strutture />
+                <NewsGrid categorySlug="novita" slideMode />
                 {/*<NewsVerticalList categorySlug="featured" />*/}
                 <div style={{margin: '32px', textAlign: 'center'}}>
                     <Button

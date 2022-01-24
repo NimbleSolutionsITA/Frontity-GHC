@@ -18,7 +18,7 @@ import NavItem from "./NavItem";
 
 const useStyles = makeStyles((theme) => ({
     appBarLogo: {
-        width: '32px',
+        height: '44px',
     },
     appBarLogoDrawer: {
         width: '32px',
@@ -38,9 +38,8 @@ const useStyles = makeStyles((theme) => ({
     hhLogo: {
         float: 'left',
         padding: 0,
-        margin: '16px 0',
-        width: '32px',
-        height: '32px',
+        margin: '10px 0',
+        width: 'auto',
         minWidth: '32px',
         [theme.breakpoints.down('sm')]: {
             float: 'right',
@@ -69,14 +68,14 @@ const MenuBar = ({isHomepage, isNavBarTop, actions, menu, closeMenu, setOpenMobi
                             {menu.map(menuItem => <NavItem closeMenu={closeMenu} key={menuItem[1]} link={menuItem} />)}
                             <NavItem closeMenu={closeMenu} link={['Prenota', '/prenota']} />
                         </SwipeableDrawer>
-                        {lastItem && (
+                        {/*{lastItem && (
                             <Box margin="0 auto" display="flex" justifyContent="space-evenly" width="100%">
                                 <Button onClick={() => actions.router.set(lastItem[1])} variant={"contained"}
                                         color="primary" size="small" disableElevation>
                                     {lastItem[0]}
                                 </Button>
                             </Box>
-                        )}
+                        )}*/}
                     </Toolbar>
                 </Hidden>
                 <Hidden smDown>

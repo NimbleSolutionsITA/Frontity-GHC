@@ -66,7 +66,7 @@ const Doctors = ({ state, actions, libraries }) => {
 
     useEffect(() => {
         fetchDoctors().then(resDoctors => setDoctors(resDoctors))
-    }, [state.theme.lang]);
+    }, []);
 
     useEffect(() => {
         if (doctors) {
