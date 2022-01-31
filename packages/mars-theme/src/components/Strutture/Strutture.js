@@ -75,7 +75,7 @@ const StrutturaCard = connect(({regione, actions, state}) => {
                         <Row
                             Icon={MarkerIcon}
                             value={regione.acf.indirizzo.street_name ?
-                                `${regione.acf.indirizzo.street_name} - ${regione.acf.indirizzo.post_code} ${regione.acf.indirizzo.city} (${regione.acf.indirizzo.state_short})` :
+                                `${regione.acf.indirizzo.street_name} ${regione.acf.indirizzo.street_number} - ${regione.acf.indirizzo.post_code} ${regione.acf.indirizzo.city} (${regione.acf.indirizzo.state_short})` :
                                 regione.acf.indirizzo.address
                             }
                         />

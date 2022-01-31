@@ -24,6 +24,7 @@ import Newsletter from "./ Newsletter/Newsletter";
 import CookieConsent from "./CookieConsent/CookieConsent";
 import Prenota from "./Prenota/Prenota";
 import Document from "./Documents/Document";
+import Struttura from "./Strutture/Struttura";
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -39,6 +40,7 @@ const Theme = ({ state }) => {
 
   const cookies = new Cookies();
 
+    console.log('PDPDPDPDP', data.type)
   return (
     <ThemeProvider theme={theme(state.theme.options.themeColor)}>
       {/* Add some metatags to the <head> of the HTML. */}
@@ -58,6 +60,7 @@ const Theme = ({ state }) => {
 
       <Header />
 
+
       {/* Add the main section. It renders a different component depending
       on the type of URL we are in. */}
       {isBrowser && (
@@ -69,6 +72,7 @@ const Theme = ({ state }) => {
                   <Prestazione when={data.isPostType && data.type === 'services'} />
                   <Doctors when={data.isPostType && state.theme.baseLink === '/i-nostri-medici/'}/>
                   <Doctor when={data.isPostType && data.type === 'doctors'}/>
+                  <Struttura when={data.isPostType && data.type === 'strutture'}/>
                   <PracticalInfo when={data.isPostType && (
                       state.theme.baseLink === '/info-pratiche/' ||
                       data.type === 'practical_info'
