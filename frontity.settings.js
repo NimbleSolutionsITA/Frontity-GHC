@@ -8,7 +8,6 @@ const {
   TITLE,
   DESCRIPTION,
   URL,
-  ANALYTICS,
   LANGUAGES
 } = process.env
 
@@ -49,7 +48,7 @@ const packages = (lang) => [
         mainUrl: URL,
         hostname,
         languages: LANGUAGES.split(',').map(l => languageMap[l]),
-        mainLanguage
+        mainLanguage,
       }
     }
   },
@@ -94,14 +93,6 @@ const packages = (lang) => [
         ]
       },
     }
-  },
-  {
-    name: "@frontity/google-analytics",
-    state: {
-      googleAnalytics: {
-        trackingId: ANALYTICS,
-      },
-    },
   },
   "@frontity/tiny-router",
   "@frontity/html2react",

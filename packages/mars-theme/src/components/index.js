@@ -49,7 +49,7 @@ const Theme = ({ state }) => {
         <meta name="description" content={state.theme.options.description} />
         <html lang={language} />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,400;0,700;1,400;1,700&display=swap"/>
-        {cookies.get('rcl_statistics_consent') && <script async src="https://www.googletagmanager.com/gtag/js?id=UA-64338762-21"/>}
+        {cookies.get('rcl_statistics_consent') && <script async src={`https://www.googletagmanager.com/gtag/js?id=${state.theme.options.analytics}`}/>}
       </Head>
 
       {/* Add some global styles for the whole site, like body or a's. 
