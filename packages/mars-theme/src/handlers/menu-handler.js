@@ -20,7 +20,7 @@ const menuHandler = {
         // GET MENUS
         const getLinks = (itm) => itm.child_items ?
             itm.child_items.map(subItm => [subItm.title, getLinks(subItm)]) :
-            `/${itm.slug}/`
+            itm.url
         state.theme.menus[slug] = menuData.items.map(itm => [itm.title, getLinks(itm)])
     },
 };
