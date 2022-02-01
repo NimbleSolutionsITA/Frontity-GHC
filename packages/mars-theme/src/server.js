@@ -28,12 +28,6 @@ export default {
         });
         const options = await optionResponse.json();
 
-        const topMenu = await libraries.source.api.get({
-          endpoint: `/menus/v1/menus/top`,
-        });
-        const menuData = await topMenu.json()
-
-
         state.theme.options = options.acf
 
         // GET CATEGORIES & TAGS

@@ -3,7 +3,6 @@ const categoriesHandler = {
     priority: 10,
     pattern: "all-categories",
     func: async ({ route, params, state, libraries }) => {
-        console.log('all-categories')
         const { api } = libraries.source;
 
         // 1. fetch the data you want from the endpoint page
