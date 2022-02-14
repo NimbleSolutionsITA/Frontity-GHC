@@ -14,13 +14,14 @@ const menuHandler = {
         });
 
         // Parse the JSON to get the object
-        const menuData = await response.json();
+        const {items} = await response.json();
 
         // GET MENUS
         const getLinks = (itm) => itm.child_items ?
             itm.child_items.map(subItm => [subItm.title, getLinks(subItm)]) :
-            itm.url
-        state.theme.menus[slug] = menuData.items.map(itm => [itm.title, getLinks(itm)])
+            itm.url.replace(state.theme.mainUrl+state.theme.urlPrefix, '')
+
+        state.theme.menus[slug] = items.map(itm => [itm.title, getLinks(itm)])
     },
 };
 
