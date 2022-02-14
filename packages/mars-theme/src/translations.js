@@ -31,6 +31,20 @@ const translations = (lang, key) => {
         richiesta: ['Richiesta cartelle cliniche', 'Request for medical records'],
         orari: ['dal <b>lunedì</b> al <b>venerdì</b> dalle <b>8</b> alle <b>18</b>', 'from <b>monday</b> to <b>friday 08:00</b> - <b>18:00</b>'],
         prestazioniSubtitle: ['PRESTAZIONI (U.O.)', 'PRESTAZIONI (U.O.)'],
+        tutti: ['tutti', 'all'],
+        mese: ['Mese', 'Month'],
+        anno: ['Anno', 'Year'],
+        noDocs: ['Nessun documento trovato', 'No documents found'],
+        search: ['Ricerca un documento', 'Search for a document'],
+        quotazione: ['Quotazione odierna di GHC', "Today's GHC listing"],
+        da: ['da', 'from'],
+        prossimoEvento: ['Prossimo evento', 'Next event'],
+        eventiSuccessivi: ['Eventi successivi', 'Following events'],
+        nessunEvento: ['Nessun evento successivo in programma', 'No subsequent events scheduled'],
+        accept: ['Accetto', 'Accept'],
+        decline: ['Non accetto', 'Decline'],
+        next: ['Successivo', 'Next'],
+        prev: ['Precedente', 'Prev'],
     }
     switch (lang) {
         case 'en':

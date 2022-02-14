@@ -45,7 +45,7 @@ const useStyles = makeStyles( {
     }
 });
 
-const NewsVerticalList = ({ state, libraries, actions, size = 3, categorySlug }) => {
+const NewsVerticalList = ({ state, libraries, actions, size = 3, categorySlug, showTitle }) => {
     const classes = useStyles();
     const [slideChunks, setSlideChunks] = useState(null)
     const category = state.source.data['all-categories/'].items.find(c => c.slug === categorySlug)
@@ -72,7 +72,10 @@ const NewsVerticalList = ({ state, libraries, actions, size = 3, categorySlug })
 
     return (
         <div className={classes.wrapper}>
-            <Typography align="center" variant="h1" style={{fontWeight: 'bold', marginBottom: '32px'}}>{category.name}</Typography>
+            {showTitle && (
+                <Typography align="center" variant="h1"
+                            style={{fontWeight: 'bold', marginBottom: '32px'}}>{category.name}</Typography>
+            )}
             <Grid container spacing={4}>
                 {slideChunks && slideChunks.length > 0 ? slideChunks[0].map((info, index) => (
                     <Grid key={info.id} item xs={12}>

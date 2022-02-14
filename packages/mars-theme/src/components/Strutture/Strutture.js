@@ -91,53 +91,16 @@ const StrutturaCard = connect(({regione, actions, state}) => {
 
 const Strutture = ({ state, actions, libraries }) => {
     const classes = useStyles()
-    const [strutture, setStrutture] = useState(null)
-    const [currentRegione, setCurrentRegione] = useState('Tutte')
-    const [regioni, setRegioni] = useState({'Tutte': 0})
-
-    async function fetchStrutture() {
-        const response = await libraries.source.api.get({
-            endpoint: "strutture",
-            params: {per_page: 100, _embed: true,},
-        });
-        const pages = libraries.source.getTotalPages(response);
-        const res = await libraries.source.populate({ response, state })
-        const requests = [];
-        for (let page = 2; page <= pages; page++) {
-            requests.push(
-                libraries.source.api.get({
-                    endpoint: "strutture",
-                    params: {
-                        per_page: 100,
-                        _embed: true,
-                        page
-                    }
-                })
-            );
+    const strutture = Object.keys(state.source.strutture).map(id => state.source.strutture[id])
+    const getRegioni = () => {
+        let regions = {}
+        for (const r of strutture.map(st => st.acf.indirizzo.state)) {
+            regions[r] = regions[r] ? regions[r] + 1 : 1;
         }
-
-        const responses = await Promise.all(requests);
-
-        const others = await Promise.all(responses.map(response =>
-            libraries.source.populate({ state, response })
-        ));
-
-        const all = [...res, ...others.flat()]
-
-        return all.map(({id}) => state.source.strutture[id])
+        return regions
     }
-
-    useEffect(() => {
-        fetchStrutture().then(res => {
-            setStrutture(res)
-            let regions = {}
-            for (const r of res.map(st => st.acf.indirizzo.state)) {
-                regions[r] = regions[r] ? regions[r] + 1 : 1;
-            }
-
-            setRegioni({'Tutte': res.length, ...regions})
-        })
-    }, []);
+    const regioni = {'Tutte': strutture.length, ...getRegioni()}
+    const [currentRegione, setCurrentRegione] = useState('Tutte')
 
     return (
         <div>
@@ -168,7 +131,7 @@ const Strutture = ({ state, actions, libraries }) => {
                         <ItalyMap regioni={regioni} currentRegione={currentRegione} setCurrentRegione={setCurrentRegione}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <HorizontalSlider modules={[Navigation, Pagination]}>
+                        <HorizontalSlider lang={state.theme.lang} modules={[Navigation, Pagination]}>
                             {strutture.filter(st => currentRegione === 'Tutte' || st.acf.indirizzo.state === currentRegione).map((regione, index) => (
                                 <SwiperSlide key={regione.id} virtualIndex={index}>
                                     <StrutturaCard regione={regione} />

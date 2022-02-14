@@ -41,3 +41,28 @@ export const getDoctorsGroupedByCategory = (source, lang) => {
             return [{doctors, category}, ...acc]
         }, [])
 }
+
+
+function padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+}
+
+export function formatDate(date) {
+    return [
+        padTo2Digits(date.getDate()),
+        padTo2Digits(date.getMonth() + 1),
+        date.getFullYear(),
+    ].join('/');
+}
+
+export function checkIsNextDate(d1, d2) {
+    return d2.getFullYear() < d1.getFullYear() || (
+        d2.getFullYear() === d1.getFullYear() && d2.getMonth() < d1.getMonth()
+    ) || (
+        d2.getFullYear() === d1.getFullYear() && d2.getMonth() === d1.getMonth() && d2.getDate() <= d1.getDate()
+    )
+}
+
+export function checkIsSameDate(d1, d2) {
+    return d2.getFullYear() === d1.getFullYear() && d2.getMonth() === d1.getMonth() && d2.getDate() === d1.getDate()
+}

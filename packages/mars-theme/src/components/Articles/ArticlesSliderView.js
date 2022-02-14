@@ -6,7 +6,7 @@ import {
     CardMedia,
     CardContent,
     Typography,
-    Button
+    Button, useMediaQuery
 } from "@material-ui/core"
 
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
@@ -90,8 +90,9 @@ const Slide = ({info, state, actions}) => {
     )
 }
 
-const ArticlesSliderView = ({ state, libraries, actions, categorySlug }) => {
+const ArticlesSliderView = ({ state, libraries, actions, categorySlug, mixedMode, showTitle }) => {
     const [articles, setArticles] = useState(null)
+    const isSm = useMediaQuery(theme => theme.breakpoints.down('sm'))
 
     const category = state.source.data['all-categories/'].items.find(c => c.slug === categorySlug)
 
@@ -106,7 +107,7 @@ const ArticlesSliderView = ({ state, libraries, actions, categorySlug }) => {
     }
 
     React.useEffect(() => {
-        fetchFeaturedNews().then(featuredPosts => setArticles(featuredPosts))
+        fetchFeaturedNews().then(featuredPosts => setArticles(mixedMode ? featuredPosts.slice(0,2) : featuredPosts))
     }, []);
 
 
@@ -118,12 +119,13 @@ const ArticlesSliderView = ({ state, libraries, actions, categorySlug }) => {
             <Global styles={swiperAutoplayCss} />
             <Global styles={swiperNavigationCss} />
             <Global styles={swiperVirtualCss} />
-            <Typography align="center" variant="h1" style={{fontWeight: 'bold', margin: '32px 0'}}>
-                {category.name}
-            </Typography>
+            {showTitle && (
+                <Typography align="center" variant="h1"
+                            style={{fontWeight: 'bold', marginBottom: '32px'}}>{category.name}</Typography>
+            )}
             <Swiper
                 modules={[Navigation, Pagination]}
-                slidesPerView={2}
+                slidesPerView={isSm ? 1 : 2}
                 spaceBetween={30}
                 pagination={{
                     dynamicBullets: true,

@@ -4,6 +4,7 @@ import GoogleMapReact from 'google-map-react';
 import List from "../list";
 import {Button, Container, makeStyles, Typography, useMediaQuery} from "@material-ui/core";
 import MarkerIcon from "@material-ui/icons/Room";
+import PhotoIcon from '@material-ui/icons/Photo';
 import PhoneIcon from "@material-ui/icons/Phone";
 import LinkIcon from "@material-ui/icons/Link";
 import EmailIcon from "@material-ui/icons/Email";
@@ -154,6 +155,14 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             display: 'none',
         }
+    },
+    headerWrapper: {
+        backgroundImage: ({headerImage}) => `url(${headerImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        width: '100%',
+        paddingBottom: '35%',
+        position: 'relative'
     }
 }));
 
@@ -186,30 +195,32 @@ const Marker = ({logo}) => {
     const classes = useStyles()
     return (
         <div className={classes.marker}>
-            <svg
-                width="100"
-                height="100"
-                viewBox="0 0 18 18"
-            >
-                <g
-                    transform="translate(0,-1034.3622)"
+            <div style={{position: 'absolute', transform: 'translate(-50%, -80%)' }}>
+                <svg
+                    width="100"
+                    height="100"
+                    viewBox="0 0 18 18"
                 >
                     <g
-                        transform="translate(48,-256)"
-                        style={{display:'inline'}}
+                        transform="translate(0,-1034.3622)"
                     >
-                        <path
-                            className={classes.markerPath1}
-                            d="m -38.5,1292.3622 c -2.33186,0 -4.5,2 -4.5,4.5 0,2.5278 3.41667,7.0556 4.5,8.5 1.08334,-1.4444 4.5,-5.9722 4.5,-8.5 0,-2.5 -2.16813,-4.5 -4.5,-4.5 z"
-                        />
-                        <path
-                            d="m -38.5,1292.3622 c -2.33186,0 -4.5,2 -4.5,4.5 0,2.5278 3.41667,7.0556 4.5,8.5 1.08334,-1.4444 4.5,-5.9722 4.5,-8.5 0,-2.5 -2.16813,-4.5 -4.5,-4.5 z"
-                            className={classes.markerPath2}
-                        />
+                        <g
+                            transform="translate(48,-256)"
+                            style={{display:'inline'}}
+                        >
+                            <path
+                                className={classes.markerPath1}
+                                d="m -38.5,1292.3622 c -2.33186,0 -4.5,2 -4.5,4.5 0,2.5278 3.41667,7.0556 4.5,8.5 1.08334,-1.4444 4.5,-5.9722 4.5,-8.5 0,-2.5 -2.16813,-4.5 -4.5,-4.5 z"
+                            />
+                            <path
+                                d="m -38.5,1292.3622 c -2.33186,0 -4.5,2 -4.5,4.5 0,2.5278 3.41667,7.0556 4.5,8.5 1.08334,-1.4444 4.5,-5.9722 4.5,-8.5 0,-2.5 -2.16813,-4.5 -4.5,-4.5 z"
+                                className={classes.markerPath2}
+                            />
+                        </g>
                     </g>
-                </g>
-            </svg>
-            <img src={logo?.url} alt={logo.filename} />
+                </svg>
+                <img src={logo?.url} alt={logo.filename} />
+            </div>
         </div>
     )
 }
@@ -248,7 +259,7 @@ const Struttura = ({ state, actions, libraries }) => {
     const date = new Date(post.date);
 
     const [mapVisible, setMapVisible] = useState(false)
-    const classes = useStyles({accentColor: state.theme.options.slider.accentColor, mapVisible})
+    const classes = useStyles({accentColor: state.theme.options.slider.accentColor, mapVisible, headerImage: state.source.attachment[post.featured_media].source_url})
     const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
     // Get the html2react component.
     const Html2React = libraries.html2react.Component;
@@ -271,13 +282,7 @@ const Struttura = ({ state, actions, libraries }) => {
             {/* Look at the settings to see if we should include the featured image */}
             {post.featured_media !== 0 ? (
                 // <FeaturedMedia id={post.featured_media} />
-                <div style={{
-                    backgroundImage: `url(${state.source.attachment[post.featured_media].source_url})`,
-                    backgroundSize: 'cover',
-                    width: '100%',
-                    paddingBottom: '35%',
-                    position: 'relative'
-                }}>
+                <div className={classes.headerWrapper}>
                     {mapVisible && <Map post={post} lang={state.theme.lang} /> }
                     {isMobile ? (
                         <svg
@@ -301,7 +306,7 @@ const Struttura = ({ state, actions, libraries }) => {
                         className={classes.showMapButton}
                         onClick={() => setMapVisible((mapVisible) => !mapVisible)}
                     >
-                        <MarkerIcon />
+                        {mapVisible ? <PhotoIcon /> : <MarkerIcon/>}
                     </Button>
                     <Contacts post={post} />
                 </div>

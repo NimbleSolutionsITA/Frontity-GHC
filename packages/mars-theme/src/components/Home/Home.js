@@ -33,7 +33,7 @@ const Home = ({ state, actions, libraries }) => {
             </Container>
             <Container>
                 <Strutture />
-                <NewsGrid categorySlug="novita" slideMode />
+                <NewsGrid categorySlug="news" slideMode showTitle />
                 {/*<NewsVerticalList categorySlug="featured" />*/}
                 <div style={{margin: '32px', textAlign: 'center'}}>
                     <Button

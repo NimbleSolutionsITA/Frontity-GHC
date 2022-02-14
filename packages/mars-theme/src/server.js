@@ -8,6 +8,7 @@ import packageClient from "./client";
 import menuHandler from "./handlers/menu-handler";
 import categoriesHandler from "./handlers/categories-handler";
 import tagsHandler from "./handlers/tags-handler";
+import struttureHandler from "./handlers/strutture-handler";
 
 // Launch dotenv.
 config();
@@ -38,6 +39,9 @@ export default {
         await actions.source.fetch(`menu/top`)
         await actions.source.fetch(`menu/main`)
         await actions.source.fetch(`menu/footer`)
+
+
+        await actions.source.fetch(`strutture`)
 
         libraries.frontity.render = ({ App }) => {
           const sheets = new ServerStyleSheets();
@@ -77,7 +81,7 @@ export default {
       processors: [image, iframe, link],
     },
     source: {
-      handlers: [menuHandler, categoriesHandler, tagsHandler],
+      handlers: [menuHandler, categoriesHandler, tagsHandler, struttureHandler],
     },
   },
 };

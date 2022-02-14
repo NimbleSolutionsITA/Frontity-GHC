@@ -2,6 +2,7 @@ import {connect} from "frontity";
 import {Button, Container, Grid, Hidden, makeStyles} from "@material-ui/core";
 import Link from "../link";
 import TranslateIcon from '@material-ui/icons/Translate';
+import NewsBanner from "./NewsBanner";
 
 const useStyles = makeStyles((theme) => ({
     rightLinks: {
@@ -33,7 +34,7 @@ const TopBar = ({isHomepage, hasSlider, state}) => {
         <div style={{background: isHomepage ? 'linear-gradient(180deg, #F6F9FC -14.41%, #E1EEFE 54.12%)' : '#FFFFFF'}}>
             <Container>
                 <Grid container>
-                    <Grid item xs={3}>
+                    <Grid item xs={9} style={{position: 'relative'}}>
                         {!hasSlider && state.theme.options.logoGHC && (
                             <Hidden xsDown>
                                 <a href="https://garofalohealthcare.com" target="_blank">
@@ -41,8 +42,9 @@ const TopBar = ({isHomepage, hasSlider, state}) => {
                                 </a>
                             </Hidden>
                         )}
+                        <NewsBanner />
                     </Grid>
-                    <Grid item xs={9} className={classes.rightLinks}>
+                    <Grid item xs={3} className={classes.rightLinks}>
                         {topMenu.map(item => <Button key={item[1]} style={{fontWeight: 'normal', paddingTop: 0, paddingBottom: 0}} component={Link} link={item[1]}>{item[0]}</Button>)}
                         {state.theme.languages.filter(l => l.id !== state.theme.lang).map(lang =>  (
                             <div style={{borderLeft: '1px solid', display: 'inline-block'}}>

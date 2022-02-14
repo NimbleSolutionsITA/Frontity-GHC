@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { Global, css, connect, Head } from "frontity";
 import { ThemeProvider } from '@material-ui/core/styles';
 import Cookies from 'universal-cookie';
@@ -40,7 +40,6 @@ const Theme = ({ state }) => {
 
   const cookies = new Cookies();
 
-    console.log('PDPDPDPDP', data.type)
   return (
     <ThemeProvider theme={theme(state.theme.options.themeColor)}>
       {/* Add some metatags to the <head> of the HTML. */}
@@ -78,7 +77,7 @@ const Theme = ({ state }) => {
                       data.type === 'practical_info'
                   )}/>
                   <Prenota when={state.theme.baseLink === '/prenota/'} />
-                  <Articles when={state.theme.baseLink === '/news/'} />
+                  {/*<Articles when={state.theme.baseLink === '/news/'} />*/}
                   <Document when={data.isPostType && data.type === 'documents'}/>
                   <WorkWithUs when={state.theme.baseLink === '/lavora-con-noi/'} />
                   <List when={data.isArchive} />
@@ -154,7 +153,7 @@ const globalStyles = css`
     border-color: white;
   }
 
-  tr:nth-child(even) {
+  tr:nth-of-type(even) {
     background-color: #F5F9FC;
   }
 
