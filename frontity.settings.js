@@ -28,8 +28,7 @@ let otherLanguages = LANGUAGES.split(',')
 const mainLanguage = otherLanguages.shift()
 
 let hostname = /^(?:\w+\:\/\/)?([^\/]+)([^\?]*)\??(.*)$/.exec(URL)[1].split('.')
-const domain = hostname.pop()
-hostname = hostname.join('.')
+const regexHostname = hostname.join('\\.')
 
 const packages = (lang) => [
   {
@@ -46,7 +45,6 @@ const packages = (lang) => [
           footer: [],
         },
         mainUrl: URL,
-        hostname,
         languages: LANGUAGES.split(',').map(l => languageMap[l]),
         mainLanguage,
       }
@@ -117,7 +115,7 @@ const settings = [
   ...otherLanguages.map(lang => (
       {
         "name": `${NAME}-${lang}`,
-        "match": [`(${hostname}\\.${domain}|localhost:3000)\\/${lang}`],
+        "match": [`(${regexHostname}|localhost:3000)\\/${lang}`],
         "state": {
           "frontity": {
             url: URL+'/'+lang,
