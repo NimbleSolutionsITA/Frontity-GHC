@@ -27,8 +27,9 @@ const languageMap = {
 let otherLanguages = LANGUAGES.split(',')
 const mainLanguage = otherLanguages.shift()
 
-const hostname = /^(?:\w+\:\/\/)?([^\/]+)([^\?]*)\??(.*)$/.exec(URL)[1]
-
+let hostname = /^(?:\w+\:\/\/)?([^\/]+)([^\?]*)\??(.*)$/.exec(URL)[1].split('.')
+const regexHostname = hostname.join('\\.')
+console.log(regexHostname)
 const packages = (lang) => [
   {
     "name": "@frontity/mars-theme",
@@ -114,7 +115,7 @@ const settings = [
   ...otherLanguages.map(lang => (
       {
         "name": `${NAME}-${lang}`,
-        "match": [`(${hostname.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')}|localhost:3000)\\/${lang}`],
+        "match": [`(ghc\\.nimble\\-lab.\\.com|localhost:3000)\\/${lang}`],
         "state": {
           "frontity": {
             url: URL+'/'+lang,
