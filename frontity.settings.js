@@ -8,7 +8,8 @@ const {
   TITLE,
   DESCRIPTION,
   URL,
-  LANGUAGES
+  LANGUAGES,
+  PORT
 } = process.env
 
 const languageMap = {
@@ -101,7 +102,7 @@ const settings = [
   ...otherLanguages.map(lang => (
       {
         "name": `${NAME}-${lang}`,
-        "match": [`(ghc.nimble-lab.com|localhost:3002|localhost:3000)\\/${lang}`],
+        "match": [`localhost:${PORT}\\/${lang}`],
         "state": {
           "frontity": {
             url: URL+'/'+lang,
