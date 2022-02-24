@@ -114,21 +114,7 @@ const settings = [
         },
         packages: packages(lang),
       }
-  )),
-  {
-    "name": `${NAME}-${mainLanguage}`,
-    "state": {
-      "frontity": {
-        url: URL,
-        "title": TITLE,
-        "description": DESCRIPTION
-      },
-      "theme": {
-        "lang": mainLanguage
-      }
-    },
-    packages: packages(mainLanguage),
-  }
+  ))
 ];
 
 export default settings;
