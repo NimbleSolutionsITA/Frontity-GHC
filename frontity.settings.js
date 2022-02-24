@@ -115,7 +115,7 @@ const settings = [
   ...otherLanguages.map(lang => (
       {
         "name": `${NAME}-${lang}`,
-        "match": [`.*https?:\/\/ghc.nimble-lab.com\/en-(.*)?$`],
+        "match": [`(ghc\.nimble\-lab\.com|localhost:3000)\/${lang}`],
         "state": {
           "frontity": {
             url: URL+'/'+lang,
