@@ -13,6 +13,14 @@ const CookieConsent = ({libraries, state}) => {
         gtag('config', state.theme.options.analytics);
     }
 
+    const italianLabels = state.theme.lang === 'it' ? {
+        necessaryOptionText: "Necessari",
+        preferencesOptionText: "Preferenze",
+        statisticsOptionText: "Statistiche",
+        acceptAllButtonText: "Accetta Tutti",
+        acceptSelectionButtonText: "Accetta Selezione",
+    } : {}
+
     return (
         <CookieBanner
             message={<div>
@@ -20,11 +28,7 @@ const CookieConsent = ({libraries, state}) => {
             </div>}
             policyLink={state.theme.options.privacyPolicyLink}
             privacyPolicyText="Privacy Policy & Cookie Policy"
-            necessaryOptionText={state.theme.lang === 'it' && "Necessari"}
-            preferencesOptionText={state.theme.lang === 'it' && "Preferenze"}
-            statisticsOptionText={state.theme.lang === 'it' && "Statistiche"}
-            acceptAllButtonText={state.theme.lang === 'it' && "Accetta Tutti"}
-            acceptSelectionButtonText={state.theme.lang === 'it' && "Accetta Selezione"}
+            {...italianLabels}
             showAcceptSelectionButton
             showMarketingOption={false}
             showPreferencesOption={false}
@@ -50,16 +54,21 @@ const CookieConsent = ({libraries, state}) => {
                     maxWidth: '960px',
                     marginLeft: 'auto',
                     marginRight: 'auto',
-                    overflow: 'hidden',
                     background: 'white',
                     padding: '10px 40px 40px',
-                    marginTop: '100px',
+                    marginTop: '10%',
+                    maxHeight: '80%',
+                    overflowY: 'scroll'
                 },
                 optionLabel: {
                     color: 'black',
                     paddingLeft: '25px',
                     lineHeight: '30px',
                 },
+                policy: {
+                    display: 'block',
+                    marginBottom: '10px'
+                }
             }}
         />
     )
