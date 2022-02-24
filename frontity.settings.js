@@ -98,20 +98,6 @@ const packages = (lang) => [
 ]
 
 const settings = [
-  {
-    "name": `${NAME}-${mainLanguage}`,
-    "state": {
-      "frontity": {
-        url: URL,
-        "title": TITLE,
-        "description": DESCRIPTION
-      },
-      "theme": {
-        "lang": mainLanguage
-      }
-    },
-    packages: packages(mainLanguage),
-  },
   ...otherLanguages.map(lang => (
       {
         "name": `${NAME}-${lang}`,
@@ -128,7 +114,21 @@ const settings = [
         },
         packages: packages(lang),
       }
-  ))
+  )),
+  {
+    "name": `${NAME}-${mainLanguage}`,
+    "state": {
+      "frontity": {
+        url: URL,
+        "title": TITLE,
+        "description": DESCRIPTION
+      },
+      "theme": {
+        "lang": mainLanguage
+      }
+    },
+    packages: packages(mainLanguage),
+  }
 ];
 
 export default settings;
