@@ -86,8 +86,8 @@ const Theme = ({ state }) => {
               </Switch>
               {!data.isFetching && <Footer />}
               <TuoTempo />
+              {state.theme.baseLink !== '/privacy-policy-cookies/' && <CookieConsent />}
               {/*{cookies.get('rcl_consent_given') && <Newsletter />}*/}
-              <CookieConsent />
           </>
       )}
     </ThemeProvider>

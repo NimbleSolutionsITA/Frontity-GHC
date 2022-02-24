@@ -89,8 +89,9 @@ const StrutturaCard = connect(({regione, actions, state}) => {
     )
 })
 
-const Strutture = ({ state, actions, libraries }) => {
+const Strutture = ({ state, libraries }) => {
     const classes = useStyles()
+    const Html2React = libraries.html2react.Component;
     const strutture = Object.keys(state.source.strutture).map(id => state.source.strutture[id])
     const getRegioni = () => {
         let regions = {}
@@ -105,13 +106,13 @@ const Strutture = ({ state, actions, libraries }) => {
     return (
         <div>
             <Typography style={{fontWeight: 'bold', textAlign: 'center', margin: '32px 0'}} variant="h1">
-                Le nostre strutture
+                {state.theme.options.struttureTitle}
             </Typography>
             {strutture ? (
                 <Grid container spacing={5}>
                     <Grid item md={7} lg={8}>
                         <div className={classes.content}>
-                            <p><strong>GHC s.p.a.</strong> è la prima ed unica realtà privata sanitaria italiana ad essere quotata sul segmento <strong>Euronext STAR di Borsa Italiana</strong> ed opera attraverso&nbsp;<strong>28 strutture di eccellenza</strong>, situate in<strong>&nbsp;8 regioni italiane</strong>.</p>
+                            <Html2React html={state.theme.options.struttureBodyTop} />
                             {Object.keys(regioni).map(reg => (
                                 <Chip
                                     key={reg}
@@ -123,8 +124,7 @@ const Strutture = ({ state, actions, libraries }) => {
                                     }}
                                 />
                             ))}
-                            <p><strong>GHC s.p.a.</strong> offre un ampia gamma di servizi coprendo tutti i comparti del <strong>settore ospedaliero, territoriale e socio-assistenziale</strong>. Dalla chirurgia di altissima complessità a quella di media e bassa complessità, alla chirurgia e medicina d’urgenza, alla cardiologia clinica ed interventistica, alla riabilitazione motoria, neurologica, cardiologica e nutrizionale, alle RSA estensive ed intensive ai comi in stato vegetativo persistente, alla psichiatria ed ai centri diagnostici.</p>
-                            <p>L’uso di tecnologie all’avanguardia e la presenza di personale altamente qualificato, con professionisti riconosciuti al livello internazionale, garantiscono la massima qualità delle prestazioni erogate.</p>
+                            <Html2React html={state.theme.options.struttureBodyBottom} />
                         </div>
                     </Grid>
                     <Grid item md={5} lg={4}>
