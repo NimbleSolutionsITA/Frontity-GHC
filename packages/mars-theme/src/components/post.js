@@ -200,11 +200,11 @@ const Post = ({ state, actions, libraries }) => {
             {post.acf.newsCategory && <NewsComponent layout={post.acf.newsLayout} categorySlug={post.acf.newsCategory.slug} />}
             {post.acf.subsidiaries?.length > 0 && <Subsidiaries subsidiaries={post.acf.subsidiaries}/>}
             {post.acf.staff?.length > 0 && <Staff staff={post.acf.staff} bottomText={post.acf.bottomText && <Html2React html={post.acf.bottomText} />}/>}
-            {state.theme.options.tradingViewRelationsPages.find(id => id === data.id) && <TradingViewGHC />}
+            {state.theme.options.tradingViewRelationsPages?.find(id => id === data.id) && <TradingViewGHC />}
             {post.acf.eventi?.length > 0 && <Event lang={state.theme.lang} events={post.acf.eventi} />}
             {post.acf.linkedDocs?.length > 0 && <Documents documentTypes={post.acf.linkedDocs} hideBody={post.acf.hideBody}/>}
             {post.acf.ipoPopup && <Dialog message={post.acf.ipoPopup} />}
-            {state.theme.options.footerInvestorRelationsPages.find(pg => pg.ID === data.id) && (
+            {state.theme.options.footerInvestorRelationsPages?.find(pg => pg.ID === data.id) && (
                 <>
                     <Divider />
                     <Html2React html={state.theme.options.footerInvestorRelations} />

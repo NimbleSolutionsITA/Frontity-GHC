@@ -25,7 +25,7 @@ const NewsBanner = ({state, libraries, limit = 5}) => {
             length = cNews.length
         })
 
-        if (animationRef && animationRef.current) {
+        if (animationRef && length && animationRef.current) {
             animationRef.current.addEventListener("animationiteration", () => updateIndex(length))
             return animationRef.current.removeEventListener("animationiteration", () => updateIndex(length))
         }
@@ -34,11 +34,13 @@ const NewsBanner = ({state, libraries, limit = 5}) => {
     return (
         <div id="breaking-news-container">
             <Global styles={bannerStyles} />
-            <div ref={animationRef} className="breaking-news-headline fadein marquee">
-                <Button component={Link} link={allNews[index].link}>
-                    {decode(allNews[index].title.rendered)}
-                </Button>
-            </div>
+            {allNews.length && (
+                <div ref={animationRef} className="breaking-news-headline fadein marquee">
+                    <Button component={Link} link={allNews[index].link}>
+                        {decode(allNews[index].title.rendered)}
+                    </Button>
+                </div>
+            )}
         </div>
     )
 }

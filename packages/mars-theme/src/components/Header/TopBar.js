@@ -34,8 +34,15 @@ const TopBar = ({isHomepage, hasSlider, state}) => {
         <div style={{background: isHomepage ? 'linear-gradient(180deg, #F6F9FC -14.41%, #E1EEFE 54.12%)' : '#FFFFFF'}}>
             <Container>
                 <Grid container>
-                    <Grid item xs={0} sm={9} style={{position: 'relative'}}>
-                        <NewsBanner />
+                    <Grid item xs={9} style={{position: 'relative'}}>
+                        {!hasSlider && state.theme.options.logoGHC && (
+                            <Hidden xsDown>
+                                <a href="https://garofalohealthcare.com" target="_blank">
+                                    <img className={classes.logoGhcTop} src={state.theme.options.logoGHC.url} style={{height: isHomepage ? '60px' : '30px'}} alt={state.theme.options.logoGHC.filename}/>
+                                </a>
+                            </Hidden>
+                        )}
+                        {hasSlider && <NewsBanner/>}
                     </Grid>
                     <Grid item xs={12} sm={3} className={classes.rightLinks}>
                         {topMenu.map(item => <Button key={item[1]} style={{fontWeight: 'normal', paddingTop: 0, paddingBottom: 0}} component={Link} link={item[1]}>{item[0]}</Button>)}

@@ -1,8 +1,20 @@
 import React from 'react'
 import {styled, connect, css, decode} from "frontity"
-import {Container, Grid, Typography, Button, Box, useMediaQuery} from "@material-ui/core"
-import Link from "@frontity/components/link";
+import {Container, Grid, Typography, Button, Box} from "@material-ui/core"
 // import {Facebook, LinkedIn} from "@material-ui/icons";
+
+
+const ContainerWrapper = styled(Box)`
+    padding: 32px 0;
+    // background-color: #375172;
+    color: #FFFFFF;
+`;
+
+const FooterLink = styled(Button)`
+    display: block !important;
+    color: #FFFFFF !important;
+    margin-bottom: 16px !important;
+`;
 
 const HHCredits = styled(Typography)`
   text-align: center;
@@ -19,16 +31,13 @@ const LogoGHC = styled.img`
   margin-right: 32px;
  `;
 
-const LogoBigGHC = styled.img`
-  padding: 0;
-  height: 60px;
+const Contacts = styled(Typography)`
+  padding-left: 16px;
 `;
 
 const LogoHH = styled.img`
   padding: 16px 0;
-  max-height: 24px;
-  max-width: 100%;
-  height: auto;
+  height: 24px;
 `;
 
 const HeartIcon = () => (
@@ -39,19 +48,14 @@ const HeartIcon = () => (
 
 const Footer = ({ state, actions, libraries }) => {
     const Html2React = libraries.html2react.Component;
-    const isSm = useMediaQuery(theme => theme.breakpoints.down('sm'))
     return (
-        <Box marginTop={{md: '8px', lg: '32px'}} padding="32px 0" color="#FFF" bgcolor="primary.main">
+        <ContainerWrapper marginTop={{md: '8px', lg: '32px'}} bgcolor="primary.main">
             <Container>
                 <Grid container justify="space-between">
                     <Grid item xs={12} sm={8}>
-                        {state.theme.options.logoGHCWhite && (
+                        {state.theme.options.logoGHCWhite&& (
                             <a href="https://garofalohealthcare.com" target="_blank">
-                                {state.theme.options.logoFooter ? (
-                                    <LogoGHC src={state.theme.options.logoGHCWhite.url} alt="Logo Garofalo Health Care"/>
-                                ) : (
-                                    <LogoBigGHC src={state.theme.options.logoGHCWhite.url} alt="Logo Garofalo Health Care"/>
-                                )}
+                                <LogoGHC src={state.theme.options.logoGHCWhite.url} alt="Logo Garofalo Health Care"/>
                             </a>
                         )}
                         {state.theme.options.logoFooter && <LogoHH src={state.theme.options.logoFooter.url} alt="Logo Istituto Raffaele Garofalo"/>}
@@ -67,34 +71,22 @@ const Footer = ({ state, actions, libraries }) => {
                 </Grid>
                 <Grid container style={{margin: '16px 0'}}>
                     <Grid item container xs={12} md={9}>
-                        {state.source.strutture && Object.keys(state.source.strutture).map(id => {
-                            const {acf: {website, logo: {url}}, title: {rendered}, featured_media} = state.source.strutture[id]
-                            return (
-                                <Grid key={website} item xs={12} sm={6} md={4}>
-                                    <Button
-                                        style={{color: 'white'}}
-                                        startIcon={<img height="30px" src={url} alt={'logo '+rendered} />}
-                                        component={Link}
-                                        link={website}
-                                        target="_blank"
-                                    >
-                                        {decode(rendered)}
-                                    </Button>
-                                </Grid>
-                            )
-                        })}
+                        {state.theme.menus.footer.map(itm => (
+                            <Grid key={itm[1]} item xs={12} md={4}>
+                                <FooterLink onClick={() => actions.router.set(state.theme.urlPrefix+itm[1])}>
+                                    {decode(itm[0])}
+                                </FooterLink>
+                            </Grid>
+                        ))}
                     </Grid>
-                    <Grid item xs={12} md={3} style={{[isSm ? 'borderTop' : 'borderLeft']: '1px solid #FFFFFF', marginTop: isSm && '20px'}}>
-                        <Typography style={{paddingLeft: !isSm && '16px'}} variant="body2">
-                            <ul>
-                                {state.theme.options.contactsFooter && state.theme.options.contactsFooter.map(ct => (
-                                    <li key={ct.label+ct.value}>
-                                        {ct.label}{ct.value && ': '}<b>{ct.value}</b>
-                                    </li>
-                                ))}
-                            </ul>
-
-                        </Typography>
+                    <Grid item xs={12} md={3} css={css`border-left: 1px solid #FFFFFF;`}>
+                        <Contacts variant="body2">
+                            {state.theme.options.contactsFooter && state.theme.options.contactsFooter.map(ct => (
+                                <>
+                                    {ct.label}{ct.value && ': '}<b>{ct.value}</b><br />
+                                </>
+                            ))}
+                        </Contacts>
                     </Grid>
                 </Grid>
                 <HHCredits variant="body2">
@@ -104,7 +96,7 @@ const Footer = ({ state, actions, libraries }) => {
                     Made with <HeartIcon /> by <a href="https://www.nimble-solutions.com" target="_blank">Nimble Solutions</a>
                 </NimbleCredits>
             </Container>
-        </Box>
+        </ContainerWrapper>
     )
 }
 

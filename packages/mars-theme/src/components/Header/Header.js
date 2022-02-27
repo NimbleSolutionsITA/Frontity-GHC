@@ -5,6 +5,7 @@ import {
     Hidden,
 } from "@material-ui/core";
 import MenuBar from "./MenuBar";
+import HomeBanner from "./HomeBanner";
 import TopBar from "./TopBar";
 import HomeSlider from "./HomeSlider";
 
@@ -24,14 +25,16 @@ const Header = ({ state }) => {
     const openMenu = () => setOpenMobileMenu(true)
 
     // const menu = state.theme.menus.main.slice(0, -1)
-    // const lastItem = [...state.theme.menus.main].pop()
+    const lastItem = [...state.theme.menus.main].pop()
 
     return (
       <>
           <div ref={appBarRef}>
               <TopBar hasSlider={state.theme.options.hasSlider} isHomepage={state.theme.isHomepage} />
               {state.theme.isHomepage && (
-                  <HomeSlider />
+                  <Hidden smDown>
+                      {state.theme.options.hasSlider ? <HomeSlider /> : <HomeBanner lastItem={lastItem} /> }
+                  </Hidden>
               )}
           </div>
           <MenuBar
@@ -42,7 +45,7 @@ const Header = ({ state }) => {
               setOpenMobileMenu={setOpenMobileMenu}
               openMobileMenu={openMobileMenu}
               openMenu={openMenu}
-              // lastItem={lastItem}
+              lastItem={lastItem}
           />
       </>
     );
