@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import translations from "../../../translations";
-import {MenuItem, Select, TextField} from "@material-ui/core";
+import {Box, MenuItem, Select, TextField} from "@material-ui/core";
 
 
 function getCurrentMonthName(month, lang) {
@@ -36,7 +36,13 @@ const Filters = ({documents, setFilteredDocuments, id, lang, routerLink}) => {
     }, [month, year, search, routerLink])
 
     return (
-        <div style={{marginTop: '20px', display: 'flex', justifyContent: 'space-between', alignItems: "center"}}>
+        <Box
+            marginTop="20px"
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            flexDirection={{xs: 'column-reverse', md: 'row'}}
+        >
             <TextField
                 fullWidth
                 style={{maxWidth: '750px'}}
@@ -45,7 +51,7 @@ const Filters = ({documents, setFilteredDocuments, id, lang, routerLink}) => {
                 variant="outlined"
                 placeholder={translations(lang, 'search')}
             />
-            <div style={{display: 'flex'}}>
+            <Box display="flex" marginBottom={{xs: '20px', md: 0}}>
                 {months.length > 1 && (
                     <Select
                         style={{margin: '0 30px'}}
@@ -73,8 +79,8 @@ const Filters = ({documents, setFilteredDocuments, id, lang, routerLink}) => {
                         ))}
                     </Select>
                 )}
-            </div>
-        </div>
+            </Box>
+        </Box>
     )
 }
 

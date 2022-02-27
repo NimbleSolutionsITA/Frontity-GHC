@@ -18,7 +18,7 @@ const customStyles = css`
 }
 `
 
-const HorizontalSlider = ({children, xs=1, sm=2, md=3, lg=4, navigation, lang, ...props}) => {
+const HorizontalSlider = ({children, xs=1, sm=2, md=3, lg=4, navigation, lang, scrollTo, ...props}) => {
     const [prevEl, setPrevEl] = useState(null)
     const [nextEl, setNextEl] = useState(null)
     const swiperRef = useRef(null)
@@ -44,6 +44,11 @@ const HorizontalSlider = ({children, xs=1, sm=2, md=3, lg=4, navigation, lang, .
         left: 0,
         behavior: 'smooth'
     })
+
+    useEffect(() => {
+        if (scrollTo)
+            scrollTo.current = scrollToTop
+    }, [])
 
 
     return (

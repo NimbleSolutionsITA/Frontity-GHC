@@ -1,7 +1,17 @@
 import React from "react";
 import { connect, decode } from "frontity";
-import { Button, Menu, MenuItem, Hidden, makeStyles } from "@material-ui/core";
+import {
+    Button,
+    Menu,
+    MenuItem,
+    Hidden,
+    makeStyles,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails
+} from "@material-ui/core";
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles((theme) => ({
     ItemWrapper: {
@@ -11,6 +21,22 @@ const useStyles = makeStyles((theme) => ({
             margin: '8px 0'
         }
     },
+    accordionDetails: {
+        flexDirection: 'column'
+    },
+    accordionRoot: {
+        '&:before': {
+            opacity: 0
+        },
+        '&.Mui-expanded': {
+            margin: 0
+        }
+    },
+    accordionSummaryContent: {
+        '&.Mui-expanded': {
+            margin: '12px 0'
+        }
+    }
 }))
 
 /**
@@ -43,8 +69,8 @@ const NavItem = ({ state, actions, link, closeMenu }) => {
 
     return Array.isArray(link[1]) ? (
         <>
-            <div className={classes.ItemWrapper}>
-                <Hidden smDown>
+            <Hidden smDown>
+                <div className={classes.ItemWrapper}>
                     <Button aria-haspopup="true" onClick={handleClick} endIcon={<ArrowDropDownIcon />}>
                         {decode(link[0])}
                     </Button>
@@ -60,21 +86,30 @@ const NavItem = ({ state, actions, link, closeMenu }) => {
                             </MenuItem>
                         )}
                     </Menu>
-                </Hidden>
-                <Hidden mdUp>
-                    <Button disabled style={{color: '#000000'}} aria-haspopup="true">
-                        {decode(link[0])}
-                    </Button>
-                </Hidden>
-            </div>
+                </div>
+            </Hidden>
             <Hidden mdUp>
-                {link[1].map(item =>
-                    <div className={classes.ItemWrapper} key={item[1]} style={{marginLeft: '40px'}}>
-                        <Button aria-haspopup="true" color={isCurrentPage(item[1]) ? 'primary' : 'default'} onClick={() => handleClickSubItemMobile(item[1])}>
-                            {decode(item[0])}
-                        </Button>
-                    </div>
-                )}
+                <Accordion elevation={0} square classes={{root: classes.accordionRoot}}>
+                    <AccordionSummary
+                        classes={{content: classes.accordionSummaryContent}}
+                        expandIcon={<ExpandMoreIcon />}
+                    >
+                        <div className={classes.ItemWrapper}>
+                            <Button disabled style={{color: '#000000'}} aria-haspopup="true">
+                                {decode(link[0])}
+                            </Button>
+                        </div>
+                    </AccordionSummary>
+                    <AccordionDetails classes={{root: classes.accordionDetails}}>
+                        {link[1].map(item =>
+                            <div className={classes.ItemWrapper} key={item[1]} style={{marginLeft: '40px'}}>
+                                <Button aria-haspopup="true" color={isCurrentPage(item[1]) ? 'primary' : 'default'} onClick={() => handleClickSubItemMobile(item[1])}>
+                                    {decode(item[0])}
+                                </Button>
+                            </div>
+                        )}
+                    </AccordionDetails>
+                </Accordion>
             </Hidden>
         </>
     ) : (

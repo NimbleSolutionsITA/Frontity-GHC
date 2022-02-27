@@ -25,10 +25,24 @@ const useStyles = makeStyles((theme) => ({
         padding: '40px',
         width: '45%',
         color: 'white',
+        [theme.breakpoints.down('sm')]: {
+            padding: '30px',
+        },
+        [theme.breakpoints.down('xs')]: {
+            padding: '20px',
+        },
         '& h1': {
             fontSize: '32px',
             lineHeight: '40px',
             textTransform: 'uppercase',
+            [theme.breakpoints.down('sm')]: {
+                fontSize: '20px',
+                lineHeight: '24px',
+            },
+            [theme.breakpoints.down('xs')]: {
+                fontSize: '12px',
+                lineHeight: '16px',
+            }
         },
         '& strong': {
             color: ({accentColor}) => accentColor || theme.palette.primary.main
@@ -45,6 +59,11 @@ const useStyles = makeStyles((theme) => ({
     },
     logo: {
         width: '60%'
+    },
+    textHideMobile: {
+        [theme.breakpoints.down('sm')]: {
+            display: 'none'
+        }
     }
 }));
 
@@ -93,7 +112,9 @@ const HomeSlider = ({state, libraries}) => {
                                 <div className={classes.textWrapper}>
                                     {state.theme.options.slider.logo && <img className={classes.logo} src={state.theme.options.slider.logo.url} alt={state.theme.options.slider.logo.filename}/>}
                                     <Html2React html={slide.slideTitle} />
-                                    {slide.slideSubtitle}
+                                    <div className={classes.textHideMobile}>
+                                        {slide.slideSubtitle}
+                                    </div>
                                 </div>
                             </div>
                         </SwiperSlide>

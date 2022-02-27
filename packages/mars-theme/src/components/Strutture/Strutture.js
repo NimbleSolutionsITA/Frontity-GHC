@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import {
     Card, CardActionArea, CardContent, CardMedia,
     Chip,
@@ -103,35 +103,43 @@ const Strutture = ({ state, libraries }) => {
     const regioni = {'Tutte': strutture.length, ...getRegioni()}
     const [currentRegione, setCurrentRegione] = useState('Tutte')
 
+    const scrollToTop = useRef(null)
+
+    const handleChangeRegione = (regione) => {
+        if (scrollToTop.current)
+            scrollToTop.current()
+        setCurrentRegione(regione)
+    }
+
     return (
         <div>
             <Typography style={{fontWeight: 'bold', textAlign: 'center', margin: '32px 0'}} variant="h1">
-                {state.theme.options.struttureTitle}
+                {state.theme.options.interactiveMap.struttureTitle}
             </Typography>
             {strutture ? (
                 <Grid container spacing={5}>
                     <Grid item md={7} lg={8}>
                         <div className={classes.content}>
-                            <Html2React html={state.theme.options.struttureBodyTop} />
+                            <Html2React html={state.theme.options.interactiveMap.struttureBodyTop} />
                             {Object.keys(regioni).map(reg => (
                                 <Chip
                                     key={reg}
                                     label={`${reg} (${['Tutte', 'Liguria'].includes(reg) ? regioni[reg] + 10 : regioni[reg]})`}
-                                    onClick={() => setCurrentRegione(reg)}
+                                    onClick={() => handleChangeRegione(reg)}
                                     style={{
                                         margin: '8px',
                                         backgroundColor: ['Tutte', reg].includes(currentRegione) ? 'rgba(31, 64, 125, 0.2)' : 'rgba(31, 64, 125, 0.05)'
                                     }}
                                 />
                             ))}
-                            <Html2React html={state.theme.options.struttureBodyBottom} />
+                            <Html2React html={state.theme.options.interactiveMap.struttureBodyBottom} />
                         </div>
                     </Grid>
                     <Grid item md={5} lg={4}>
-                        <ItalyMap regioni={regioni} currentRegione={currentRegione} setCurrentRegione={setCurrentRegione}/>
+                        <ItalyMap regioni={regioni} currentRegione={currentRegione} setCurrentRegione={handleChangeRegione}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <HorizontalSlider lang={state.theme.lang} modules={[Navigation, Pagination]}>
+                        <HorizontalSlider scrollTo={scrollToTop} lang={state.theme.lang} modules={[Navigation, Pagination]}>
                             {strutture.filter(st => currentRegione === 'Tutte' || st.acf.indirizzo.state === currentRegione).map((regione, index) => (
                                 <SwiperSlide key={regione.id} virtualIndex={index}>
                                     <StrutturaCard regione={regione} />

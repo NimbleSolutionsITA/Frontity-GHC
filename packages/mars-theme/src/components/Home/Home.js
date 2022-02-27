@@ -2,12 +2,12 @@ import React from 'react'
 import {connect} from "frontity"
 import {Button, Container} from "@material-ui/core"
 import AlertBox from "./AlertBox";
-import {pagesMap} from "../../config";
 // import NewsGrid from "../Articles/NewsGrid";
 // import NewsVerticalList from "../Articles/NewsVerticalList";
 import translations from "../../translations";
 import NewsGrid from "../Articles/NewsGrid";
 import Strutture from "../Strutture/Strutture";
+import Kpis from "../Widgets/Kpis";
 
 const Home = ({ state, actions, libraries }) => {
     const data = state.source.get(state.router.link);
@@ -33,6 +33,9 @@ const Home = ({ state, actions, libraries }) => {
             </Container>
             <Container>
                 <Strutture />
+            </Container>
+            <Kpis />
+            <Container>
                 <NewsGrid categorySlug="news" slideMode showTitle />
                 {/*<NewsVerticalList categorySlug="featured" />*/}
                 <div style={{margin: '32px', textAlign: 'center'}}>

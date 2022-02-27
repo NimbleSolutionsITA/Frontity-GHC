@@ -5,7 +5,6 @@ import {
     Hidden,
 } from "@material-ui/core";
 import MenuBar from "./MenuBar";
-import HomeBanner from "./HomeBanner";
 import TopBar from "./TopBar";
 import HomeSlider from "./HomeSlider";
 
@@ -32,10 +31,7 @@ const Header = ({ state }) => {
           <div ref={appBarRef}>
               <TopBar hasSlider={state.theme.options.hasSlider} isHomepage={state.theme.isHomepage} />
               {state.theme.isHomepage && (
-                  <Hidden smDown>
-                      {/*{state.theme.options.hasSlider ? <HomeSlider /> : <HomeBanner lastItem={lastItem} /> }*/}
-                      <HomeSlider />
-                  </Hidden>
+                  <HomeSlider />
               )}
           </div>
           <MenuBar

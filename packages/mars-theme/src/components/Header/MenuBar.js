@@ -1,18 +1,15 @@
 import {connect} from "frontity";
 import {
     AppBar,
-    Box,
     Button,
     Container,
     Hidden,
     IconButton,
     makeStyles,
-    SwipeableDrawer,
+    Drawer,
     Toolbar
 } from "@material-ui/core";
-import {pagesMap} from "../../config";
 import MenuIcon from "@material-ui/icons/Menu";
-import logoSmall from "../../../assets/logo-small.png";
 import {CloseIcon} from "../menu-icon";
 import NavItem from "./NavItem";
 
@@ -21,13 +18,13 @@ const useStyles = makeStyles((theme) => ({
         height: '44px',
     },
     appBarLogoDrawer: {
-        width: '32px',
+        height: '32px',
         position: 'absolute',
         top: '24px',
         left: '36px',
     },
     drawer: {
-        height: '100vh',
+        height: 'calc(100vh - 88px)',
         padding: '64px 24px 24px'
     },
     closeIcon: {
@@ -62,12 +59,11 @@ const MenuBar = ({isHomepage, isNavBarTop, actions, menu, closeMenu, setOpenMobi
                         <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => setOpenMobileMenu(!openMobileMenu)}>
                             <MenuIcon />
                         </IconButton>
-                        <SwipeableDrawer classes={{paper: classes.drawer}} anchor="top" open={openMobileMenu} onOpen={openMenu} onClose={closeMenu} >
-                            <img className={classes.appBarLogoDrawer} src={logoSmall} alt="Logo Istituto Raffaele Garofalo"/>
+                        <Drawer classes={{paper: classes.drawer}} anchor="top" open={openMobileMenu} onOpen={openMenu} onClose={closeMenu} >
+                            <img className={classes.appBarLogoDrawer} src={state.theme.options.logoHeadSmall.url} alt="Logo Istituto Raffaele Garofalo"/>
                             <IconButton color="inherit" onClick={closeMenu} className={classes.closeIcon}><CloseIcon size="16px" /></IconButton>
                             {menu.map(menuItem => <NavItem closeMenu={closeMenu} key={menuItem[1]} link={menuItem} />)}
-                            <NavItem closeMenu={closeMenu} link={['Prenota', '/prenota']} />
-                        </SwipeableDrawer>
+                        </Drawer>
                         {/*{lastItem && (
                             <Box margin="0 auto" display="flex" justifyContent="space-evenly" width="100%">
                                 <Button onClick={() => actions.router.set(lastItem[1])} variant={"contained"}
