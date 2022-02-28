@@ -1,6 +1,7 @@
 import {connect} from "frontity";
 import {Button, Container, Grid, makeStyles, Typography} from "@material-ui/core";
 import PhoneIcon from "../icons/Phone";
+import HomeBannerSlider from "./HomeBannerSlider";
 
 const useStyles = makeStyles((theme) => ({
     homeBannerWrapper: {
@@ -53,9 +54,9 @@ const HomeBanner = ({libraries, actions, lastItem, state}) => {
                             <Typography color="secondary" className={classes.homeBannerDescription}>
                                 {state.theme.options.banner.description}
                             </Typography>
-                            {/*<Button onClick={() => window.open('https://wp.hesperia.it/wp-content/uploads/2021/03/modalita%CC%80-prenotazione.pdf','_blank')} variant="contained" color="secondary" disableElevation>
-                                          {translations(state.theme.lang, 'prenotareUnaVisita')}
-                                      </Button>*/}
+                                {/*<Button onClick={() => window.open('https://wp.hesperia.it/wp-content/uploads/2021/03/modalita%CC%80-prenotazione.pdf','_blank')} variant="contained" color="secondary" disableElevation>
+                                    {translations(state.theme.lang, 'prenotareUnaVisita')}
+                                </Button>*/}
                             <Grid container justifyContent="center">
                                 <Grid item xs={12} sm={6}>
                                     <Button onClick={() => actions.router.set(lastItem[1])} variant="contained" color="secondary" disableElevation>
@@ -63,15 +64,15 @@ const HomeBanner = ({libraries, actions, lastItem, state}) => {
                                     </Button>
                                 </Grid>
                                 {/*<Grid item xs={12} sm={6}>
-                                              <Button onClick={() => actions.router.set('/prenota', {state: {params: '#login'}})} variant="outlined" color="secondary" disableElevation>
-                                                  {translations(state.theme.lang, 'refertiOnline')}
-                                              </Button>
-                                          </Grid>*/}
+                                  <Button onClick={() => actions.router.set('/prenota', {state: {params: '#login'}})} variant="outlined" color="secondary" disableElevation>
+                                      {translations(state.theme.lang, 'refertiOnline')}
+                                  </Button>
+                                </Grid>*/}
                             </Grid>
                             <Typography variant="h3"  className={classes.homeBannerPhoneText}>
-                                        <span className={classes.homeBannerPhone}>
-                                            <PhoneIcon style={{height: '18px'}} />
-                                        </span>
+                                <span className={classes.homeBannerPhone}>
+                                    <PhoneIcon style={{height: '18px'}} />
+                                </span>
                                 {state.theme.options.banner.phone}
                             </Typography>
                             <Typography color="secondary">
@@ -79,10 +80,14 @@ const HomeBanner = ({libraries, actions, lastItem, state}) => {
                             </Typography>
                         </Grid>
                         <Grid item xs={7} style={{position: 'relative'}}>
-                            <div
-                                className={classes.bannerHomeImage}
-                                style={{backgroundImage: `url(${state.theme.options.banner.photo.url})`}}
-                            />
+                            {state.theme.options.banner.photo.length === 1 ? (
+                                <div
+                                    className={classes.bannerHomeImage}
+                                    style={{backgroundImage: `url(${state.theme.options.banner.photo.url})`}}
+                                />
+                            ) : (
+                                <HomeBannerSlider />
+                            )}
                         </Grid>
                     </Grid>
                 </Container>

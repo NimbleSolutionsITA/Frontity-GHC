@@ -121,7 +121,7 @@ const ArticlesSliderView = ({ state, libraries, actions, categorySlug, mixedMode
             <Global styles={swiperVirtualCss} />
             {showTitle && (
                 <Typography align="center" variant="h1"
-                            style={{fontWeight: 'bold', marginBottom: '32px'}}>{category.name}</Typography>
+                            style={{fontWeight: 'bold', marginTop: '32px', marginBottom: '32px'}}>{category.name}</Typography>
             )}
             <Swiper
                 modules={[Navigation, Pagination]}

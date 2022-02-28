@@ -15,10 +15,10 @@ const useStyles = makeStyles((theme) => ({
     },
     logoHH: {
         textAlign: 'center',
-        marginTop: '-32px',
+        marginTop: '-50px',
         paddingBottom: '16px',
         '& img': {
-            height: '75px',
+            height: '100px',
         },
         [theme.breakpoints.down('sm')]: {
             marginTop: '-8px',

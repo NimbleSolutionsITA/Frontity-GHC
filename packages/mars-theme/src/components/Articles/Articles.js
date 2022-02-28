@@ -8,9 +8,9 @@ const Articles = () => {
 
     return (
         <Container>
-            <ArticlesSliderView categorySlug="featured" />
-            <NewsVerticalList categorySlug="novita" />
-            <NewsGrid categorySlug="news"/>
+            <ArticlesSliderView showTitle categorySlug="featured" />
+            <NewsVerticalList showTitle categorySlug="novita" />
+            <NewsGrid showTitle categorySlug="news"/>
         </Container>
     )
 }

@@ -74,7 +74,7 @@ const NewsVerticalList = ({ state, libraries, actions, size = 3, categorySlug, s
         <div className={classes.wrapper}>
             {showTitle && (
                 <Typography align="center" variant="h1"
-                            style={{fontWeight: 'bold', marginBottom: '32px'}}>{category.name}</Typography>
+                            style={{fontWeight: 'bold', marginTop: '32px', marginBottom: '32px'}}>{category.name}</Typography>
             )}
             <Grid container spacing={4}>
                 {slideChunks && slideChunks.length > 0 ? slideChunks[0].map((info, index) => (

@@ -73,7 +73,7 @@ const NewsGrid = ({
     return (
         <div style={{padding: '32px 0'}}>
             {showTitle && (
-                <Typography align="center" variant="h1" style={{fontWeight: 'bold', marginBottom: '32px'}}>{category.name}</Typography>
+                <Typography align="center" variant="h1" style={{fontWeight: 'bold', marginTop: '32px', marginBottom: '32px'}}>{category.name}</Typography>
             )}
 
             {allNews && allNews.length > 0 ? (

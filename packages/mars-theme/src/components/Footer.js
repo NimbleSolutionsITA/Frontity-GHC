@@ -1,8 +1,15 @@
 import React from 'react'
 import {styled, connect, css, decode} from "frontity"
-import {Container, Grid, Typography, Button, Box} from "@material-ui/core"
-// import {Facebook, LinkedIn} from "@material-ui/icons";
+import {Container, Grid, Typography, Button, Box, IconButton, makeStyles} from "@material-ui/core"
+import {Facebook, LinkedIn, YouTube, Instagram} from "@material-ui/icons";
 
+const useStyles = makeStyles((theme) => ({
+    socials: {
+        [theme.breakpoints.up('sm')]: {
+            textAlign: 'right'
+        }
+    }
+}));
 
 const ContainerWrapper = styled(Box)`
     padding: 32px 0;
@@ -46,8 +53,16 @@ const HeartIcon = () => (
     </svg>
 )
 
+const socialIconsMap = {
+    facebook: <Facebook />,
+    linkedin: <LinkedIn />,
+    youtube: <YouTube />,
+    instagram: <Instagram />
+}
+
 const Footer = ({ state, actions, libraries }) => {
     const Html2React = libraries.html2react.Component;
+    const classes = useStyles()
     return (
         <ContainerWrapper marginTop={{md: '8px', lg: '32px'}} bgcolor="primary.main">
             <Container>
@@ -60,14 +75,13 @@ const Footer = ({ state, actions, libraries }) => {
                         )}
                         {state.theme.options.logoFooter && <LogoHH src={state.theme.options.logoFooter.url} alt="Logo Istituto Raffaele Garofalo"/>}
                     </Grid>
-                    {/*<Grid item xs={12} sm={4} classes={{root: classes.socials}}>
-                        <IconButton href="https://www.facebook.com/hesperiahospital" target="_blank" edge="start">
-                            <Facebook />
-                        </IconButton>
-                        <IconButton href="https://www.linkedin.com/company/6907246" target="_blank" edge="end">
-                            <LinkedIn />
-                        </IconButton>
-                    </Grid>*/}
+                    <Grid item xs={12} sm={4} classes={{root: classes.socials}}>
+                        {state.theme.options.social && state.theme.options.social.map(social => (
+                            <IconButton href={social.link} target="_blank" edge="start">
+                                {socialIconsMap[social.nome]}
+                            </IconButton>
+                        ))}
+                    </Grid>
                 </Grid>
                 <Grid container style={{margin: '16px 0'}}>
                     <Grid item container xs={12} md={9}>
