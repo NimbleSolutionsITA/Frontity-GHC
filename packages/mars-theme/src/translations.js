@@ -11,6 +11,7 @@ const translations = (lang, key) => {
         prenotareUnaVisita: ['Prenota una visita', 'Book a visit'],
         tutteLeNotizie: ['Tutte le News', 'All the News'],
         cercaUnaPrestazione: ['Cerca una prestazione', 'Find a service'],
+        cercaUnaInformazione: ['Cerca una info', 'Find a practical info'],
         oppureClicca: ["Oppure clicca sull'iniziale", 'Or click on the intial letter'],
         vaiAiMedici: ['Vai i medici', "Go to Doctor's page"],
         daSapere: ['Da sapere', 'To know'],

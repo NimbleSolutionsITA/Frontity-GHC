@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import {
     Grid,
     Container,
@@ -18,6 +18,7 @@ import Loading from "../loading";
 
 const Doctors = ({ state, actions, libraries }) => {
     const [onlyHead, setOnlyHead] = useState(false)
+    const letterRef = useRef([])
     const data = state.source.get(state.router.link);
     const post = state.source[data.type][data.id];
     const serviceId = state.router.state;
@@ -99,21 +100,28 @@ const Doctors = ({ state, actions, libraries }) => {
 
     const handleChange = (event) => {
         setSearchWord(event.target.value)
-        if (event.target.value.length > 0)
-            setDoctorsChunks(doctors.length > LETTERS_MIN_AMOUNT ? alphabet.map(letter => {
-                return {
-                    letter,
-                    doctors: doctors.filter(doctor => doctor.title.rendered.startsWith(letter) && doctor.title.rendered.toLowerCase().indexOf(event.target.value.toLowerCase()) > -1)
-                }
-            }).filter(letterChunk => letterChunk.doctors.length > 0) : [{letter: '#', doctors: doctors.filter(doctor => doctor.title.rendered.toLowerCase().indexOf(event.target.value.toLowerCase()) > -1)}])
+        if (event.target.value.length > 0) {
+            const currentDoctors = doctors.filter(doctor => doctor.title.rendered.toLowerCase().indexOf(event.target.value.toLowerCase()) > -1)
+            setDoctorsChunks(currentDoctors.length > LETTERS_MIN_AMOUNT ? alphabet.map(letter => ({
+                letter,
+                doctors: currentDoctors.filter(doctor => doctor.title.rendered.startsWith(letter))
+            })).filter(letterChunk => letterChunk.doctors.length > 0) : [{
+                letter: '#',
+                doctors: doctors.filter(doctor => doctor.title.rendered.toLowerCase().indexOf(event.target.value.toLowerCase()) > -1)
+            }])
+        }
         else
-            setDoctorsChunks(doctors.length > LETTERS_MIN_AMOUNT ? alphabet.map(letter => {
-                return {
-                    letter,
-                    doctors: doctors.filter(doctor => doctor.title.rendered.replace('Dr. ', '').replace('Dr.ssa ', '').startsWith(letter))
-                }
-            }).filter(letterChunk => letterChunk.doctors.length > 0) : [{letter: '#', doctors}])
+            setDoctorsChunks(doctors.length > LETTERS_MIN_AMOUNT ? alphabet.map(letter => ({
+                letter,
+                doctors: doctors.filter(doctor => doctor.title.rendered.replace('Dr. ', '').replace('Dr.ssa ', '').startsWith(letter))
+            })).filter(letterChunk => letterChunk.doctors.length > 0) : [{letter: '#', doctors}])
     }
+
+    const scrollTo = (letter) => window.scrollTo({
+        top: letterRef.current[letter].getBoundingClientRect().y - 100,
+        left: 0,
+        behavior: 'smooth'
+    })
 
     return (
         <Container>
@@ -139,7 +147,7 @@ const Doctors = ({ state, actions, libraries }) => {
                                     '')}</Typography>
                                 <div style={{margin: '16px 0', textAlign: 'center'}}>
                                     {doctorsChunks.map(chunk => filterDoctors(currentTags, chunk).length > 0 && (
-                                        <Button key={chunk.letter} component="a" href={`${state.router.link}#${chunk.letter}`}>{chunk.letter}</Button>
+                                        <Button key={chunk.letter} component="a" onClick={() => scrollTo(chunk.letter)}>{chunk.letter}</Button>
                                     ))}
                                 </div>
                             </Grid>
@@ -191,9 +199,16 @@ const Doctors = ({ state, actions, libraries }) => {
                     </div>
                     {doctorsChunks.map((chunk) => filterDoctors(currentTags, chunk).length > 0 && (
                         <div key={chunk.letter} style={{position: 'relative'}}>
-                            {doctors.length > LETTERS_MIN_AMOUNT && (<>
-                                <div style={{position: 'absolute', top: '-90px', width: '1px', height: '1px'}} id={chunk.letter} />
-                                <Typography color="primary" variant="h5" style={{fontWeight: 'bold', paddingLeft: '16px'}}>{chunk.letter}</Typography>
+                            {doctors.length > LETTERS_MIN_AMOUNT && chunk.letter !== '#' && (<>
+                                <div style={{position: 'absolute', top: '-90px', width: '1px', height: '1px'}} />
+                                <Typography
+                                    ref={(el) => letterRef.current[chunk.letter] = el}
+                                    color="primary"
+                                    variant="h5"
+                                    style={{fontWeight: 'bold', paddingLeft: '16px'}}
+                                >
+                                    {chunk.letter}
+                                </Typography>
                                 <br/>
                             </>)}
                             <Grid container spacing={5}>
@@ -201,41 +216,14 @@ const Doctors = ({ state, actions, libraries }) => {
                                     .filter(doctor => searchWord ? doctor.title.rendered.toLowerCase().indexOf(searchWord.toLowerCase()) > -1 : true)
                                     .sort((a,b) => (a.title.rendered > b.title.rendered) ? 1 : ((b.title.rendered > a.title.rendered) ? -1 : 0))
                                     .map(doctor => doctor && (
-                                        <Grid key={doctor.id} item xs={12} sm={6} md={4} lg={3}>
-                                            <Card elevation={0}>
-                                                <CardActionArea>
-                                                    <CardMedia
-                                                        onClick={() => actions.router.set(doctor.link)}
-                                                        image={doctor["featured_media"] ? state.source.attachment[doctor["featured_media"]]['media_details']['sizes']['full']['source_url'] : state.theme.options.doctorDefault}
-                                                        style={{height: '300px'}}
-                                                    />
-                                                    <CardContent>
-                                                        <div onClick={() => actions.router.set(doctor.link)}>
-                                                            <Typography variant="h4" style={{fontWeight: 'bold'}}>
-                                                                {doctor.acf.doctorsHead && <SupervisedUserCircleRoundedIcon style={{marginBottom: '-4px', marginRight: '4px', fontSize: '22px', lineHeight: '22px'}} />}
-                                                                {doctor.acf.abbreviazione} <Html2React html={doctor.title.rendered} />
-                                                            </Typography>
-                                                            <Typography style={{margin: '16px 0'}}>
-                                                                {doctor.acf.specialistica ? `Specialistica: ${doctor.acf.specialistica.map(s => s.name).join(', ')}` : doctor.acf.doctorActivity}
-                                                            </Typography>
-                                                        </div>
-                                                        <div style={{marginLeft: '-4px', width: 'calc(100% + 4px)'}}>
-                                                            {doctor.acf.prestazioni && doctor.acf.prestazioni.map(prestazione => (
-                                                                <Chip
-                                                                    key={prestazione.ID}
-                                                                    label={prestazione['post_title']}
-                                                                    onClick={() => actions.router.set(state.source.services[prestazione.ID].link)}
-                                                                    style={{
-                                                                        margin: '2px',
-                                                                        backgroundColor: 'rgba(31, 64, 125, 0.05)'
-                                                                    }}
-                                                                />
-                                                            ))}
-                                                        </div>
-                                                    </CardContent>
-                                                </CardActionArea>
-                                            </Card>
-                                        </Grid>
+                                        <DoctorCard
+                                            doctor={doctor}
+                                            onlClick={actions.router.set}
+                                            attachment={state.source.attachment}
+                                            services={state.source.services}
+                                            doctorDefault={state.theme.options.doctorDefault}
+                                            Html2React={Html2React}
+                                        />
                                     ))}
                             </Grid>
                             <br />
@@ -246,5 +234,43 @@ const Doctors = ({ state, actions, libraries }) => {
         </Container>
     )
 }
+
+const DoctorCard = ({doctor, onlClick, attachment, services, doctorDefault, Html2React}) => (
+    <Grid key={doctor.id} item xs={12} sm={6} md={4} lg={3}>
+        <Card elevation={0}>
+            <CardActionArea>
+                <CardMedia
+                    onClick={() => onlClick(doctor.link)}
+                    image={doctor["featured_media"] ? attachment[doctor["featured_media"]]['media_details']['sizes']['full']['source_url'] : doctorDefault}
+                    style={{height: '300px', backgroundPosition: 'top center'}}
+                />
+                <CardContent>
+                    <div onClick={() => onlClick(doctor.link)}>
+                        <Typography variant="h4" style={{fontWeight: 'bold'}}>
+                            {doctor.acf.doctorsHead && <SupervisedUserCircleRoundedIcon style={{marginBottom: '-4px', marginRight: '4px', fontSize: '22px', lineHeight: '22px'}} />}
+                            {doctor.acf.abbreviazione} <Html2React html={doctor.title.rendered} />
+                        </Typography>
+                        <Typography style={{margin: '16px 0'}}>
+                            {doctor.acf.specialistica ? `Specialistica: ${doctor.acf.specialistica.map(s => s.name).join(', ')}` : doctor.acf.doctorActivity}
+                        </Typography>
+                    </div>
+                    <div style={{marginLeft: '-4px', width: 'calc(100% + 4px)'}}>
+                        {doctor.acf.prestazioni && doctor.acf.prestazioni.map(prestazione => (
+                            <Chip
+                                key={prestazione.ID}
+                                label={prestazione['post_title']}
+                                onClick={() => onlClick(services[prestazione.ID].link)}
+                                style={{
+                                    margin: '2px',
+                                    backgroundColor: 'rgba(31, 64, 125, 0.05)'
+                                }}
+                            />
+                        ))}
+                    </div>
+                </CardContent>
+            </CardActionArea>
+        </Card>
+    </Grid>
+)
 
 export default connect(Doctors)

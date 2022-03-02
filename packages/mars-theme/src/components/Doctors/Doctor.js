@@ -15,7 +15,7 @@ const Doctor = ({ state, actions, libraries }) => {
 
     const DepartmentChips = () => (
         <div style={{marginLeft: '-8px', marginBottom: '16px', width: 'calc(100% + 8px)'}}>
-            {tags.map((tag) => (
+            {tags && tags.map((tag) => (
                 <Chip
                     key={tag.term_id}
                     label={tag.name}
@@ -36,7 +36,7 @@ const Doctor = ({ state, actions, libraries }) => {
                     <Html2React html={post.title.rendered} />
                 </Typography>
             </Hidden>
-            <Grid container spacing={5} style={{marginTop: '32px'}}>
+            <Grid container spacing={5} style={{marginTop: '32px', marginBottom: '32px'}}>
                 <Grid item xs={12} sm={5}>
                     <div style={{width: '100%',paddingBottom: '100%', backgroundSize: 'cover' ,backgroundImage: `url(${post["featured_media"] ? state.source.attachment[post["featured_media"]]['source_url'] : state.theme.options.doctorDefault})`}} />
                 </Grid>
@@ -52,7 +52,7 @@ const Doctor = ({ state, actions, libraries }) => {
                     </Hidden>
                     <Typography style={{margin: '16px 0'}}>{post.acf.doctorActivity}</Typography>
                     <div style={{marginLeft: '-2px', marginBottom: '16px', width: 'calc(100% + 2px)'}}>
-                        {post.acf.prestazioni.map(prestazione => (
+                        {post.acf.prestazioni && post.acf.prestazioni.map(prestazione => (
                             <Chip
                                 color="primary"
                                 size="small"
@@ -70,12 +70,16 @@ const Doctor = ({ state, actions, libraries }) => {
                     {post.acf.doctorsCV && (
                         <Button startIcon={<InfoRoundedIcon />} component="a" target="_blank" href={post.acf.doctorsCV}>{translations(state.theme.lang, 'visualizzaCV')}</Button>
                     )}
-                    <div style={{margin: '16px 0'}}>
-                        <Button onClick={() => actions.router.set('/prenota/', {state: {params: tuoTempoParams}})} color="primary" variant="contained">{translations(state.theme.lang, 'prendiAppuntamento')}</Button>
-                        {/*<Button onClick={() => window.open('https://wp.hesperia.it/wp-content/uploads/2021/03/modalita%CC%80-prenotazione.pdf','_blank')} variant="contained" color="secondary" disableElevation>
+                    {post.acf.prestazioni && (
+                        <div style={{margin: '16px 0'}}>
+                            <Button onClick={() => actions.router.set('/prenota/', {state: {params: tuoTempoParams}})}
+                                    color="primary"
+                                    variant="contained">{translations(state.theme.lang, 'prendiAppuntamento')}</Button>
+                            {/*<Button onClick={() => window.open('https://wp.hesperia.it/wp-content/uploads/2021/03/modalita%CC%80-prenotazione.pdf','_blank')} variant="contained" color="secondary" disableElevation>
                             {translations(state.theme.lang, 'prendiAppuntamento')}
                         </Button>*/}
-                    </div>
+                        </div>
+                    )}
                 </Grid>
             </Grid>
         </Container>

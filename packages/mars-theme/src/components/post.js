@@ -1,159 +1,15 @@
 import React, { useEffect } from "react";
-import { connect, styled, decode } from "frontity";
+import { connect, styled } from "frontity";
 import List from "./list";
-import {Container, Divider, makeStyles, Typography, useMediaQuery, useTheme} from "@material-ui/core";
+import {Container, Divider, useMediaQuery} from "@material-ui/core";
 import Dialog from "./Widgets/Dialog";
-import translations from "../translations";
+import PostHeader from "./PostHeader";
 import Documents from "./Widgets/Documents/DocsTable";
 import Subsidiaries from "./Widgets/Subsidiaries";
 import TradingViewGHC from "./Widgets/TradingView";
 import Event from "./Widgets/Event";
 import Staff from "./Widgets/Staff";
 import NewsComponent from "./Widgets/NewsComponent";
-
-const useStyles = makeStyles((theme) => ({
-    textWrapper: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        fontWeight: 'bold',
-        padding: '0 2%',
-        width: '39%',
-        color: 'white',
-        textTransform: 'uppercase',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        [theme.breakpoints.down('sm')]: {
-            width: 'auto',
-        },
-        '& strong': {
-            color: ({accentColor}) => accentColor || theme.palette.primary.main
-        },
-        '& p': {
-            color: ({accentColor}) => accentColor || theme.palette.primary.main,
-            fontWeight: 'bold',
-            fontSize: '16px',
-            fontStyle: 'italic',
-            textTransform: 'none',
-            [theme.breakpoints.down('sm')]: {
-                fontSize: '12px',
-            }
-        }
-    },
-    h1: {
-        fontWeight: 'bold',
-        fontSize: '40px',
-        lineHeight: '50px',
-        [theme.breakpoints.down('md')]: {
-            fontSize: '30px',
-            lineHeight: '38px',
-        },
-        [theme.breakpoints.down('sm')]: {
-            fontSize: '24px',
-            lineHeight: '30px',
-        },
-        [theme.breakpoints.down('xs')]: {
-            fontSize: '18px',
-            lineHeight: '22px',
-        }
-    },
-    h1Long: {
-        fontWeight: 'bold',
-        fontSize: '30px',
-        lineHeight: '35px',
-        [theme.breakpoints.down('md')]: {
-            fontSize: '20px',
-            lineHeight: '25px',
-        },
-        [theme.breakpoints.down('sm')]: {
-            fontSize: '24px',
-            lineHeight: '30px',
-        },
-        [theme.breakpoints.down('xs')]: {
-            fontSize: '14px',
-            lineHeight: '18px',
-        }
-    },
-    mask: {
-        opacity: '.5',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        overflow: 'visible',
-        enableBackground: 'new 0 0 689.4 400',
-        fill: theme.palette.primary.main
-    },
-}));
-
-const ImageHeader = ({featuredImage, isPost, postTitle, isMobile, date, accentColor}) => {
-    const classes = useStyles({accentColor})
-    const {width, height} = featuredImage['media_details']
-    const isPortrait = height > (width * .75)
-    const maskProps = isMobile ? { width: '100%' } : { viewBox: '0 0 689.4 400'}
-    const theme = useTheme()
-    const textWidth = isPortrait ? {width: `${96 - ((width / height) * 35)}%`} : {}
-    return (
-        <div style={{
-            backgroundImage: `url(${featuredImage.source_url})`,
-            backgroundSize: isPortrait ? 'contain' : 'cover',
-            width: '100%',
-            paddingBottom: '35%',
-            position: 'relative',
-            backgroundPosition: isPortrait ? 'right' : 'center',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: isPortrait && theme.palette.primary.main
-        }}>
-            {!isPortrait && (
-                <svg
-                    height="100%"
-                    className={classes.mask}
-                    {...maskProps}
-                >
-                    {isMobile ?
-                        <rect width="100%" height="100%" /> :
-                        <path d="M489.4,200c0-110.5,89.5-200,200-200H0v400h689.4C578.9,400,489.4,310.5,489.4,200z" />
-                    }
-                </svg>
-            )}
-            <div style={textWidth} className={classes.textWrapper}>
-                <Typography classes={{root: classes[decode(postTitle).length > 150 ? 'h1Long' : 'h1']}} variant="h1">{decode(postTitle)}</Typography>
-                {/* Only display author and date on posts */}
-                {isPost && (
-                    <Typography>
-                        {date.toLocaleDateString()}
-                    </Typography>
-                )}
-            </div>
-        </div>
-    )
-}
-
-const PostHeader = ({accentColor, featuredImage, isMobile, isPost, date, postTitle, lang}) => featuredImage ? (
-    <ImageHeader
-        featuredImage={featuredImage}
-        isMobile={isMobile}
-        isPost={isPost}
-        postTitle={postTitle}
-        date={date}
-        accentColor={accentColor}
-    />
-) : (
-    <div style={{padding: '64px 0 16px'}}>
-        <Typography style={{fontWeight: 'bold'}} variant="h1">{decode(postTitle)}</Typography>
-
-        {/* Only display author and date on posts */}
-        {isPost && (
-            <div>
-                <DateWrapper>
-                    {" "}
-                    {translations(lang, 'pubblicatoIl')} <b>{date.toLocaleDateString()}</b>
-                </DateWrapper>
-            </div>
-        )}
-    </div>
-)
 
 const Post = ({ state, actions, libraries }) => {
     // Get information about the current URL.
@@ -238,7 +94,7 @@ const Content = styled.div`
   }
 
   img {
-    width: 100%;
+    max-width: 100%;
     object-fit: cover;
     object-position: center;
   }

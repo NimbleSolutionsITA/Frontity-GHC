@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import {Button, Container, Typography, TextField, Grid} from "@material-ui/core";
+import {Button, Container, Typography, TextField, Grid, useMediaQuery} from "@material-ui/core";
 import {connect} from "frontity";
-import {getServicesGroupedByCategory} from "../../helpers";
 import PrestazioniTabs from "./PrestazioniTabs";
 import translations from "../../translations";
 import {pagesMap} from "../../config";
 import Loading from "../loading";
+import PostHeader from "../PostHeader";
 
 const Prestazioni = ({state, actions, libraries}) => {
     const data = state.source.get(state.router.link);
@@ -14,6 +14,7 @@ const Prestazioni = ({state, actions, libraries}) => {
     const categoryId = [ambCat, ricCat] // state.router.link === pagesMap[1][state.theme.lang][1] ? ambCat : ricCat
     const post = state.source.page[data.id]
     const type = state.router.link === pagesMap[1][state.theme.lang][1] ? 'ambulatoriali' : 'ricoveri'
+    const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
 
     const [services, setServices] = useState(null)
     const [searchWord, setSearchWord] = useState('')
@@ -67,7 +68,14 @@ const Prestazioni = ({state, actions, libraries}) => {
 
     return (
         <Container>
-            <Typography style={{fontWeight: 'bold', textAlign: 'center', margin: '64px 0 32px'}} variant="h1">{post.title.rendered}</Typography>
+            <PostHeader
+                featuredImage={state.source.attachment[post.featured_media]}
+                isMobile={isMobile}
+                postTitle={post.title.rendered}
+                date={new Date(post.date)}
+                accentColor={state.theme.options.slider.accentColor}
+                lang={state.theme.lang}
+            />
             <Html2React html={post.content.rendered}/>
             {services ? (
                 <>

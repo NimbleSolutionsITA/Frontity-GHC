@@ -34,7 +34,7 @@ const TopBar = ({isHomepage, hasSlider, state}) => {
         <div style={{background: isHomepage ? 'linear-gradient(180deg, #F6F9FC -14.41%, #E1EEFE 54.12%)' : '#FFFFFF'}}>
             <Container>
                 <Grid container>
-                    <Grid item xs={9} style={{position: 'relative'}}>
+                    <Grid item sm={7} md={9} style={{position: 'relative'}}>
                         {!hasSlider && state.theme.options.logoGHC && (
                             <Hidden xsDown>
                                 <a href="https://garofalohealthcare.com" target="_blank">
@@ -44,7 +44,7 @@ const TopBar = ({isHomepage, hasSlider, state}) => {
                         )}
                         {hasSlider && <NewsBanner/>}
                     </Grid>
-                    <Grid item xs={12} sm={3} className={classes.rightLinks}>
+                    <Grid item xs={12} sm={5} md={3} className={classes.rightLinks}>
                         {topMenu.map(item => <Button key={item[1]} style={{fontWeight: 'normal', paddingTop: 0, paddingBottom: 0}} component={Link} link={item[1]}>{item[0]}</Button>)}
                         {state.theme.languages.filter(l => l.id !== state.theme.lang).map(lang =>  (
                             <div style={{borderLeft: '1px solid', display: 'inline-block'}}>
