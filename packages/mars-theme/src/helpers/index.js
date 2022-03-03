@@ -48,6 +48,12 @@ function padTo2Digits(num) {
 }
 
 export function formatDate(date) {
+    console.log({
+        date,
+        day: padTo2Digits(date.getDate()),
+        month: padTo2Digits(date.getMonth() + 1),
+        year: date.getFullYear()
+    })
     return [
         padTo2Digits(date.getDate()),
         padTo2Digits(date.getMonth() + 1),

@@ -24,7 +24,7 @@ const Header = ({ state }) => {
     const closeMenu = () => setOpenMobileMenu(false)
     const openMenu = () => setOpenMobileMenu(true)
 
-    // const menu = state.theme.menus.main.slice(0, -1)
+    const menu = state.theme.menus.main.slice(0, -1)
     const lastItem = [...state.theme.menus.main].pop()
 
     return (
@@ -40,7 +40,7 @@ const Header = ({ state }) => {
           <MenuBar
               isHomepage={state.theme.isHomepage}
               isNavBarTop={isNavBarTop}
-              menu={state.theme.menus.main}
+              menu={menu}
               closeMenu={closeMenu}
               setOpenMobileMenu={setOpenMobileMenu}
               openMobileMenu={openMobileMenu}

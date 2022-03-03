@@ -77,7 +77,7 @@ const Footer = ({ state, actions, libraries }) => {
                     </Grid>
                     <Grid item xs={12} sm={4} classes={{root: classes.socials}}>
                         {state.theme.options.social && state.theme.options.social.map(social => (
-                            <IconButton href={social.link} target="_blank" edge="start">
+                            <IconButton key={social.link} href={social.link} target="_blank" edge="start">
                                 {socialIconsMap[social.nome]}
                             </IconButton>
                         ))}
@@ -96,9 +96,9 @@ const Footer = ({ state, actions, libraries }) => {
                     <Grid item xs={12} md={3} css={css`border-left: 1px solid #FFFFFF;`}>
                         <Contacts variant="body2">
                             {state.theme.options.contactsFooter && state.theme.options.contactsFooter.map(ct => (
-                                <>
+                                <span key={ct.label+ct.value}>
                                     {ct.label}{ct.value && ': '}<b>{ct.value}</b><br />
-                                </>
+                                </span>
                             ))}
                         </Contacts>
                     </Grid>

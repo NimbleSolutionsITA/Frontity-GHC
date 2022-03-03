@@ -1,5 +1,5 @@
 import React from "react";
-import {makeStyles, Typography, useTheme} from "@material-ui/core";
+import {makeStyles, Typography, useMediaQuery, useTheme} from "@material-ui/core";
 import {decode, styled} from "frontity";
 import translations from "../translations";
 
@@ -79,7 +79,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ImageHeader = ({featuredImage, isPost, postTitle, isMobile, date, accentColor}) => {
+const ImageHeader = ({featuredImage, isPost, postTitle, date, accentColor}) => {
+    const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
     const classes = useStyles({accentColor})
     const {width, height} = featuredImage['media_details']
     const isPortrait = height > (width * .75)

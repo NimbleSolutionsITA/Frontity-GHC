@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const TopBar = ({isHomepage, hasSlider, state}) => {
+const TopBar = ({isHomepage, hasSlider, state, actions}) => {
     const classes = useStyles()
     const topMenu = state.theme.menus.top
     const setLanguage = (lang) => window.location.assign(window.location.origin+(lang === state.theme.mainLanguage ? '' : '/'+lang)+state.theme.baseLink)
@@ -45,7 +45,7 @@ const TopBar = ({isHomepage, hasSlider, state}) => {
                         {hasSlider && <NewsBanner/>}
                     </Grid>
                     <Grid item xs={12} sm={5} md={3} className={classes.rightLinks}>
-                        {topMenu.map(item => <Button key={item[1]} style={{fontWeight: 'normal', paddingTop: 0, paddingBottom: 0}} component={Link} link={item[1]}>{item[0]}</Button>)}
+                        {topMenu.map(item => <Button key={item[1]} style={{fontWeight: 'normal', paddingTop: 0, paddingBottom: 0}} onClick={() => actions.router.set(state.theme.urlPrefix+item[1])} >{item[0]}</Button>)}
                         {state.theme.languages.filter(l => l.id !== state.theme.lang).map(lang =>  (
                             <div style={{borderLeft: '1px solid', display: 'inline-block'}}>
                                 <Button startIcon={<TranslateIcon />} style={{fontWeight: 'normal', paddingTop: 0, paddingBottom: 0}} color="primary" onClick={() => setLanguage(lang.id)}>

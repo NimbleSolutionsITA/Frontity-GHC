@@ -3,6 +3,7 @@ import {connect, decode} from "frontity";
 import {Container, Box, Tabs, makeStyles, Tab} from "@material-ui/core";
 import Filters from "./Filters";
 import DocumentTable from "./DocumentTable";
+import Loading from "../../loading";
 
 function a11yProps(index) {
     return {
@@ -74,7 +75,7 @@ const Documents = ({ documentTypes, state, libraries, hideBody }) => {
 
     useEffect(() => {
         for (let doc of documentTypes) {
-            if(!documents || !documents[doc.ID])
+            if(!documents || !documents[doc.ID]) {
                 fetchDocs(doc.ID).then(() => {
                     const newDoc = {
                         [doc.ID]: state.source.documents[doc.ID].acf.documents.map(d => ({
@@ -84,14 +85,17 @@ const Documents = ({ documentTypes, state, libraries, hideBody }) => {
                     }
                     setDocuments(d => ({...d, ...newDoc}))
                     setFilteredDocuments(d => ({...d, ...newDoc}))
-                    const newContent = {[doc.ID]: state.source.documents[doc.ID].content.rendered}
-                    setContents(c => ({...c, ...newContent}))
+                    setContents(c => ({
+                        ...c,
+                        [doc.ID]: state.source.documents[doc.ID].content?.rendered
+                    }))
                 })
+            }
         }
         setValue(documentTypes[0].post_name)
     }, [state.router.link]);
 
-    return documents && (
+    return documents ? (
         <Container maxWidth="md" className={classes.root}>
             {documentTypes.length > 1 && (
                 <Tabs
@@ -129,7 +133,7 @@ const Documents = ({ documentTypes, state, libraries, hideBody }) => {
                 </TabPanel>
             ))}
         </Container>
-    )
+    ) : <Loading />
 }
 
 export default connect(Documents)

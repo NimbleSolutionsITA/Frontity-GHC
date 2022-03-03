@@ -15,6 +15,7 @@ import {connect} from "frontity";
 import translations from "../../translations";
 import SupervisedUserCircleRoundedIcon from '@material-ui/icons/SupervisedUserCircleRounded';
 import Loading from "../loading";
+import PostHeader from "../PostHeader";
 
 const Doctors = ({ state, actions, libraries }) => {
     const [onlyHead, setOnlyHead] = useState(false)
@@ -125,7 +126,14 @@ const Doctors = ({ state, actions, libraries }) => {
 
     return (
         <Container>
-            <Typography style={{fontWeight: 'bold', textAlign: 'center', margin: '64px 0 32px'}} variant="h1"><Html2React html={post.title.rendered} /></Typography>
+            <PostHeader
+                featuredImage={state.source.attachment[post.featured_media]}
+                isPost={data.isPost}
+                postTitle={post.title.rendered}
+                date={new Date(post.date)}
+                accentColor={state.theme.options.slider.accentColor}
+                lang={state.theme.lang}
+            />
             <Html2React html={post.content.rendered} />
             {doctors ? (
                 <>

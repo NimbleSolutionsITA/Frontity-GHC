@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect, styled } from "frontity";
 import List from "./list";
-import {Container, Divider, useMediaQuery} from "@material-ui/core";
+import {Container, Divider} from "@material-ui/core";
 import Dialog from "./Widgets/Dialog";
 import PostHeader from "./PostHeader";
 import Documents from "./Widgets/Documents/DocsTable";
@@ -18,7 +18,6 @@ const Post = ({ state, actions, libraries }) => {
     const post = state.source[data.type][data.id];
     // Get a human readable date.
     const date = new Date(post.date);
-    const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
     // Get the html2react component.
     const Html2React = libraries.html2react.Component;
 
@@ -40,7 +39,6 @@ const Post = ({ state, actions, libraries }) => {
             {/* Look at the settings to see if we should include the featured image */}
             <PostHeader
                 featuredImage={state.source.attachment[post.featured_media]}
-                isMobile={isMobile}
                 isPost={data.isPost}
                 postTitle={post.title.rendered}
                 date={date}
@@ -71,12 +69,6 @@ const Post = ({ state, actions, libraries }) => {
 };
 
 export default connect(Post);
-
-const DateWrapper = styled.p`
-  color: rgba(12, 17, 43, 0.9);
-  font-size: 0.9em;
-  display: inline;
-`;
 
 /**
  * This component is the parent of the `content.rendered` HTML. We can use nested

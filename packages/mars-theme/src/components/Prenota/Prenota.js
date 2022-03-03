@@ -9,6 +9,7 @@ import {
     TextField, Typography,
 } from "@material-ui/core";
 import {Alert} from "@material-ui/lab";
+import PostHeader from "../PostHeader";
 
 const Prenota = ({ state, actions, libraries }) => {
     const data = state.source.get(state.router.link);
@@ -76,7 +77,14 @@ const Prenota = ({ state, actions, libraries }) => {
 
     return (<>
         <Container>
-            <Typography style={{fontWeight: 'bold', textAlign: 'center', margin: '64px 0 32px'}} variant="h1">{post.title.rendered}</Typography>
+            <PostHeader
+                featuredImage={state.source.attachment[post.featured_media]}
+                isPost={data.isPost}
+                postTitle={post.title.rendered}
+                date={new Date(post.date)}
+                accentColor={state.theme.options.slider.accentColor}
+                lang={state.theme.lang}
+            />
             <Html2React html={post.content.rendered}/>
         </Container>
         <Container maxWidth="md">
