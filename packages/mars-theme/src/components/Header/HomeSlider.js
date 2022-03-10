@@ -107,7 +107,7 @@ const HomeSlider = ({state, libraries}) => {
                             <div className={classes.slideWrapper} style={getStyle(slide)}>
                                 {slide.video && (
                                     <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                                        <ReactPlayer width="100%" height="100%" loop playing url={[slide.video.url]} />
+                                        <ReactPlayer width="100%" height="100%" loop playing url={slide.video.url} />
                                     </div>
                                 )}
                                 <svg
