@@ -2,6 +2,7 @@ import {connect, Global} from "frontity";
 import {Box, Container, makeStyles} from "@material-ui/core";
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
 import { Virtual, Pagination, Autoplay, EffectFade, Navigation } from 'swiper';
+import ReactPlayer from 'react-player'
 import swiperCss from 'swiper/swiper.min.css'
 import swiperPaginationCss from 'swiper/modules/pagination/pagination.min.css'
 import swiperEffectFadeCss from 'swiper/modules/effect-fade/effect-fade.min.css'
@@ -71,6 +72,8 @@ const HomeSlider = ({state, libraries}) => {
     const Html2React = libraries.html2react.Component;
     const classes = useStyles({accentColor: state.theme.options.slider.accentColor})
 
+    const getStyle = (slide) => slide.video ? { paddingBottom: (slide.video.height/slide.video.width)*100+'%' } : { backgroundImage: `url(${slide.slideImage.url})` }
+
     return (
         <Box bgcolor="rgb(225 238 254)">
             <Global styles={swiperCss} />
@@ -101,13 +104,22 @@ const HomeSlider = ({state, libraries}) => {
                 >
                     {state.theme.options.slider.slides.map((slide, index) => (
                         <SwiperSlide key={slide.slideTitle} virtualIndex={index}>
-                            <div className={classes.slideWrapper} style={{ backgroundImage: `url(${slide.slideImage.url})` }}>
+                            <div className={classes.slideWrapper} style={getStyle(slide)}>
+                                {slide.video && (
+                                    <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+                                        <ReactPlayer width="100%" height="100%" loop playing url={[slide.video.url]} />
+                                    </div>
+                                )}
                                 <svg
                                     height="100%"
-                                    viewBox="0 0 689.4 400"
                                     className={classes.mask}
+                                    {...(slide.video ? {width: '100%'} : {viewBox: '0 0 689.4 400'})}
                                 >
-                                    <path d="M489.4,200c0-110.5,89.5-200,200-200H0v400h689.4C578.9,400,489.4,310.5,489.4,200z"/>
+                                    {slide.video ?
+                                        <rect width="100%" height="100%" /> :
+                                        <path d="M489.4,200c0-110.5,89.5-200,200-200H0v400h689.4C578.9,400,489.4,310.5,489.4,200z"/>
+                                    }
+
                                 </svg>
                                 <div className={classes.textWrapper}>
                                     {state.theme.options.slider.logo && <img className={classes.logo} src={state.theme.options.slider.logo.url} alt={state.theme.options.slider.logo.filename}/>}
