@@ -68,6 +68,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+const VideoPlayer = ({url}) => (
+    <div style={{position: 'absolute', width: '100%', height: '100%'}}>
+        <ReactPlayer width="100%" height="100%" loop playing url={url} />
+    </div>
+)
+
 const HomeSlider = ({state, libraries}) => {
     const Html2React = libraries.html2react.Component;
     const classes = useStyles({accentColor: state.theme.options.slider.accentColor})
@@ -105,11 +111,7 @@ const HomeSlider = ({state, libraries}) => {
                     {state.theme.options.slider.slides.map((slide, index) => (
                         <SwiperSlide key={slide.slideTitle} virtualIndex={index}>
                             <div className={classes.slideWrapper} style={getStyle(slide)}>
-                                {slide.video && (
-                                    <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                                        <ReactPlayer width="100%" height="100%" loop playing url={slide.video.url} />
-                                    </div>
-                                )}
+                                {/*{slide.video && <VideoPlayer url={slide.video.url} />}*/}
                                 <svg
                                     height="100%"
                                     className={classes.mask}
