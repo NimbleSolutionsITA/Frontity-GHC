@@ -59,7 +59,6 @@ const Theme = ({ state }) => {
 
       <Header />
 
-
       {/* Add the main section. It renders a different component depending
       on the type of URL we are in. */}
       {isBrowser && (

@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect, useCallback, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {connect, css, decode, Global} from "frontity";
 import Link from "../link";
 import {Button} from "@material-ui/core";

@@ -1,14 +1,14 @@
 import {connect, Global} from "frontity";
 import {Box, Container, makeStyles} from "@material-ui/core";
-import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
+import { Swiper, SwiperSlide } from 'swiper/react/swiper-react';
 import { Virtual, Pagination, Autoplay, EffectFade, Navigation } from 'swiper';
-import ReactPlayer from 'react-player'
-import swiperCss from 'swiper/swiper.min.css'
-import swiperPaginationCss from 'swiper/modules/pagination/pagination.min.css'
-import swiperEffectFadeCss from 'swiper/modules/effect-fade/effect-fade.min.css'
-import swiperAutoplayCss from 'swiper/modules/autoplay/autoplay.min.css'
-import swiperNavigationCss from 'swiper/modules/navigation/navigation.min.css'
-import swiperVirtualCss from 'swiper/modules/virtual/virtual.min.css'
+import ReactPlayer from 'react-player';
+import swiperCss from 'swiper/swiper.min.css';
+import swiperPaginationCss from 'swiper/modules/pagination/pagination.min.css';
+import swiperEffectFadeCss from 'swiper/modules/effect-fade/effect-fade.min.css';
+import swiperAutoplayCss from 'swiper/modules/autoplay/autoplay.min.css';
+import swiperNavigationCss from 'swiper/modules/navigation/navigation.min.css';
+import swiperVirtualCss from 'swiper/modules/virtual/virtual.min.css';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -111,7 +111,7 @@ const HomeSlider = ({state, libraries}) => {
                     {state.theme.options.slider.slides.map((slide, index) => (
                         <SwiperSlide key={slide.slideTitle} virtualIndex={index}>
                             <div className={classes.slideWrapper} style={getStyle(slide)}>
-                                {/*{slide.video && <VideoPlayer url={slide.video.url} />}*/}
+                                {slide.video && <VideoPlayer url={slide.video.url} />}
                                 <svg
                                     height="100%"
                                     className={classes.mask}
