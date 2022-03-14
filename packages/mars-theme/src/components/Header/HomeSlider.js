@@ -109,28 +109,35 @@ const HomeSlider = ({state, libraries}) => {
                     slidesPerView={1}
                 >
                     {state.theme.options.slider.slides.map((slide, index) => (
-                        <SwiperSlide key={slide.slideTitle} virtualIndex={index}>
-                            <div className={classes.slideWrapper} style={getStyle(slide)}>
-                                {slide.video && <VideoPlayer url={slide.video.url} />}
-                                <svg
-                                    height="100%"
-                                    className={classes.mask}
-                                    {...(slide.video ? {width: '100%'} : {viewBox: '0 0 689.4 400'})}
-                                >
-                                    {slide.video ?
-                                        <rect width="100%" height="100%" /> :
-                                        <path d="M489.4,200c0-110.5,89.5-200,200-200H0v400h689.4C578.9,400,489.4,310.5,489.4,200z"/>
-                                    }
+                        <SwiperSlide
+                            key={slide.slideTitle}
+                            virtualIndex={index}
+                            onSlideChange={() => console.log('slide change')}
+                        >
+                            {({ isActive }) => (
+                                <div className={classes.slideWrapper} style={getStyle(slide)}>
+                                    {slide.video && isActive && <VideoPlayer url={slide.video.url}/>}
+                                    <svg
+                                        height="100%"
+                                        className={classes.mask}
+                                        {...(slide.video ? {width: '100%'} : {viewBox: '0 0 689.4 400'})}
+                                    >
+                                        {slide.video ?
+                                            <rect width="100%" height="100%" /> :
+                                            <path d="M489.4,200c0-110.5,89.5-200,200-200H0v400h689.4C578.9,400,489.4,310.5,489.4,200z"/>
+                                        }
 
-                                </svg>
-                                <div className={classes.textWrapper}>
-                                    {state.theme.options.slider.logo && <img className={classes.logo} src={state.theme.options.slider.logo.url} alt={state.theme.options.slider.logo.filename}/>}
-                                    <Html2React html={slide.slideTitle} />
-                                    <div className={classes.textHideMobile}>
-                                        {slide.slideSubtitle}
+                                    </svg>
+                                    <div className={classes.textWrapper}>
+                                        {state.theme.options.slider.logo && <img className={classes.logo} src={state.theme.options.slider.logo.url} alt={state.theme.options.slider.logo.filename}/>}
+                                        <Html2React html={slide.slideTitle} />
+                                        <div className={classes.textHideMobile}>
+                                            {slide.slideSubtitle}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            )}
+
                         </SwiperSlide>
                     ))}
                 </Swiper>
