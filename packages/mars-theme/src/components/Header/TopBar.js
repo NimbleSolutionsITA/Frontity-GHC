@@ -30,6 +30,7 @@ const TopBar = ({isHomepage, hasSlider, state, actions}) => {
     const classes = useStyles()
     const topMenu = state.theme.menus.top
     const setLanguage = (lang) => window.location.assign(window.location.origin+(lang === state.theme.mainLanguage ? '' : '/'+lang)+state.theme.baseLink)
+    const flashNewsCategory = state.source.data['all-categories/'].items.find(c => c.slug === 'flash-news')?.id
     return (
         <div style={{background: isHomepage ? 'linear-gradient(180deg, #F6F9FC -14.41%, #E1EEFE 54.12%)' : '#FFFFFF'}}>
             <Container>
@@ -42,7 +43,7 @@ const TopBar = ({isHomepage, hasSlider, state, actions}) => {
                                 </a>
                             </Hidden>
                         )}
-                        {hasSlider && <NewsBanner/>}
+                        {hasSlider && flashNewsCategory && <NewsBanner categories={flashNewsCategory} />}
                     </Grid>
                     <Grid item xs={12} sm={5} md={3} className={classes.rightLinks}>
                         {topMenu.map(item => <Button key={item[1]} style={{fontWeight: 'normal', paddingTop: 0, paddingBottom: 0}} onClick={() => actions.router.set(state.theme.urlPrefix+item[1])} >{item[0]}</Button>)}

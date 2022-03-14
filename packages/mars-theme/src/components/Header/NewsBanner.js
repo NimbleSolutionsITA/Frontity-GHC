@@ -3,7 +3,7 @@ import {connect, css, decode, Global} from "frontity";
 import Link from "../link";
 import {Button} from "@material-ui/core";
 
-const NewsBanner = ({state, libraries, limit = 5}) => {
+const NewsBanner = ({state, libraries, limit = 5, categories}) => {
     const [allNews, setAllNews] = useState([{title: {rendered: ''}, link: ''}])
     const [index, setIndex] = useState(0)
     const animationRef = useRef(null);
@@ -15,7 +15,7 @@ const NewsBanner = ({state, libraries, limit = 5}) => {
         async function fetchAllNews() {
             const response = await libraries.source.api.get({
                 endpoint: "posts",
-                params: { _embed: true, categories: state.source.data['all-categories/'].items.find(c => c.slug === 'flash-news').id, per_page: limit },
+                params: { _embed: true, categories, per_page: limit },
             });
             const res = await libraries.source.populate({ response, state })
             return res.map(({id}) => state.source.post[id])
