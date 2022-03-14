@@ -57,7 +57,7 @@ const Theme = ({ state }) => {
 
       {/* Add the header of the site. */}
 
-      {/*<Header />*/}
+      <Header />
 
 
       {/* Add the main section. It renders a different component depending
