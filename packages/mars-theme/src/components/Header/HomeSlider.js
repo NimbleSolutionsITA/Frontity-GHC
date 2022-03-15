@@ -58,6 +58,9 @@ const useStyles = makeStyles((theme) => ({
         enableBackground: 'new 0 0 689.4 400',
         fill: theme.palette.primary.main
     },
+    maskWhite: {
+        fill: 'rgb(255 255 255 / 50%)'
+    },
     logo: {
         width: '60%'
     },
@@ -117,8 +120,8 @@ const HomeSlider = ({state, libraries}) => {
                                 {slide.video && <VideoPlayer url={slide.video.url} />}
                                 <svg
                                     height="100%"
-                                    className={classes.mask}
-                                    {...(slide.video ? {width: '100%'} : {viewBox: '0 0 689.4 400'})}
+                                    className={`${classes.mask} ${slide.video ? classes.maskWhite : ''}`}
+                                    {...(slide.video ? {width: '100%', fill: 'white'} : {viewBox: '0 0 689.4 400'})}
                                 >
                                     {slide.video ?
                                         <rect width="100%" height="100%" /> :
