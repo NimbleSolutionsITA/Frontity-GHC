@@ -26,27 +26,34 @@ const useStyles = makeStyles((theme) => ({
         padding: '40px',
         width: '45%',
         color: 'white',
-        [theme.breakpoints.down('sm')]: {
-            padding: '30px',
-        },
-        [theme.breakpoints.down('xs')]: {
-            padding: '20px',
-        },
         '& h1': {
             fontSize: '32px',
             lineHeight: '40px',
             textTransform: 'uppercase',
-            [theme.breakpoints.down('sm')]: {
-                fontSize: '20px',
-                lineHeight: '24px',
-            },
-            [theme.breakpoints.down('xs')]: {
-                fontSize: '12px',
-                lineHeight: '16px',
-            }
         },
         '& strong': {
             color: ({accentColor}) => accentColor || theme.palette.primary.main
+        }
+    },
+    textWrapperFull: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        color: 'white',
+        paddingTop: '40px',
+        paddingBottom: '40px',
+        '& h1': {
+            fontSize: '50px',
+            lineHeight: '58px',
+            textTransform: 'uppercase',
+        },
+        '& strong': {
+            color: ({accentColor}) => accentColor || theme.palette.primary.main
+        },
+        '& > div': {
+            fontSize: '24px',
+            lineHeight: '28px'
         }
     },
     mask: {
@@ -62,7 +69,8 @@ const useStyles = makeStyles((theme) => ({
         fill: 'rgb(255 255 255 / 50%)'
     },
     logo: {
-        width: '60%'
+        width: 'auto',
+        height: '120px'
     },
     textHideMobile: {
         [theme.breakpoints.down('sm')]: {
@@ -83,6 +91,16 @@ const HomeSlider = ({state, libraries}) => {
 
     const getStyle = (slide) => slide.video ? { paddingBottom: (slide.video.height/slide.video.width)*100+'%' } : { backgroundImage: `url(${slide.slideImage.url})` }
 
+    const Wrapper = ({children}) => state.theme.options.slider.fullWidth ? <div>{children}</div> : <Container>{children}</Container>
+    const Inner = ({children}) => (
+        <div className={classes[state.theme.options.slider.fullWidth ? 'textWrapperFull' : 'textWrapper']}>
+            {state.theme.options.slider.fullWidth ?
+                <Container>{children}</Container> :
+                children
+            }
+        </div>
+    )
+
     return (
         <Box bgcolor="rgb(225 238 254)">
             <Global styles={swiperCss} />
@@ -91,7 +109,7 @@ const HomeSlider = ({state, libraries}) => {
             <Global styles={swiperAutoplayCss} />
             <Global styles={swiperNavigationCss} />
             <Global styles={swiperVirtualCss} />
-            <Container>
+            <Wrapper>
                 <Swiper
                     fadeEffect={{
                         crossFade: true
@@ -123,25 +141,31 @@ const HomeSlider = ({state, libraries}) => {
                                     className={`${classes.mask} ${slide.video ? classes.maskWhite : ''}`}
                                     {...(slide.video ? {width: '100%', fill: 'white'} : {viewBox: '0 0 689.4 400'})}
                                 >
+                                    <defs>
+                                        <radialGradient id="RadialGradient" cx="0.1" cy="0.1" r="0.5">
+                                            <stop offset="0%" stopColor="wheat"/>
+                                            <stop offset="100%" stopColor="#004a8f33"/>
+                                        </radialGradient>
+                                    </defs>
                                     {slide.video ?
-                                        <rect width="100%" height="100%" /> :
+                                        <rect width="100%" height="100%" fill="url(#RadialGradient)"/> :
                                         <path d="M489.4,200c0-110.5,89.5-200,200-200H0v400h689.4C578.9,400,489.4,310.5,489.4,200z"/>
                                     }
 
                                 </svg>
-                                <div className={classes.textWrapper}>
+                                <Inner>
                                     {state.theme.options.slider.logo && <img className={classes.logo} src={state.theme.options.slider.logo.url} alt={state.theme.options.slider.logo.filename}/>}
                                     <Html2React html={slide.slideTitle} />
                                     <div className={classes.textHideMobile}>
                                         {slide.slideSubtitle}
                                     </div>
-                                </div>
+                                </Inner>
                             </div>
 
                         </SwiperSlide>
                     ))}
                 </Swiper>
-            </Container>
+            </Wrapper>
         </Box>
     )
 }

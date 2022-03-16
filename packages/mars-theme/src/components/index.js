@@ -65,7 +65,7 @@ const Theme = ({ state }) => {
           <>
               <Switch>
                   <Loading when={data.isFetching} />
-                  <Home when={state.theme.isHomepage} />
+                  {/*<Home when={state.theme.isHomepage} />*/}
                   <Prestazioni when={state.theme.baseLink === '/prestazioni/'}/>
                   <Prestazione when={data.isPostType && data.type === 'services'} />
                   <Doctors when={data.isPostType && state.theme.baseLink === '/i-nostri-medici/'}/>
@@ -83,7 +83,7 @@ const Theme = ({ state }) => {
                   <Post when={data.isPostType} />
                   <PageError when={data.isError} />
               </Switch>
-              {!data.isFetching && <Footer />}
+              {/*{!data.isFetching && <Footer />}*/}
               <TuoTempo />
               {state.theme.baseLink !== '/privacy-policy-cookies/' && <CookieConsent />}
               {/*{cookies.get('rcl_consent_given') && <Newsletter />}*/}
