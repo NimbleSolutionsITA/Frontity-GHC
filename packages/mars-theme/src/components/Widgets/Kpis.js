@@ -1,6 +1,6 @@
 import React from "react";
 import { connect, Global, css, loadable } from "frontity";
-import {Container, Grid, makeStyles, Typography, useMediaQuery, useTheme} from "@material-ui/core";
+import {Container, Grid, makeStyles, Typography, useTheme} from "@material-ui/core";
 import {useInView} from "react-intersection-observer";
 import * as Icons from "@material-ui/icons"
 const ReactOdometer = loadable(() => import('react-odometerjs'))
@@ -28,9 +28,8 @@ const useStyles = makeStyles((theme) => ({
 const Kpis = ({state}) => {
     const classes = useStyles()
     const theme = useTheme()
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const { ref, inView, entry } = useInView({
+    const { ref, inView } = useInView({
         /* Optional options */
         threshold: 0,
         delay: 500,

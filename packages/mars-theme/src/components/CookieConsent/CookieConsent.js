@@ -2,15 +2,10 @@ import React from 'react'
 import {connect} from "frontity";
 import {CookieBanner} from '@keepist/react-gdpr-cookie-banner';
 
-const CookieConsent = ({libraries, state}) => {
+const CookieConsent = ({libraries, state, GAInit}) => {
     const Html2React = libraries.html2react.Component;
     const onAcceptStatistics = () => {
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-            dataLayer.push(arguments)
-        }
-        gtag('js', new Date());
-        gtag('config', state.theme.options.analytics);
+        GAInit()
     }
 
     const italianLabels = state.theme.lang === 'it' ? {

@@ -6,6 +6,7 @@ import AlertBox from "./AlertBox";
 // import NewsVerticalList from "../Articles/NewsVerticalList";
 import translations from "../../translations";
 import NewsGrid from "../Articles/NewsGrid";
+import Kpis from "../Widgets/Kpis";
 
 const Home = ({ state, actions, libraries }) => {
     const data = state.source.get(state.router.link);
@@ -29,6 +30,7 @@ const Home = ({ state, actions, libraries }) => {
                     />
                 )}
             </Container>
+            {state.theme.options.odometer?.length > 0 && <Kpis/>}
             <Container>
                 <NewsGrid categorySlug="news" slideMode showTitle />
                 {/*<NewsVerticalList categorySlug="featured" />*/}

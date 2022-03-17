@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Global, css, connect, Head } from "frontity";
 import { ThemeProvider } from '@material-ui/core/styles';
 import Cookies from 'universal-cookie';
+import ReactGA from 'react-ga';
 import Switch from "@frontity/components/switch";
 import Header from "./Header/Header";
 import List from "./list";
@@ -40,6 +41,17 @@ const Theme = ({ state }) => {
 
   const cookies = new Cookies();
 
+  const GAInit = () => {
+      ReactGA.initialize(state.theme.options.analytics);
+      ReactGA.set({anonymizeIp: true});
+  }
+
+    useEffect(() => {
+        if (cookies.get('rcl_statistics_consent'))
+            GAInit()
+    }, []);
+
+
   return (
     <ThemeProvider theme={theme(state.theme.options.themeColor)}>
       {/* Add some metatags to the <head> of the HTML. */}
@@ -48,16 +60,16 @@ const Theme = ({ state }) => {
         <meta name="description" content={state.theme.options.description} />
         <html lang={language} />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,400;0,700;1,400;1,700&display=swap"/>
-        {cookies.get('rcl_statistics_consent') && <script async src={`https://www.googletagmanager.com/gtag/js?id=${state.theme.options.analytics}`}/>}
       </Head>
 
-      {/* Add some global styles for the whole site, like body or a's. 
+      {/* Add some global styles for the whole site, like body or a's.
       Not classes here because we use CSS-in-JS. Only global HTML tags. */}
       <Global styles={globalStyles} />
 
       {/* Add the header of the site. */}
 
       <Header />
+
 
       {/* Add the main section. It renders a different component depending
       on the type of URL we are in. */}
@@ -85,7 +97,7 @@ const Theme = ({ state }) => {
               </Switch>
               {!data.isFetching && <Footer />}
               <TuoTempo />
-              {state.theme.baseLink !== '/privacy-policy-cookies/' && <CookieConsent />}
+              {state.theme.baseLink !== '/privacy-policy-cookies/' && <CookieConsent GAInit={GAInit} />}
               {/*{cookies.get('rcl_consent_given') && <Newsletter />}*/}
           </>
       )}
